@@ -1217,15 +1217,13 @@ select.sort:focus{
   font-weight: 700;
 }
 /* ===============================
-   MOBILE SIDEBAR MENU
+   UNIVERSAL SIDEBAR
 ================================ */
 
 .mobile-menu-btn {
-  display: none;
   font-size: 22px;
 }
 
-/* sidebar container */
 .mobile-sidebar {
   position: fixed;
   top: 0;
@@ -1233,7 +1231,7 @@ select.sort:focus{
   width: 260px;
   height: 100vh;
   background: #ffffff;
-  z-index: 4000;
+  z-index: 5000;
   transition: 0.35s ease;
   box-shadow: 10px 0 40px rgba(0,0,0,.25);
 }
@@ -1242,7 +1240,6 @@ select.sort:focus{
   left: 0;
 }
 
-/* sidebar content */
 .mobile-sidebar-content {
   padding: 20px;
   display: flex;
@@ -1251,12 +1248,12 @@ select.sort:focus{
 }
 
 .mobile-sidebar-content a {
-  text-decoration: none;
   padding: 12px 14px;
   border-radius: 10px;
-  font-weight: 700;
-  color: #111827;
   background: #f3f4f6;
+  font-weight: 700;
+  text-decoration: none;
+  color: #111827;
 }
 
 .mobile-sidebar-content a:hover {
@@ -1268,7 +1265,6 @@ select.sort:focus{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .mobile-sidebar-header h3 {
@@ -1276,11 +1272,23 @@ select.sort:focus{
   font-size: 18px;
 }
 
-.mobile-sidebar-header button {
-  border: none;
-  background: none;
-  font-size: 20px;
-  cursor: pointer;
+/* language */
+.sidebar-lang {
+  margin: 10px 0;
+}
+
+.sidebar-lang label {
+  font-size: 13px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.sidebar-lang select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
 }
 
 /* overlay */
@@ -1289,18 +1297,11 @@ select.sort:focus{
   inset: 0;
   background: rgba(0,0,0,.45);
   display: none;
-  z-index: 3500;
+  z-index: 4500;
 }
 
 .sidebar-overlay.active {
   display: block;
-}
-
-/* show only on mobile */
-@media (max-width: 900px) {
-  .mobile-menu-btn {
-    display: block;
-  }
 }
 
 </style>
@@ -1311,22 +1312,26 @@ select.sort:focus{
 <header class="topbar">
 
   <div class="logo">
-   <a href="/" class="logo-link">
-  <img src="https://th.bing.com/th/id/R.35647c0cec927537fa43ed1836a446c2?rik=7Lzu71WwPczowA&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fhyundai-logo-png-hyundai-car-logo-png-brand-image-1749.png&ehk=UI8O%2bS7ci5lpalKI9Rf1u%2bMYvCgw%2bVwAeupMAcxmk2g%3d&risl=&pid=ImgRaw&r=0" alt="AKC Auto Parts Logo" class="logo">
-</a>
+    <a href="/" class="logo-link">
+      <img src="https://th.bing.com/th/id/R.35647c0cec927537fa43ed1836a446c2?rik=7Lzu71WwPczowA&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fhyundai-logo-png-hyundai-car-logo-png-brand-image-1749.png&ehk=UI8O%2bS7ci5lpalKI9Rf1u%2bMYvCgw%2bVwAeupMAcxmk2g%3d&risl=&pid=ImgRaw&r=0"
+           alt="AKC Auto Parts Logo">
+    </a>
 
     <div class="brand">AKC AUTO PARTS</div>
   </div>
 
-  <div style="display:flex; align-items:center; gap:12px; margin-left:18px;">
-    <div class="muted">Parts for Hyundai • Tata • Bajaj</div>
+  <div class="muted header-subtext">
+    Parts for Hyundai • Tata • Bajaj
   </div>
-  <div class="lang-select">
-    <select id="languageSelect">
-      <option value="en">English</option>
-      <option value="hi">हिंदी</option>
-    </select>
+
+  <div class="top-actions">
+    <button class="icon-btn mobile-menu-btn" onclick="toggleMobileMenu()">
+      ☰
+    </button>
   </div>
+
+</header>
+
 
 <script>
 document.getElementById("languageSelect").value = "<%= lang %>";
@@ -1336,12 +1341,6 @@ document.getElementById("languageSelect").addEventListener("change", function ()
   location.reload();
 });
 </script>
-
-
-
-  <button class="icon-btn mobile-menu-btn" onclick="toggleMobileMenu()">
-  ☰
-</button>
 
 
     <div class="cart-badge">
@@ -1958,13 +1957,23 @@ function confirmSignout() {
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
-<!-- MOBILE SIDEBAR -->
+<!-- MAIN SIDEBAR -->
 <div id="mobileSidebar" class="mobile-sidebar">
   <div class="mobile-sidebar-content">
 
+    <!-- HEADER -->
     <div class="mobile-sidebar-header">
       <h3><%= t.menu %></h3>
       <button onclick="toggleMobileMenu()">✕</button>
+    </div>
+
+    <!-- LANGUAGE -->
+    <div class="sidebar-lang">
+      <label>🌐 <%= t.language || "Language" %></label>
+      <select id="sidebarLanguage">
+        <option value="en">English</option>
+        <option value="hi">हिंदी</option>
+      </select>
     </div>
 
     <a href="/my-orders">📦 <%= t.myOrders %></a>
@@ -1982,15 +1991,23 @@ function confirmSignout() {
 
 <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
+
 </body>
 <script>
-function toggleMobileMenu() {
-  const sidebar = document.getElementById("mobileSidebar");
-  const overlay = document.getElementById("sidebarOverlay");
+document.addEventListener("DOMContentLoaded", () => {
+  const lang = "<%= lang %>";
+  const select = document.getElementById("sidebarLanguage");
 
-  sidebar.classList.toggle("active");
-  overlay.classList.toggle("active");
-}
+  if (select) {
+    select.value = lang;
+
+    select.addEventListener("change", function () {
+      document.cookie = "lang=" + this.value + "; path=/";
+      location.reload();
+    });
+  }
+});
 </script>
+
 
 </html>
