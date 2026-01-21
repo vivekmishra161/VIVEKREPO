@@ -1217,91 +1217,75 @@ select.sort:focus{
   font-weight: 700;
 }
 /* ===============================
-   UNIVERSAL SIDEBAR
+   SIDEBAR LAYOUT (PRO LEVEL)
 ================================ */
 
-.mobile-menu-btn {
-  font-size: 22px;
-}
-
-.mobile-sidebar {
-  position: fixed;
-  top: 0;
-  left: -280px;
-  width: 260px;
-  height: 100vh;
-  background: #ffffff;
-  z-index: 5000;
-  transition: 0.35s ease;
-  box-shadow: 10px 0 40px rgba(0,0,0,.25);
-}
-
-.mobile-sidebar.active {
-  left: 0;
-}
-
 .mobile-sidebar-content {
-  padding: 20px;
+  padding: 22px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
 }
 
-.mobile-sidebar-content a {
-  padding: 12px 14px;
-  border-radius: 10px;
-  background: #f3f4f6;
+/* Welcome box */
+.sidebar-user {
+  background: linear-gradient(135deg, #111827, #1f2937);
+  color: #ffffff;
+  padding: 14px 16px;
+  border-radius: 14px;
   font-weight: 700;
-  text-decoration: none;
-  color: #111827;
+  font-size: 15px;
 }
 
-.mobile-sidebar-content a:hover {
-  background: #e5e7eb;
-}
-
-/* header */
-.mobile-sidebar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mobile-sidebar-header h3 {
-  margin: 0;
-  font-size: 18px;
-}
-
-/* language */
-.sidebar-lang {
-  margin: 10px 0;
-}
-
+/* Language */
 .sidebar-lang label {
   font-size: 13px;
   font-weight: 700;
-  display: block;
   margin-bottom: 6px;
+  display: block;
 }
 
 .sidebar-lang select {
   width: 100%;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 600;
+  border: 1px solid #d1d5db;
 }
 
-/* overlay */
-.sidebar-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.45);
-  display: none;
-  z-index: 4500;
+/* Menu buttons */
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;   /* 🔥 equal spacing */
 }
 
-.sidebar-overlay.active {
-  display: block;
+.sidebar-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f3f4f6;
+  font-weight: 700;
+  color: #111827;
+  text-decoration: none;
+  transition: 0.25s ease;
+}
+
+.sidebar-menu a:hover {
+  background: #e5e7eb;
+  transform: translateX(3px);
+}
+
+/* signout */
+.sidebar-menu a.danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.sidebar-menu a.danger:hover {
+  background: #fecaca;
 }
 
 </style>
@@ -1342,33 +1326,6 @@ document.getElementById("languageSelect").addEventListener("change", function ()
 });
 </script>
 
-
-    <div class="cart-badge">
-      <button class="btn" id="openCartBtn" onclick="window.location.href='/cart'">
-        🛒 <%= t.cart || "Cart" %>
-
-      </button>
-      <div class="count" id="cartCount" style="display:none">0</div>
-    </div>
-    <% if (session && session.user) { %>
-      <span style="font-size:14px; font-weight:600; color: #0f0f10;">
-        👋 Welcome, <%= session.user.name%>
-      </span>
-    <% } %>
-
-    <% if (session && session.user) { %>
-    <button class="btn" style="background:#dc2626;" onclick="openSignoutPopup()">
-  <%= t.signOut %>
-</button>
-
-    <% } else { %>
-      <button class="btn secondary" onclick="window.location.href='/signin'">
-        <%= t.signIn %>
-      </button>
-      <button class="btn" onclick="window.location.href='/signup'">
-        <%= t.signUp %>
-      </button>
-    <% } %>
    <!-- SIGN-OUT CONFIRM POPUP -->
 <div id="signoutPopup" class="popup-overlay">
   <div class="popup-box">
@@ -1381,7 +1338,7 @@ document.getElementById("languageSelect").addEventListener("change", function ()
     </div>
   </div>
 </div>
-<a href="/my-orders" class="orders-btn">My Orders</a>
+
 </div>
 
 </header>
@@ -1824,10 +1781,6 @@ function viewPart(id){
 }
 
 /* ------------ UI helpers & init ------------ */
-function toggleSidebar(){
-  const s = document.getElementById('sidebar');
-  s.style.display = (s.style.display === 'none' || !s.style.display) ? 'block' : 'none';
-}
 function escapeHtml(str){ return String(str).replace(/[&<>"']/g, (m)=>({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[m])); }
 function numberWithCommas(x){ return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 
@@ -1961,11 +1914,12 @@ function confirmSignout() {
 <div id="mobileSidebar" class="mobile-sidebar">
   <div class="mobile-sidebar-content">
 
-    <!-- HEADER -->
-    <div class="mobile-sidebar-header">
-      <h3><%= t.menu %></h3>
-      <button onclick="toggleMobileMenu()">✕</button>
-    </div>
+    <!-- USER INFO -->
+    <% if (session && session.user) { %>
+      <div class="sidebar-user">
+        👋 <span>Welcome, <%= session.user.name %></span>
+      </div>
+    <% } %>
 
     <!-- LANGUAGE -->
     <div class="sidebar-lang">
@@ -1976,38 +1930,38 @@ function confirmSignout() {
       </select>
     </div>
 
-    <a href="/my-orders">📦 <%= t.myOrders %></a>
-    <a href="/cart">🛒 <%= t.cart %></a>
+    <!-- MENU BUTTONS -->
+    <nav class="sidebar-menu">
+      <a href="/my-orders">📦 <%= t.myOrders %></a>
+      <a href="/cart">🛒 <%= t.cart %></a>
 
-    <% if (session && session.user) { %>
-      <a href="#" onclick="openSignoutPopup()">🚪 <%= t.signOut %></a>
-    <% } else { %>
-      <a href="/signin">🔐 <%= t.signIn %></a>
-      <a href="/signup">📝 <%= t.signUp %></a>
-    <% } %>
+      <% if (session && session.user) { %>
+        <a href="#" class="danger" onclick="openSignoutPopup()">🚪 <%= t.signOut %></a>
+      <% } else { %>
+        <a href="/signin">🔐 <%= t.signIn %></a>
+        <a href="/signup">📝 <%= t.signUp %></a>
+      <% } %>
+    </nav>
 
   </div>
 </div>
 
 <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
-
-</body>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const lang = "<%= lang %>";
-  const select = document.getElementById("sidebarLanguage");
+function toggleMobileMenu() {
+  const sidebar = document.getElementById("mobileSidebar");
+  const overlay = document.getElementById("sidebarOverlay");
 
-  if (select) {
-    select.value = lang;
-
-    select.addEventListener("change", function () {
-      document.cookie = "lang=" + this.value + "; path=/";
-      location.reload();
-    });
+  if (!sidebar || !overlay) {
+    alert("Sidebar elements missing");
+    return;
   }
-});
+
+  sidebar.classList.toggle("active");
+  overlay.classList.toggle("active");
+}
 </script>
 
-
+</body>
 </html>
