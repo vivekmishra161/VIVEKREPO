@@ -1216,6 +1216,92 @@ select.sort:focus{
   color: #ffffff;
   font-weight: 700;
 }
+/* ===============================
+   MOBILE SIDEBAR MENU
+================================ */
+
+.mobile-menu-btn {
+  display: none;
+  font-size: 22px;
+}
+
+/* sidebar container */
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 260px;
+  height: 100vh;
+  background: #ffffff;
+  z-index: 4000;
+  transition: 0.35s ease;
+  box-shadow: 10px 0 40px rgba(0,0,0,.25);
+}
+
+.mobile-sidebar.active {
+  left: 0;
+}
+
+/* sidebar content */
+.mobile-sidebar-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mobile-sidebar-content a {
+  text-decoration: none;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  color: #111827;
+  background: #f3f4f6;
+}
+
+.mobile-sidebar-content a:hover {
+  background: #e5e7eb;
+}
+
+/* header */
+.mobile-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.mobile-sidebar-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.mobile-sidebar-header button {
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* overlay */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: none;
+  z-index: 3500;
+}
+
+.sidebar-overlay.active {
+  display: block;
+}
+
+/* show only on mobile */
+@media (max-width: 900px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+}
 
 </style>
 </head>
@@ -1253,10 +1339,10 @@ document.getElementById("languageSelect").addEventListener("change", function ()
 
 
 
-  <div class="top-actions">
-    <button class="icon-btn" title="Categories" id="toggleSidebar" onclick="toggleSidebar()">
-      
-    </button>
+  <button class="icon-btn mobile-menu-btn" onclick="toggleMobileMenu()">
+  ☰
+</button>
+
 
     <div class="cart-badge">
       <button class="btn" id="openCartBtn" onclick="window.location.href='/cart'">
@@ -1872,6 +1958,29 @@ function confirmSignout() {
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
+<!-- MOBILE SIDEBAR -->
+<div id="mobileSidebar" class="mobile-sidebar">
+  <div class="mobile-sidebar-content">
+
+    <div class="mobile-sidebar-header">
+      <h3><%= t.menu %></h3>
+      <button onclick="toggleMobileMenu()">✕</button>
+    </div>
+
+    <a href="/my-orders">📦 <%= t.myOrders %></a>
+    <a href="/cart">🛒 <%= t.cart %></a>
+
+    <% if (session && session.user) { %>
+      <a href="#" onclick="openSignoutPopup()">🚪 <%= t.signOut %></a>
+    <% } else { %>
+      <a href="/signin">🔐 <%= t.signIn %></a>
+      <a href="/signup">📝 <%= t.signUp %></a>
+    <% } %>
+
+  </div>
+</div>
+
+<div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
 </body>
 </html>
