@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKC Admin Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background: linear-gradient(135deg, #eef3ff, #f9fbff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #0f172a;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.2);
+            padding: 48px 40px;
+            max-width: 420px;
+            width: 100%;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-header h1 {
+            font-size: 28px;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .login-header p {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Alert Messages */
+        .alert {
+            display: none;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            animation: slideDown 0.3s ease;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+
+        .alert-icon {
+            margin-right: 8px;
+            font-weight: 700;
+        }
+
+        /* Form Styling */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group input {
+            padding: 13px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: 'Nunito Sans', sans-serif;
+            transition: all 0.25s ease;
+            background: #f8fafc;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2563eb;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+        }
+
+        .form-group input:disabled {
+            background: #f1f5f9;
+            color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .form-group input.error {
+            border-color: #dc2626;
+            background: #fef2f2;
+        }
+
+        .form-error {
+            font-size: 12px;
+            color: #dc2626;
+            font-weight: 500;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .form-group input.error + .form-error {
+            display: block;
+        }
+
+        /* Remember Me & Forgot Password */
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .remember-me input[type="checkbox"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: #2563eb;
+        }
+
+        .remember-me label {
+            cursor: pointer;
+            color: #475569;
+            font-weight: 500;
+            margin: 0;
+            text-transform: none;
+        }
+
+        .forgot-password {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .forgot-password:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            padding: 13px 24px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.3px;
+            margin-top: 12px;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        }
+
+        .submit-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Loading Spinner */
+        .submit-btn.loading {
+            color: transparent;
+        }
+
+        .submit-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 16px;
+            height: 16px;
+            margin-top: -8px;
+            margin-left: -8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Security Info */
+        .security-info {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #166534;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0;
+            color: #cbd5e1;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e2e8f0;
+        }
+
+        /* Footer Help Text */
+        .login-footer {
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 32px 24px;
+                border-radius: 14px;
+            }
+
+            .login-header h1 {
+                font-size: 24px;
+            }
+
+            .form-footer {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .submit-btn {
+                font-size: 14px;
+                padding: 12px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>AKC Admin</h1>
+            <p>Secure Administrator Access</p>
+        </div>
+
+        <!-- Error Alert -->
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="alert alert-error show" id="errorAlert">
+                <span class="alert-icon">⚠️</span>
+                <%= error %>
+            </div>
+        <% } %>
+
+        <!-- Success Alert -->
+        <% if (typeof success !== 'undefined' && success) { %>
+            <div class="alert alert-success show" id="successAlert">
+                <span class="alert-icon">✅</span>
+                <%= success %>
+            </div>
+        <% } %>
+
+        <!-- Security Info Banner -->
+        <div class="security-info">
+            🔒 Your login credentials are encrypted and secure
+        </div>
+
+        <!-- Login Form -->
+        <form method="POST" action="/admin/login" class="login-form" id="loginForm" novalidate>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="admin@gmail.com"
+                    required
+                    autocomplete="email"
+                    aria-label="Email Address"
+                    aria-required="true"
+                    <% if (typeof email !== 'undefined' && email) { %>value="<%= email %>"<% } %>
+                />
+                <span class="form-error">Please enter a valid email address</span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                    autocomplete="current-password"
+                    aria-label="Password"
+                    aria-required="true"
+                />
+                <span class="form-error">Password is required</span>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="form-footer">
+                <div class="remember-me">
+                    <input
+                        type="checkbox"
+                        id="rememberMe"
+                        name="rememberMe"
+                        aria-label="Remember me"
+                    />
+                    <label for="rememberMe">Remember me</label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button
+                type="submit"
+                class="submit-btn"
+                id="submitBtn"
+                aria-label="Login to admin dashboard"
+            >
+                Sign In
+            </button>
+        </form>
+
+        <!-- Help Text -->
+        <div class="divider">Help</div>
+        <div class="login-footer">
+            <p>Having trouble logging in?</p>
+            <p>Contact system administrator for password reset</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('loginForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Clear previous error styling
+                emailInput.classList.remove('error');
+                passwordInput.classList.remove('error');
+
+                // Validate email
+                if (!emailInput.value.trim()) {
+                    emailInput.classList.add('error');
+                    emailInput.focus();
+                    return;
+                }
+
+                if (!isValidEmail(emailInput.value)) {
+                    emailInput.classList.add('error');
+                    emailInput.focus();
+                    return;
+                }
+
+                // Validate password
+                if (!passwordInput.value) {
+                    passwordInput.classList.add('error');
+                    passwordInput.focus();
+                    return;
+                }
+
+                if (passwordInput.value.length < 1) {
+                    passwordInput.classList.add('error');
+                    passwordInput.focus();
+                    return;
+                }
+
+                // Show loading state
+                submitBtn.disabled = true;
+                submitBtn.classList.add('loading');
+                const originalText = submitBtn.textContent;
+
+                // Submit form after brief delay
+                setTimeout(() => {
+                    form.submit();
+                }, 300);
+            });
+
+            // Clear error on input focus
+            emailInput.addEventListener('focus', function() {
+                this.classList.remove('error');
+            });
+
+            passwordInput.addEventListener('focus', function() {
+                this.classList.remove('error');
+            });
+
+            // Auto-dismiss alerts
+            const alerts = document.querySelectorAll('.alert.show');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    alert.style.transition = 'opacity 0.3s ease';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 300);
+                }, 5000);
+            });
+        });
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Orders</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:'Nunito Sans',sans-serif;
+  background:linear-gradient(135deg,#eef3ff,#f9fbff);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  padding:50px 20px;
+  color:#0f172a;
+}
+
+/* ===== MAIN ===== */
+.main{
+  width:100%;
+  max-width:1250px;
+}
+
+/* ===== PAGE TITLE ===== */
+h1{
+  text-align:center;
+  margin-bottom:35px;
+  font-size:34px;
+  font-weight:900;
+  letter-spacing:.8px;
+}
+
+/* ===== TABLE ===== */
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0 18px;
+}
+
+/* ===== HEADER ===== */
+th{
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  color:#fff;
+  padding:18px;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+th:first-child{border-radius:16px 0 0 16px;}
+th:last-child{border-radius:0 16px 16px 0;}
+
+/* ===== ORDER ROW CARD ===== */
+tr{
+  background:#ffffff;
+  border-radius:18px;
+  box-shadow:0 12px 30px rgba(15,23,42,.12);
+  transition:.3s ease;
+}
+
+
+/* ===== CELLS ===== */
+td{
+  padding:18px;
+  vertical-align:top;
+  font-size:15px;
+  color:#0f172a;
+}
+
+/* CUSTOMER */
+td:first-child{
+  font-weight:800;
+  font-size:16px;
+}
+
+/* ADDRESS */
+td:nth-child(2){
+  font-size:13px;
+  line-height:1.5;
+  color:#475569;
+  max-width:240px;
+}
+
+/* PART NAME */
+td:nth-child(3) div{
+  background:#f1f5f9;
+  padding:6px 10px;
+  border-radius:8px;
+  margin-bottom:6px;
+  font-size:13px;
+  font-weight:600;
+}
+
+/* PART ID */
+td:nth-child(4) div{
+  font-size:13px;
+  color:#2563eb;
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+/* TOTAL */
+td:nth-child(5){
+  font-weight:900;
+  font-size:16px;
+  color:#2563eb;
+}
+
+/* ===== STATUS DROPDOWN ===== */
+select{
+  padding:10px 16px;
+  border-radius:999px;
+  border:1px solid #e5e7eb;
+  font-weight:800;
+  cursor:pointer;
+  background:#ffffff;
+  outline:none;
+  transition:.2s ease;
+}
+
+select:hover{
+  box-shadow:0 0 0 4px rgba(37,99,235,.12);
+}
+
+/* STATUS COLORS */
+.Pending{
+  color:#92400e;
+  background:#fff7ed;
+}
+
+.Packed{
+  color:#1d4ed8;
+  background:#eff6ff;
+}
+
+.Delivered{
+  color:#065f46;
+  background:#ecfdf5;
+}
+
+.Cancelled{
+  color:#991b1b;
+  background:#fef2f2;
+}
+
+/* DATE */
+td:last-child{
+  font-size:13px;
+  color:#475569;
+  white-space:nowrap;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:900px){
+  table{
+    font-size:14px;
+  }
+  td{
+    padding:14px;
+  }
+}
+.search-box{
+  width:100%;
+  max-width:520px;
+  margin:0 auto 30px;
+}
+
+.search-box input{
+  width:100%;
+  padding:14px 18px;
+  border-radius:14px;
+  border:1px solid #d1d5db;
+  font-size:15px;
+  font-weight:600;
+  outline:none;
+  transition:.25s ease;
+}
+
+.search-box input:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,.15);
+}
+/* ===== PAYMENT TYPE ===== */
+.pay-type {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  display: inline-block;
+}
+
+.pay-type.COD {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.pay-type.UPI {
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+/* ===== PAYMENT STATUS ===== */
+.pay-status {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 900;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.pay-status.PAYMENT_PENDING {
+  background: #fff7ed;
+  color: #92400e;
+}
+
+.pay-status.PAID {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="main">
+
+
+  <h1>Orders</h1>
+  <div class="search-box">
+  <input
+    type="text"
+    id="orderSearch"
+    placeholder="Search by customer, part name, part ID, address..."
+    onkeyup="searchOrders()"
+  >
+</div>
+
+
+  <table>
+   <tr>
+  <th>Customer</th>
+  <th>Address</th>
+  <th>Part Name</th>
+  <th>Part ID</th>
+  <th>Total</th>
+  <th>Payment Type</th>
+<th>Payment Status</th>
+  <th>Status</th>
+  <th>Date</th>
+</tr>
+
+
+   <% orders.forEach(function(o){ %>
+<tr>
+
+  <!-- CUSTOMER -->
+  <td><%= o.customerName %></td>
+
+  <!-- ADDRESS -->
+  <td style="max-width:220px;font-size:13px;line-height:1.4;">
+    <%= o.address %>, <%= o.city %>, <%= o.state %> - <%= o.pin %>
+  </td>
+
+  <!-- PART NAME -->
+  <td>
+    <% o.items.forEach(function(i){ %>
+      <div><%= i.name %></div>
+    <% }) %>
+  </td>
+
+  <!-- PART ID -->
+  <td>
+    <% o.items.forEach(function(i){ %>
+      <div><%= i.id %></div>
+    <% }) %>
+  </td>
+
+  <!-- TOTAL -->
+  <td style="font-weight:700;color:#2563eb;">
+    ₹ <%= o.totalPrice %>
+  </td>
+<!-- PAYMENT TYPE -->
+<td>
+  <span class="pay-type <%= o.paymentMethod %>">
+    <%= o.paymentMethod %>
+  </span>
+</td>
+
+<!-- PAYMENT STATUS -->
+<td>
+  <select
+    onchange="updatePaymentStatus('<%= o.id %>', this.value)"
+    class="pay-status <%= o.paymentStatus %>">
+
+    <option value="PAYMENT_PENDING"
+      <%= o.paymentStatus === "PAYMENT_PENDING" ? "selected" : "" %>>
+      Pending
+    </option>
+
+    <option value="PAID"
+      <%= o.paymentStatus === "PAID" ? "selected" : "" %>>
+      Paid
+    </option>
+
+  </select>
+</td>
+
+
+
+
+  <!-- STATUS -->
+  <td>
+    <select onchange="updateStatus('<%= o.id %>', this.value)" class="<%= o.status %>">
+      <option value="Pending" <%= o.status === "Pending" ? "selected" : "" %>>Pending</option>
+      <option value="Packed" <%= o.status === "Packed" ? "selected" : "" %>>Packed</option>
+      <option value="Delivered" <%= o.status === "Delivered" ? "selected" : "" %>>Delivered</option>
+      <option value="Cancelled" <%= o.status === "Cancelled" ? "selected" : "" %>>Cancelled</option>
+    </select>
+  </td>
+
+  <!-- DATE -->
+  <td><%= new Date(o.createdAt).toDateString() %></td>
+
+</tr>
+<% }) %>
+
+
+</div>
+
+<script>
+function updateStatus(orderId, status){
+  fetch("/admin/update-order-status",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ orderId, status })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success){
+      location.reload();
+    }
+  });
+}
+</script>
+<script>
+function searchOrders() {
+  const input = document.getElementById("orderSearch").value.toLowerCase();
+  const rows = document.querySelectorAll("table tr");
+
+  rows.forEach((row, index) => {
+    if (index === 0) return; // skip header
+
+    const text = row.innerText.toLowerCase();
+    row.style.display = text.includes(input) ? "" : "none";
+  });
+}
+</script>
+<script>
+function updatePaymentStatus(orderId, paymentStatus) {
+  fetch("/admin/update-payment-status", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ orderId, paymentStatus })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      const select = event.target;
+
+      // remove old classes
+      select.classList.remove("PAID", "PAYMENT_PENDING");
+
+      // add new class
+      select.classList.add(paymentStatus);
+    }
+  });
+}
+
+
+</script>
+</body>
+</html>

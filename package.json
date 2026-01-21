@@ -1,0 +1,30 @@
+{
+  "name": "akc-autoparts-backend",
+  "version": "1.0.0",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "seed:admin": "node backend/routes/seedAdmin.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^2.2.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "express-session": "^1.18.2",
+    "googleapis": "^167.0.0",
+    "mongoose": "^9.0.1",
+    "morgan": "^1.10.1",
+    "node-fetch": "^2.7.0",
+    "path": "^0.12.7",
+    "pg": "^8.17.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

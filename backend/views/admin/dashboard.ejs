@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <title>Admin Dashboard</title>
+
+  <style>
+    body{margin:0;font-family:'Nunito Sans',sans-serif;background:#f3f4f6}
+
+    .sidebar{
+      width:220px;
+      background:#111827;
+      color:#fff;
+      height:100vh;
+      position:fixed;
+      padding:20px;
+    }
+
+    .sidebar a{
+      display:block;
+      color:#fff;
+      text-decoration:none;
+      padding:12px;
+      border-radius:8px;
+      margin-bottom:10px;
+    }
+
+    .sidebar a:hover{background:#1f2937}
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:40px;
+    }
+
+    .brand img{width:38px}
+    .brand span{font-size:20px;font-weight:700}
+
+    .main{
+      margin-left:240px;
+      padding:30px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:20px;
+    }
+
+    .card{
+      background:#fff;
+      padding:35px;
+      border-radius:14px;
+      box-shadow:0 10px 30px rgba(0,0,0,.08);
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 20px 40px rgba(0,0,0,.12);
+    }
+
+    .card h3{margin:0}
+    .card-link{text-decoration:none;color:inherit}
+    /* ===== ANALYTICS SECTION ===== */
+
+.section-title {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 30px;
+}
+
+/* Chart card */
+.chart-card {
+  background: #ffffff;
+  padding: 22px 24px 26px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  transition: transform .2s, box-shadow .2s;
+}
+
+.chart-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+}
+
+.chart-card h3 {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* Fix chart height */
+.chart-card canvas {
+  width: 100% !important;
+  height: 260px !important;
+}
+
+/* Responsive tweak */
+@media (max-width: 768px) {
+  .chart-card canvas {
+    height: 220px !important;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="brand">
+    <img src="https://th.bing.com/th/id/R.35647c0cec927537fa43ed1836a446c2?rik=7Lzu71WwPczowA&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fhyundai-logo-png-hyundai-car-logo-png-brand-image-1749.png&ehk=UI8O%2bS7ci5lpalKI9Rf1u%2bMYvCgw%2bVwAeupMAcxmk2g%3d&risl=&pid=ImgRaw&r=0">
+    <span>AKC Admin</span>
+  </div>
+
+  <a href="/admin/dashboard">Dashboard</a>
+  <a href="/admin/products">Products</a>
+  <a href="/admin/orders">Orders</a>
+  <a href="/admin/reviews">Reviews</a>
+  <a href="/admin/logout">Logout</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <h1>Dashboard</h1>
+
+  <div class="cards">
+
+    <a href="/admin/products" class="card-link">
+      <div class="card">
+        <h3>Products</h3>
+        <p>Manage all products</p>
+      </div>
+    </a>
+
+    <a href="/admin/orders" class="card-link">
+      <div class="card">
+        <h3>Orders</h3>
+        <p>Track customer orders</p>
+      </div>
+    </a>
+
+    <a href="/admin/reviews" class="card-link">
+      <div class="card">
+        <h3>Reviews</h3>
+        <p>Manage customer reviews</p>
+      </div>
+    </a>
+
+    <div class="card">
+      <h3>Revenue</h3>
+      <p style="font-size:22px;font-weight:700;color:#065f46;margin-top:10px">
+        ₹ <%= totalRevenue %>
+      </p>
+      <small>Delivered orders</small>
+    </div>
+
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:20px">
+    <h2 class="section-title">Analytics</h2>
+
+<div class="analytics-grid">
+
+  <div class="chart-card">
+    <h3>Order Overview</h3>
+    <canvas id="orderBarChart"></canvas>
+  </div>
+
+  <div class="chart-card">
+    <h3>Order Status Distribution</h3>
+    <canvas id="orderPieChart"></canvas>
+  </div>
+
+</div>
+
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<div id="stats"
+  data-total="<%= totalOrders %>"
+  data-delivered="<%= delivered %>"
+  data-cancelled="<%= cancelled %>"
+  data-pending="<%= pending %>"
+  data-packed="<%= packed %>">
+</div>
+
+
+<script>
+const el = document.getElementById('stats');
+
+if (!el) {
+  console.error("Stats element not found");
+}
+
+const orderStats = {
+  total: Number(el.dataset.total || 0),
+  delivered: Number(el.dataset.delivered || 0),
+  cancelled: Number(el.dataset.cancelled || 0),
+  pending: Number(el.dataset.pending || 0),
+  packed: Number(el.dataset.packed || 0)
+};
+</script>
+
+
+
+<!-- BAR CHART -->
+<script>
+const barCanvas = document.getElementById('orderBarChart');
+
+if (barCanvas) {
+  new Chart(barCanvas, {
+    type: 'bar',
+    data: {
+      labels: ['Total', 'Delivered', 'Cancelled', 'Pending', 'Packed'],
+      datasets: [{
+        data: [
+          orderStats.total,
+          orderStats.delivered,
+          orderStats.cancelled,
+          orderStats.pending,
+          orderStats.packed
+        ],
+        backgroundColor: [
+          '#1f2937',
+          '#065f46',
+          '#991b1b',
+          '#92400e',
+          '#1d4ed8'
+        ]
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } }
+    }
+  });
+}
+
+</script>
+
+
+<!-- PIE CHART -->
+<script>
+const pieCanvas = document.getElementById('orderPieChart');
+
+if (pieCanvas) {
+  new Chart(pieCanvas, {
+    type: 'pie',
+    data: {
+      labels: ['Delivered', 'Cancelled', 'Pending', 'Packed'],
+      datasets: [{
+        data: [
+          orderStats.delivered,
+          orderStats.cancelled,
+          orderStats.pending,
+          orderStats.packed
+        ],
+        backgroundColor: [
+          '#065f46',
+          '#991b1b',
+          '#92400e',
+          '#1d4ed8'
+        ]
+      }]
+    }
+  });
+}
+</script>
+
+
+</body>
+</html>
