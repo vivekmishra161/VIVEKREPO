@@ -1,4 +1,5 @@
 require('dotenv').config();
+const bcrypt = require('bcryptjs');
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
@@ -9,10 +10,10 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 const User = sequelize.define('User', {
   name: DataTypes.STRING,
   email: DataTypes.STRING,
-  password: DataTypes.STRING,  // ⚠️ Should be hashed!
+  password: DataTypes.STRING,
   role: DataTypes.STRING
 }, {
-  tableName: 'Users',
+  tableName: 'users',
   timestamps: true
 });
 
@@ -25,14 +26,17 @@ async function createAdmin() {
     console.log('✅ Tables synchronized');
 
     const email = 'admin@gmail.com';
-    const password = 'admin123';  // TODO: Hash this with bcrypt!
+    const password = 'admin123';
+
+    // Hash password with bcrypt
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const [admin, created] = await User.findOrCreate({
       where: { email },
       defaults: {
         name: 'Super Admin',
         email,
-        password,  // ❌ This should be bcrypt.hashSync(password, 10)
+        password: hashedPassword,  // ✅ Store hashed password
         role: 'admin'
       }
     });

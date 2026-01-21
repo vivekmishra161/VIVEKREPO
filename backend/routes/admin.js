@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 
 const User = require("../models/user");   // lowercase file name
 const Order = require("../models/order");
@@ -32,8 +33,9 @@ router.post('/login', async (req, res) => {
       return res.render('admin/login', { error: 'Invalid email or password' });
     }
 
-    // TODO: Use bcrypt.compare() instead of plaintext comparison
-    if (admin.password !== password) {  // ❌ Plaintext comparison
+    // ✅ Use bcrypt.compare() for secure password verification
+    const isPasswordValid = await bcrypt.compare(password, admin.password);
+    if (!isPasswordValid) {
       return res.render('admin/login', { error: 'Invalid email or password' });
     }
 
