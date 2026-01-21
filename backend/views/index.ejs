@@ -1313,6 +1313,168 @@ select.sort:focus{
 .sidebar-overlay.active {
   display: block;
 }
+/* =====================================================
+   MOBILE-FIRST UX ENHANCEMENT (PRODUCTION LEVEL)
+===================================================== */
+
+@media (max-width: 600px) {
+
+  /* ---------- PAGE SPACING ---------- */
+  body {
+    background: #f8fafc;
+  }
+
+  .wrap {
+    padding: 10px;
+  }
+
+  /* ---------- HEADER ---------- */
+  .topbar {
+    padding: 10px 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  }
+
+  .brand {
+    font-size: 14px;
+  }
+
+  /* ---------- PROMO (SQUARE STYLE) ---------- */
+  .promo-slider {
+    height: auto;
+    aspect-ratio: 1 / 1; /* 🔥 square */
+    border-radius: 16px;
+    margin-bottom: 18px;
+  }
+
+  .promo-slide {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 18px;
+  }
+
+  .promo-slide .text {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .promo-slide .sub {
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .promo-img {
+    width: 140px;
+    margin-top: 12px;
+  }
+
+  /* ---------- FILTER BAR ---------- */
+  .controls {
+    gap: 10px;
+    padding: 10px;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 6px 20px rgba(0,0,0,.08);
+  }
+
+  .controls select,
+  .controls input {
+    font-size: 13px;
+    height: 40px;
+    border-radius: 12px;
+  }
+
+  /* ---------- PRODUCT GRID ---------- */
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  /* ---------- PRODUCT CARD ---------- */
+  .card {
+    border-radius: 16px;
+    padding: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.1);
+  }
+
+  .card img {
+    height: 110px;
+    border-radius: 12px;
+  }
+
+  .title {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .price {
+    font-size: 15px;
+  }
+
+  /* ---------- BUTTONS (TOUCH FRIENDLY) ---------- */
+  .card .btn {
+    padding: 10px;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+
+  .qty {
+    height: 38px;
+    font-size: 13px;
+  }
+
+  /* ---------- WHY US SECTION ---------- */
+  .why-us-section {
+    padding: 0 6px;
+    gap: 14px;
+  }
+
+  .why-us-card {
+    padding: 18px 14px;
+    border-radius: 16px;
+  }
+
+  .why-us-card h4 {
+    font-size: 15px;
+  }
+
+  .why-us-card p {
+    font-size: 13px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .footer {
+    padding: 30px 15px;
+  }
+
+  .footer-box h3 {
+    font-size: 16px;
+  }
+
+  .footer-box p,
+  .footer-box a {
+    font-size: 13px;
+  }
+
+  /* ---------- SIDEBAR MOBILE UX ---------- */
+  .mobile-sidebar {
+    width: 270px;
+  }
+
+  .sidebar-menu a {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .sidebar-user {
+    font-size: 15px;
+  }
+
+  /* ---------- SMOOTH FEEL ---------- */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
 
 </style>
 </head>
