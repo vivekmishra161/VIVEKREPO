@@ -1983,4 +1983,14 @@ function confirmSignout() {
 <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
 </body>
+<script>
+function toggleMobileMenu() {
+  const sidebar = document.getElementById("mobileSidebar");
+  const overlay = document.getElementById("sidebarOverlay");
+
+  sidebar.classList.toggle("active");
+  overlay.classList.toggle("active");
+}
+</script>
+
 </html>
