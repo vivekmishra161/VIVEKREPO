@@ -1475,6 +1475,123 @@ select.sort:focus{
     -webkit-tap-highlight-color: transparent;
   }
 }
+/* =====================================================
+   FINAL MOBILE FIT FIX — NO OVERFLOW
+===================================================== */
+
+@media (max-width: 600px) {
+
+  /* prevent horizontal scroll */
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* wrapper */
+  .wrap {
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+  }
+
+  /* HEADER */
+  .topbar {
+    width: 100%;
+    padding: 10px 12px;
+  }
+
+  /* PROMO — full width */
+  .promo-slider {
+    width: 100%;
+    margin: 0 auto 18px;
+    border-radius: 14px;
+    aspect-ratio: 1 / 1;
+    height: auto;
+  }
+
+  .promo-slide {
+    width: 100%;
+    padding: 16px;
+  }
+
+  .promo-slide .text-box {
+    width: 100%;
+  }
+
+  .promo-img {
+    max-width: 140px;
+    width: 100%;
+    height: auto;
+  }
+
+  /* WHY CHOOSE US */
+  .why-us-section {
+    width: 100%;
+    padding: 0 6px;
+    margin: 20px 0;
+  }
+
+  .why-us-card {
+    width: 100%;
+  }
+
+  /* FILTER BAR */
+  .controls {
+    width: 100%;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .controls > div {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .controls select,
+  .controls input {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+
+  /* PRODUCTS GRID */
+  .grid {
+    width: 100%;
+    margin: 0;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .card {
+    width: 100%;
+    margin: 0;
+  }
+
+  .card img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  /* FOOTER */
+  .footer,
+  .footer-container {
+    width: 100%;
+    margin: 0;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  /* SIDEBAR FIX */
+  .mobile-sidebar {
+    width: 85vw;
+    max-width: 300px;
+  }
+}
 
 </style>
 </head>
