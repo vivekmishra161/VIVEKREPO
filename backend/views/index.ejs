@@ -1287,6 +1287,32 @@ select.sort:focus{
 .sidebar-menu a.danger:hover {
   background: #fecaca;
 }
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 260px;
+  height: 100vh;
+  background: #fff;
+  transition: 0.3s ease;
+  z-index: 5000;
+}
+
+.mobile-sidebar.active {
+  left: 0;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  display: none;
+  z-index: 4000;
+}
+
+.sidebar-overlay.active {
+  display: block;
+}
 
 </style>
 </head>
