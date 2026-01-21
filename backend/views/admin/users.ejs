@@ -1,42 +1,208 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin - Users</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+    
     body {
-      font-family: Arial;
-      padding: 30px;
-      background: #f4f6f9;
+      font-family: 'Nunito Sans', Arial, sans-serif;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, #f4f6f9, #e8ecf3);
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
     table {
       width: 100%;
-      border-collapse: collapse;
-      background: white;
+      border-collapse: separate;
+      border-spacing: 0 10px;
+      background: transparent;
     }
 
     th, td {
-      padding: 12px;
-      border: 1px solid #ddd;
+      padding: 14px 16px;
       text-align: left;
     }
 
     th {
       background: #0f172a;
       color: white;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    th:first-child {
+      border-radius: 12px 0 0 12px;
+    }
+    
+    th:last-child {
+      border-radius: 0 12px 12px 0;
+    }
+    
+    tbody tr {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: 0.25s ease;
     }
 
-    tr:hover {
-      background: #f1f1f1;
+    tbody tr:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+    
+    td {
+      font-size: 14px;
+      color: #374151;
+    }
+    
+    td:first-child {
+      border-radius: 12px 0 0 12px;
+      font-weight: 700;
+      color: #2563eb;
+    }
+    
+    td:last-child {
+      border-radius: 0 12px 12px 0;
     }
 
     h2 {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    
+    /* ===============================
+       MOBILE RESPONSIVE STYLES
+       =============================== */
+    
+    @media(max-width:768px){
+      body{
+        padding:20px 15px;
+      }
+      
+      h2{
+        font-size:24px;
+        margin-bottom:20px;
+      }
+      
+      table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+      }
+      
+      th, td{
+        padding:12px 10px;
+        font-size:13px;
+      }
+    }
+    
+    @media(max-width:600px){
+      body{
+        padding:15px 10px;
+      }
+      
+      h2{
+        font-size:20px;
+        margin-bottom:18px;
+      }
+      
+      /* Convert table to card layout on mobile */
+      table, thead, tbody, th, td, tr{
+        display:block;
+      }
+      
+      thead tr{
+        position:absolute;
+        top:-9999px;
+        left:-9999px;
+      }
+      
+      tbody tr{
+        margin-bottom:15px;
+        border-radius:14px;
+        box-shadow:0 6px 20px rgba(0,0,0,0.08);
+        padding:14px;
+        white-space:normal;
+      }
+      
+      td{
+        border:none;
+        position:relative;
+        padding:10px 10px 10px 40%;
+        text-align:right;
+        white-space:normal;
+        font-size:13px;
+      }
+      
+      td:before{
+        position:absolute;
+        left:14px;
+        width:35%;
+        padding-right:10px;
+        text-align:left;
+        font-weight:700;
+        color:#374151;
+        font-size:11px;
+        text-transform:uppercase;
+      }
+      
+      td:nth-of-type(1):before { content: "ID"; }
+      td:nth-of-type(2):before { content: "Name"; }
+      td:nth-of-type(3):before { content: "Email"; }
+      td:nth-of-type(4):before { content: "Role"; }
+      td:nth-of-type(5):before { content: "Joined"; }
+      
+      td:first-child{
+        border-radius:0;
+      }
+      
+      td:last-child{
+        border-radius:0;
+      }
+    }
+    
+    @media(max-width:400px){
+      body{
+        padding:12px 8px;
+      }
+      
+      h2{
+        font-size:18px;
+      }
+      
+      tbody tr{
+        padding:12px;
+      }
+      
+      td{
+        padding:8px 8px 8px 38%;
+        font-size:12px;
+      }
+      
+      td:before{
+        font-size:10px;
+      }
     }
   </style>
 </head>
 <body>
 
+<div class="container">
 <h2>👥 Registered Users</h2>
 
 <table>
@@ -62,6 +228,7 @@
     <% }) %>
   </tbody>
 </table>
+</div>
 
 </body>
 </html>

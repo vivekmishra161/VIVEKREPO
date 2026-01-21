@@ -374,12 +374,350 @@
 
     /* sign-in prompt (center modal) */
     .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.45); display:none; align-items:center; justify-content:center; z-index:9998; }
-    .modal{ background:#fff; padding:22px; border-radius:12px; width:360px; box-shadow:0 10px 30px rgba(2,6,23,0.2); text-align:center; }
+    .modal{ background:#fff; padding:22px; border-radius:12px; width:360px; max-width:90%; box-shadow:0 10px 30px rgba(2,6,23,0.2); text-align:center; }
     .modal h3{ margin:0 0 10px 0; }
     .modal .actions{ display:flex; gap:10px; margin-top:14px; justify-content:center; }
     .dot-indicators{display:flex; gap:8px; justify-content:center; margin-top:12px;}
     .dot{ width:10px; height:10px; border-radius:999px; background:#e6e9ef; cursor:pointer; transition:transform .15s ease, background .15s ease;}
     .dot.active{ background:var(--accent-2); transform:scale(1.15); box-shadow:0 4px 10px rgba(234,88,12,0.18);}
+    
+    /* ===============================
+       MOBILE RESPONSIVE STYLES
+       =============================== */
+    
+    @media(max-width:768px){
+      body{
+        padding:15px 10px;
+      }
+      
+      .glass-header{
+        padding:10px 15px;
+        flex-wrap:wrap;
+        gap:10px;
+      }
+      
+      .header-logo{
+        height:35px;
+      }
+      
+      .brand-title{
+        font-size:16px;
+      }
+      
+      .header-right{
+        font-size:12px;
+        display:none;
+      }
+      
+      .container{
+        gap:20px;
+      }
+      
+      .hero{
+        min-height:220px;
+      }
+      
+      .hero img{
+        max-height:350px;
+      }
+      
+      .meta{
+        padding:16px;
+      }
+      
+      .title{
+        font-size:18px;
+      }
+      
+      .price{
+        font-size:22px;
+      }
+      
+      .thumbs button{
+        width:60px;
+        height:48px;
+      }
+      
+      .details{
+        padding:14px;
+      }
+      
+      .review-section{
+        padding:18px;
+      }
+      
+      .review-section h3{
+        font-size:18px;
+      }
+      
+      .review-textarea{
+        height:80px;
+      }
+      
+      .review-card{
+        padding:14px;
+      }
+    }
+    
+    @media(max-width:600px){
+      body{
+        padding:10px 8px;
+      }
+      
+      .glass-header{
+        padding:8px 12px;
+        border-radius:10px;
+        margin-bottom:15px;
+      }
+      
+      .header-left{
+        gap:8px;
+      }
+      
+      .header-logo{
+        height:30px;
+      }
+      
+      .brand-title{
+        font-size:14px;
+      }
+      
+      .container{
+        gap:15px;
+      }
+      
+      .hero{
+        min-height:180px;
+        border-radius:10px;
+      }
+      
+      .hero img{
+        max-height:280px;
+      }
+      
+      .thumbs{
+        gap:6px;
+      }
+      
+      .thumbs button{
+        width:50px;
+        height:40px;
+        border-radius:6px;
+      }
+      
+      .meta{
+        padding:14px;
+        border-radius:10px;
+        gap:10px;
+      }
+      
+      .brand-row img{
+        height:28px;
+      }
+      
+      .title{
+        font-size:16px;
+      }
+      
+      .subline{
+        font-size:12px;
+      }
+      
+      .price-row{
+        flex-wrap:wrap;
+        gap:8px;
+      }
+      
+      .price{
+        font-size:20px;
+      }
+      
+      .stock{
+        padding:5px 8px;
+        font-size:11px;
+      }
+      
+      .delivery-box{
+        padding:8px 10px;
+        border-radius:10px;
+      }
+      
+      .free-delivery{
+        font-size:13px;
+      }
+      
+      .delivery-date{
+        font-size:12px;
+      }
+      
+      .rating{
+        flex-wrap:wrap;
+        gap:6px;
+      }
+      
+      .stars{
+        gap:2px;
+      }
+      
+      .star{
+        font-size:16px;
+      }
+      
+      #ratingText{
+        font-size:12px;
+      }
+      
+      .qty-row{
+        flex-wrap:wrap;
+        gap:8px;
+      }
+      
+      .qty button{
+        padding:8px 10px;
+      }
+      
+      .qty input{
+        width:45px;
+        padding:6px;
+        font-size:14px;
+      }
+      
+      .cta{
+        flex-direction:column;
+      }
+      
+      .btn{
+        padding:10px 14px;
+        font-size:13px;
+      }
+      
+      .btn.cart{
+        width:100%;
+        text-align:center;
+      }
+      
+      #backBtn{
+        width:100%;
+        text-align:center;
+      }
+      
+      .details{
+        padding:12px;
+        border-radius:10px;
+        margin-top:12px;
+      }
+      
+      .details h4{
+        font-size:14px;
+      }
+      
+      .specs td{
+        padding:6px 8px;
+        font-size:12px;
+      }
+      
+      .review-section{
+        padding:14px;
+        margin-top:25px;
+        border-radius:12px;
+      }
+      
+      .review-section h3{
+        font-size:16px;
+        margin-bottom:12px;
+      }
+      
+      .review-textarea{
+        height:70px;
+        padding:10px;
+        font-size:14px;
+      }
+      
+      .review-submit-btn{
+        padding:8px 14px;
+        font-size:13px;
+      }
+      
+      #reviewRating{
+        padding:6px;
+        font-size:13px;
+      }
+      
+      .review-card{
+        padding:12px;
+        margin-bottom:10px;
+        border-radius:10px;
+      }
+      
+      .review-user{
+        font-size:14px;
+      }
+      
+      .review-message{
+        font-size:13px;
+        line-height:1.4;
+        margin:5px 0 8px;
+      }
+      
+      .review-stars{
+        font-size:14px;
+      }
+      
+      .review-date{
+        font-size:11px;
+      }
+      
+      .related{
+        gap:8px;
+      }
+      
+      .rel-card{
+        min-width:140px;
+        padding:8px;
+      }
+      
+      .rel-card img{
+        width:110px;
+        height:70px;
+      }
+      
+      #toast{
+        padding:12px 18px;
+        font-size:14px;
+        width:90%;
+        max-width:280px;
+      }
+      
+      .popup-overlay,
+      .modal-overlay{
+        padding:15px;
+      }
+      
+      .popup-box,
+      .modal{
+        width:95%;
+        padding:18px;
+      }
+    }
+    
+    @media(max-width:400px){
+      .brand-title{
+        display:none;
+      }
+      
+      .title{
+        font-size:15px;
+      }
+      
+      .price{
+        font-size:18px;
+      }
+      
+      .btn{
+        padding:9px 12px;
+        font-size:12px;
+      }
+    }
   </style>
 </head>
 <body>

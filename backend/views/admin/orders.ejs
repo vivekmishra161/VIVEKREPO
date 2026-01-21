@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Orders</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -158,11 +159,169 @@ td:last-child{
 
 /* ===== MOBILE ===== */
 @media(max-width:900px){
-  table{
+  body{
+    padding:30px 15px;
+  }
+  
+  .main{
+    max-width:100%;
+  }
+  
+  h1{
+    font-size:28px;
+    margin-bottom:25px;
+  }
+  
+  .search-box{
+    max-width:100%;
+    margin-bottom:20px;
+  }
+  
+  .search-box input{
+    padding:12px 14px;
     font-size:14px;
   }
+  
+  table{
+    font-size:14px;
+    display:block;
+    overflow-x:auto;
+    white-space:nowrap;
+  }
+  
+  th{
+    padding:14px 12px;
+    font-size:12px;
+  }
+  
   td{
+    padding:14px 12px;
+  }
+  
+  select{
+    padding:8px 12px;
+    font-size:12px;
+  }
+}
+
+@media(max-width:600px){
+  body{
+    padding:20px 10px;
+  }
+  
+  h1{
+    font-size:24px;
+    margin-bottom:20px;
+  }
+  
+  .search-box input{
+    padding:11px 12px;
+    font-size:13px;
+    border-radius:12px;
+  }
+  
+  /* Convert table to card layout on mobile */
+  table, thead, tbody, th, td, tr{
+    display:block;
+  }
+  
+  thead tr{
+    position:absolute;
+    top:-9999px;
+    left:-9999px;
+  }
+  
+  tr{
+    margin-bottom:20px;
+    border-radius:14px;
+    box-shadow:0 8px 24px rgba(15,23,42,0.1);
+    padding:16px;
+    background:#ffffff;
+    white-space:normal;
+  }
+  
+  td{
+    border:none;
+    position:relative;
+    padding:10px 10px 10px 45%;
+    text-align:right;
+    white-space:normal;
+    font-size:13px;
+  }
+  
+  td:before{
+    position:absolute;
+    left:14px;
+    width:40%;
+    padding-right:10px;
+    text-align:left;
+    font-weight:700;
+    color:#374151;
+    font-size:11px;
+    text-transform:uppercase;
+  }
+  
+  td:nth-of-type(1):before { content: "Customer"; }
+  td:nth-of-type(2):before { content: "Address"; }
+  td:nth-of-type(3):before { content: "Part Name"; }
+  td:nth-of-type(4):before { content: "Part ID"; }
+  td:nth-of-type(5):before { content: "Total"; }
+  td:nth-of-type(6):before { content: "Pay Type"; }
+  td:nth-of-type(7):before { content: "Pay Status"; }
+  td:nth-of-type(8):before { content: "Status"; }
+  td:nth-of-type(9):before { content: "Date"; }
+  
+  td:first-child{
+    font-size:15px;
+  }
+  
+  td:nth-child(2){
+    max-width:100%;
+    font-size:12px;
+  }
+  
+  td:nth-child(5){
+    font-size:15px;
+  }
+  
+  select{
+    padding:8px 10px;
+    font-size:11px;
+    width:100%;
+    max-width:150px;
+  }
+  
+  .pay-type{
+    padding:5px 10px;
+    font-size:11px;
+  }
+  
+  .pay-status{
+    padding:6px 12px;
+    font-size:11px;
+  }
+}
+
+@media(max-width:400px){
+  body{
+    padding:15px 8px;
+  }
+  
+  h1{
+    font-size:20px;
+  }
+  
+  tr{
     padding:14px;
+  }
+  
+  td{
+    padding:8px 8px 8px 42%;
+    font-size:12px;
+  }
+  
+  td:before{
+    font-size:10px;
   }
 }
 .search-box{

@@ -494,9 +494,306 @@
     font-weight:700;
   }
 
+  /* ===============================
+     ENHANCED MOBILE RESPONSIVE STYLES
+     =============================== */
+  
   @media(max-width:900px){
     .wrap{padding:12px}
     .sidebar{display:none}
+    
+    .topbar{
+      flex-wrap:wrap;
+      padding:10px 12px;
+      gap:8px;
+    }
+    
+    .logo img{
+      height:32px;
+    }
+    
+    .brand{
+      font-size:14px;
+    }
+    
+    .top-actions{
+      flex-wrap:wrap;
+      gap:6px;
+    }
+    
+    .btn{
+      padding:6px 10px;
+      font-size:13px;
+    }
+    
+    .promo-slider{
+      height:220px;
+    }
+    
+    .promo-slide .text{
+      font-size:32px;
+    }
+    
+    .promo-slide .sub{
+      font-size:16px;
+    }
+    
+    .promo-img{
+      width:180px;
+    }
+    
+    .controls{
+      flex-direction:column;
+      align-items:stretch;
+    }
+    
+    .search-with-btn{
+      width:100%;
+    }
+    
+    .grid{
+      grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+      gap:12px;
+    }
+    
+    .card{
+      padding:10px;
+      min-height:220px;
+    }
+    
+    .card img{
+      height:100px;
+    }
+    
+    .title{
+      font-size:13px;
+    }
+    
+    .price{
+      font-size:14px;
+    }
+    
+    .why-us-section{
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    
+    .why-us-header h2{
+      font-size:28px;
+    }
+    
+    .why-us-header p{
+      font-size:14px;
+    }
+    
+    .footer-container{
+      grid-template-columns:1fr;
+      gap:25px;
+    }
+  }
+
+  @media(max-width:600px){
+    .topbar{
+      padding:8px 10px;
+    }
+    
+    .logo{
+      gap:6px;
+    }
+    
+    .logo img{
+      height:28px;
+    }
+    
+    .brand{
+      font-size:12px;
+      display:none;
+    }
+    
+    .muted{
+      display:none;
+    }
+    
+    .top-actions{
+      width:100%;
+      justify-content:flex-end;
+    }
+    
+    .btn{
+      padding:5px 8px;
+      font-size:12px;
+      border-radius:8px;
+    }
+    
+    .cart-badge .btn{
+      padding:5px 10px;
+    }
+    
+    .orders-btn{
+      padding:5px 10px;
+      font-size:11px;
+    }
+    
+    .lang-select select{
+      padding:6px 28px 6px 8px;
+      font-size:11px;
+    }
+    
+    .promo-slider{
+      height:180px;
+      border-radius:12px;
+    }
+    
+    .promo-slide{
+      padding:15px;
+    }
+    
+    .promo-slide .text{
+      font-size:22px;
+      line-height:1.2;
+    }
+    
+    .promo-slide .sub{
+      font-size:12px;
+      margin-top:6px;
+    }
+    
+    .promo-img{
+      width:120px;
+      display:none;
+    }
+    
+    .promo-slide .text-box{
+      max-width:100%;
+    }
+    
+    .controls{
+      gap:8px;
+      margin-bottom:15px;
+    }
+    
+    .controls .chip,
+    .controls .select,
+    .controls .sort,
+    .search-with-btn input{
+      height:36px;
+      font-size:12px;
+    }
+    
+    select.select,
+    select.sort{
+      min-width:100%;
+      padding:0 36px 0 12px;
+      font-size:12px;
+    }
+    
+    .grid{
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+    
+    .card{
+      padding:8px;
+      border-radius:12px;
+      min-height:200px;
+    }
+    
+    .card img{
+      height:80px;
+      border-radius:10px;
+    }
+    
+    .meta{
+      flex-direction:column;
+      gap:4px;
+    }
+    
+    .title{
+      font-size:12px;
+    }
+    
+    .id{
+      font-size:10px;
+    }
+    
+    .price{
+      font-size:13px;
+    }
+    
+    .card .actions{
+      flex-direction:column;
+      gap:6px;
+    }
+    
+    .qty{
+      width:100%;
+      padding:5px;
+    }
+    
+    .card .btn{
+      width:100%;
+      padding:8px;
+      font-size:11px;
+    }
+    
+    .why-us-section{
+      grid-template-columns:1fr;
+      gap:10px;
+      padding:0 10px;
+    }
+    
+    .why-us-card{
+      padding:16px 14px;
+      border-radius:14px;
+    }
+    
+    .why-us-card .icon{
+      font-size:28px;
+    }
+    
+    .why-us-card h4{
+      font-size:14px;
+    }
+    
+    .why-us-card p{
+      font-size:12px;
+    }
+    
+    .why-us-header h2{
+      font-size:22px;
+    }
+    
+    .why-us-header p{
+      font-size:12px;
+    }
+    
+    .footer{
+      padding:30px 15px 15px;
+      margin-top:40px;
+    }
+    
+    .footer-box h3{
+      font-size:16px;
+    }
+    
+    .footer-box p,
+    .footer-box a,
+    .social-links a{
+      font-size:13px;
+    }
+    
+    .popup-box{
+      width:90%;
+      padding:20px;
+    }
+    
+    .popup-box h3{
+      font-size:18px;
+    }
+    
+    .popup-box p{
+      font-size:13px;
+    }
   }
 
   @media(max-width:480px){
@@ -506,6 +803,44 @@
     }
     .promo-slide .text-box{
       max-width:100%;
+    }
+    
+    .topbar{
+      position:relative;
+    }
+    
+    .top-actions{
+      position:static;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:5px;
+    }
+    
+    .grid{
+      grid-template-columns:repeat(2,1fr);
+    }
+    
+    .card{
+      gap:10px;
+    }
+  }
+  
+  /* Tablet specific styles */
+  @media(min-width:601px) and (max-width:900px){
+    .grid{
+      grid-template-columns:repeat(3,1fr);
+    }
+    
+    .promo-slide .text{
+      font-size:40px;
+    }
+    
+    .promo-img{
+      width:250px;
+    }
+    
+    .why-us-section{
+      grid-template-columns:repeat(2,1fr);
     }
   }
 

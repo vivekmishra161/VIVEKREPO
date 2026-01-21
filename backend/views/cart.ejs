@@ -290,6 +290,206 @@ input[type="number"]:focus{
   font-weight: 700;
 }
 
+/* ===============================
+   MOBILE RESPONSIVE STYLES
+   =============================== */
+
+@media(max-width:768px){
+  body{
+    padding:15px 10px;
+  }
+  
+  header{
+    flex-wrap:wrap;
+    padding:10px 15px;
+    gap:10px;
+  }
+  
+  header img{
+    height:30px;
+  }
+  
+  header > div:first-child{
+    font-size:14px;
+  }
+  
+  .box{
+    padding:15px;
+    border-radius:16px;
+  }
+  
+  h2{
+    font-size:22px;
+    margin-bottom:15px;
+  }
+  
+  table{
+    display:block;
+    overflow-x:auto;
+    white-space:nowrap;
+    border-spacing:0 10px;
+  }
+  
+  th{
+    padding:10px 8px;
+    font-size:12px;
+  }
+  
+  td{
+    padding:12px 8px;
+    font-size:13px;
+  }
+  
+  input[type="number"]{
+    width:55px;
+    padding:6px;
+    font-size:13px;
+  }
+  
+  .btn{
+    padding:10px 14px;
+    font-size:13px;
+    border-radius:10px;
+  }
+  
+  .total-box{
+    padding:15px;
+    font-size:18px;
+    border-radius:12px;
+  }
+  
+  .popup-box{
+    width:90%;
+    padding:20px;
+  }
+}
+
+@media(max-width:480px){
+  body{
+    padding:10px 8px;
+  }
+  
+  header{
+    padding:8px 12px;
+  }
+  
+  header img{
+    height:26px;
+  }
+  
+  header > a > div{
+    font-size:12px;
+  }
+  
+  .box{
+    padding:12px;
+    border-radius:14px;
+  }
+  
+  h2{
+    font-size:18px;
+  }
+  
+  /* Convert table to card layout on mobile */
+  table, thead, tbody, th, td, tr{
+    display:block;
+  }
+  
+  thead tr{
+    position:absolute;
+    top:-9999px;
+    left:-9999px;
+  }
+  
+  tr{
+    margin-bottom:15px;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    padding:12px;
+    background:#f8fafc;
+  }
+  
+  td{
+    border:none;
+    position:relative;
+    padding:8px 8px 8px 45%;
+    text-align:right;
+    white-space:normal;
+  }
+  
+  td:before{
+    position:absolute;
+    left:12px;
+    width:40%;
+    padding-right:10px;
+    text-align:left;
+    font-weight:700;
+    color:#374151;
+    font-size:12px;
+  }
+  
+  td:nth-of-type(1):before { content: "Product"; }
+  td:nth-of-type(2):before { content: "Qty"; }
+  td:nth-of-type(3):before { content: "Subtotal"; }
+  td:nth-of-type(4):before { content: "Action"; }
+  
+  input[type="number"]{
+    width:50px;
+    padding:5px;
+    font-size:12px;
+  }
+  
+  .btn{
+    padding:8px 12px;
+    font-size:12px;
+  }
+  
+  .total-box{
+    padding:12px;
+    font-size:16px;
+    text-align:center;
+  }
+  
+  div[style*="display:flex"][style*="gap:10px"]{
+    flex-direction:column;
+  }
+  
+  .btn.secondary,
+  #checkoutBtn{
+    width:100%;
+  }
+  
+  .popup-box{
+    width:95%;
+    padding:18px;
+    border-radius:14px;
+  }
+  
+  .popup-box h3{
+    font-size:18px;
+  }
+  
+  .popup-box p{
+    font-size:13px;
+  }
+  
+  .lang-select select{
+    padding:6px 28px 6px 10px;
+    font-size:12px;
+  }
+}
+
+/* Tablet styles */
+@media(min-width:481px) and (max-width:768px){
+  table{
+    font-size:14px;
+  }
+  
+  th, td{
+    padding:12px 10px;
+  }
+}
+
 </style>
 
 </head>

@@ -2,26 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <title>Sign Up - AKC Auto Parts</title>
 
   <style>
+    * { box-sizing: border-box; }
+    
     body {
       font-family: 'Nunito Sans';
-      background: #f3f4f6;
+      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
       margin: 0;
-      padding: 40px;
+      padding: 40px 20px;
       display: flex;
       justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
     .box {
       background: #fff;
-      padding: 28px 32px;
-      border-radius: 12px;
-      width: 380px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      padding: 30px 28px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
     }
 
     h2 {
@@ -105,6 +111,72 @@
 
     .popup-success { border-left: 6px solid #28a745; }
     .popup-error   { border-left: 6px solid #dc3545; }
+
+    /* ===============================
+       MOBILE RESPONSIVE STYLES
+       =============================== */
+    
+    @media(max-width: 480px) {
+      body {
+        padding: 20px 15px;
+      }
+      
+      .box {
+        padding: 25px 20px;
+        border-radius: 14px;
+      }
+      
+      h2 {
+        font-size: 22px;
+      }
+      
+      label {
+        font-size: 13px;
+        margin-top: 10px;
+      }
+      
+      input {
+        padding: 11px 12px;
+        font-size: 14px;
+        border-radius: 8px;
+      }
+      
+      button {
+        padding: 12px;
+        font-size: 15px;
+        margin-top: 18px;
+      }
+      
+      p {
+        font-size: 13px;
+        margin-top: 15px;
+      }
+      
+      .popup-box {
+        width: 90%;
+        padding: 20px 24px;
+        font-size: 15px;
+      }
+    }
+    
+    @media(max-width: 360px) {
+      .box {
+        padding: 20px 15px;
+      }
+      
+      h2 {
+        font-size: 20px;
+      }
+      
+      input {
+        padding: 10px;
+      }
+      
+      button {
+        padding: 11px;
+        font-size: 14px;
+      }
+    }
 
   </style>
 </head>

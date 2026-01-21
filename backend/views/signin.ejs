@@ -2,32 +2,190 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <title>Sign In - AKC Auto Parts</title>
 
   <style>
-    body { font-family: 'Nunito Sans'; background:#f3f4f6; padding:40px; display:flex; justify-content:center; }
-    .box { background:#fff; padding:25px; border-radius:10px; width:350px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-    h2 { text-align:center; }
-    label { font-weight:bold; margin-top:10px; display:block; }
-    input { width:100%; padding:8px; margin-top:5px; border:1px solid #ccc; border-radius:6px; }
-    button { width:100%; margin-top:16px; padding:10px; background:#111827; color:white; border-radius:8px; border:none; cursor:pointer; }
-    button:hover { background:#1f2937; }
-    p { text-align:center; margin-top:12px; }
+    * { box-sizing: border-box; }
+    
+    body {
+      font-family: 'Nunito Sans';
+      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    
+    .box {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+    
+    h2 {
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 25px;
+    }
+    
+    label {
+      font-weight: 700;
+      margin-top: 12px;
+      display: block;
+      font-size: 14px;
+      color: #374151;
+    }
+    
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      margin-top: 6px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 15px;
+      transition: all 0.25s ease;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+    
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      background: linear-gradient(135deg, #111827, #1f2937);
+      color: white;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      transition: all 0.25s ease;
+    }
+    
+    button:hover {
+      background: linear-gradient(135deg, #1f2937, #374151);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(17, 24, 39, 0.25);
+    }
+    
+    p {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+    
+    p a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    p a:hover {
+      text-decoration: underline;
+    }
 
     /* popup */
     .popup-overlay {
-      position:fixed; inset:0; background:rgba(0,0,0,0.45); display:none; z-index:99;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 99;
     }
+    
     .popup-box {
-      position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);
-      background:white; padding:20px 35px; border-radius:10px; display:none;
-      font-size:18px; text-align:center; box-shadow:0 0 20px rgba(0,0,0,0.3); z-index:100;
-      min-width:260px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 24px 30px;
+      border-radius: 14px;
+      display: none;
+      font-size: 16px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      z-index: 100;
+      width: 90%;
+      max-width: 320px;
     }
-    .popup-success { border-left:6px solid #28a745; }
-    .popup-error { border-left:6px solid #dc3545; }
+    
+    .popup-success { border-left: 6px solid #28a745; }
+    .popup-error { border-left: 6px solid #dc3545; }
+    
+    /* Mobile Responsive Styles */
+    @media(max-width: 480px) {
+      body {
+        padding: 20px 15px;
+      }
+      
+      .box {
+        padding: 25px 20px;
+        border-radius: 14px;
+      }
+      
+      h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+      }
+      
+      label {
+        font-size: 13px;
+      }
+      
+      input {
+        padding: 11px 12px;
+        font-size: 14px;
+      }
+      
+      button {
+        padding: 12px;
+        font-size: 15px;
+      }
+      
+      p {
+        font-size: 13px;
+      }
+      
+      .popup-box {
+        padding: 20px;
+        font-size: 14px;
+      }
+    }
+    
+    @media(max-width: 360px) {
+      .box {
+        padding: 20px 15px;
+      }
+      
+      h2 {
+        font-size: 20px;
+      }
+      
+      input {
+        padding: 10px;
+      }
+      
+      button {
+        padding: 11px;
+        font-size: 14px;
+      }
+    }
   </style>
 
 </head>

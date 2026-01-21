@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Products</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -122,6 +122,142 @@ td:nth-child(3){
 .search-box input:focus{
   border-color:#2563eb;
   box-shadow:0 0 0 4px rgba(37,99,235,.15);
+}
+
+/* ===============================
+   MOBILE RESPONSIVE STYLES
+   =============================== */
+
+@media(max-width:768px){
+  body{
+    padding:30px 15px;
+  }
+  
+  h1{
+    font-size:24px;
+    margin-bottom:20px;
+  }
+  
+  .search-box{
+    max-width:100%;
+    margin-bottom:20px;
+  }
+  
+  .search-box input{
+    padding:12px 14px;
+    font-size:14px;
+  }
+  
+  table{
+    display:block;
+    overflow-x:auto;
+    white-space:nowrap;
+  }
+  
+  th{
+    padding:12px 10px;
+    font-size:12px;
+  }
+  
+  td{
+    padding:12px 10px;
+    font-size:13px;
+  }
+}
+
+@media(max-width:600px){
+  body{
+    padding:20px 10px;
+  }
+  
+  h1{
+    font-size:22px;
+    margin-bottom:18px;
+  }
+  
+  .search-box input{
+    padding:11px 12px;
+    font-size:13px;
+    border-radius:10px;
+  }
+  
+  /* Convert table to card layout on mobile */
+  table, thead, tbody, th, td, tr{
+    display:block;
+  }
+  
+  thead tr{
+    position:absolute;
+    top:-9999px;
+    left:-9999px;
+  }
+  
+  tr{
+    margin-bottom:15px;
+    border-radius:14px;
+    box-shadow:0 8px 22px rgba(0,0,0,0.08);
+    padding:14px;
+    background:#ffffff;
+    white-space:normal;
+  }
+  
+  td{
+    border:none;
+    position:relative;
+    padding:10px 10px 10px 40%;
+    text-align:right;
+    white-space:normal;
+    font-size:13px;
+  }
+  
+  td:before{
+    position:absolute;
+    left:14px;
+    width:35%;
+    padding-right:10px;
+    text-align:left;
+    font-weight:700;
+    color:#374151;
+    font-size:11px;
+    text-transform:uppercase;
+  }
+  
+  td:nth-of-type(1):before { content: "ID"; }
+  td:nth-of-type(2):before { content: "Name"; }
+  td:nth-of-type(3):before { content: "Price"; }
+  td:nth-of-type(4):before { content: "Stock"; }
+  
+  td:nth-child(3){
+    font-size:15px;
+  }
+  
+  .stock-badge{
+    padding:5px 12px;
+    font-size:11px;
+  }
+}
+
+@media(max-width:400px){
+  body{
+    padding:15px 8px;
+  }
+  
+  h1{
+    font-size:20px;
+  }
+  
+  tr{
+    padding:12px;
+  }
+  
+  td{
+    padding:8px 8px 8px 38%;
+    font-size:12px;
+  }
+  
+  td:before{
+    font-size:10px;
+  }
 }
 
 </style>

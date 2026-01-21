@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MY ORDERS</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -185,8 +186,204 @@ body{
 
 /* ===== MOBILE ===== */
 @media(max-width:768px){
-  .order-card{padding:20px}
-  .timeline::before{left:5%;right:5%}
+  body{
+    padding:20px 10px;
+  }
+  
+  .header-bar{
+    flex-direction:column;
+    padding:12px 18px;
+    gap:12px;
+    text-align:center;
+  }
+  
+  .header-bar img{
+    height:45px;
+  }
+  
+  .center-section h1{
+    font-size:24px;
+  }
+  
+  .right-section p{
+    font-size:12px;
+  }
+  
+  .orders-wrapper{
+    gap:25px;
+  }
+  
+  .order-card{
+    padding:20px;
+    border-radius:18px;
+  }
+  
+  .status{
+    position:relative;
+    top:0;
+    right:0;
+    margin-bottom:15px;
+    display:inline-block;
+  }
+  
+  .order-header{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  
+  .order-header p{
+    font-size:14px;
+  }
+  
+  .timeline{
+    margin:20px 0 25px;
+  }
+  
+  .timeline::before{
+    left:5%;
+    right:5%;
+  }
+  
+  .timeline-step span{
+    font-size:11px;
+  }
+  
+  .circle{
+    width:18px;
+    height:18px;
+  }
+  
+  .item-box{
+    padding:14px 16px;
+  }
+  
+  .item-box p{
+    font-size:13px;
+  }
+  
+  .cancel-btn{
+    padding:10px 20px;
+    font-size:14px;
+  }
+  
+  .delivered-text,
+  .cancelled-text{
+    font-size:16px;
+  }
+}
+
+@media(max-width:480px){
+  body{
+    padding:15px 8px;
+  }
+  
+  .header-bar{
+    padding:10px 14px;
+    border-radius:14px;
+    margin-bottom:25px;
+  }
+  
+  .header-bar img{
+    height:38px;
+  }
+  
+  .center-section h1{
+    font-size:20px;
+  }
+  
+  .right-section{
+    display:none;
+  }
+  
+  .orders-wrapper{
+    gap:20px;
+  }
+  
+  .order-card{
+    padding:16px;
+    border-radius:14px;
+  }
+  
+  .status{
+    padding:8px 16px;
+    font-size:12px;
+  }
+  
+  .order-header p{
+    font-size:13px;
+    margin:4px 0;
+  }
+  
+  .timeline{
+    margin:15px 0 20px;
+  }
+  
+  .timeline::before{
+    top:8px;
+    height:3px;
+  }
+  
+  .circle{
+    width:16px;
+    height:16px;
+  }
+  
+  .timeline-step span{
+    font-size:10px;
+    margin-top:8px;
+  }
+  
+  .item-box{
+    padding:12px 14px;
+    border-radius:12px;
+    margin-bottom:10px;
+  }
+  
+  .item-box p{
+    font-size:12px;
+    margin:4px 0;
+  }
+  
+  .cancel-btn{
+    width:100%;
+    padding:12px 20px;
+    font-size:14px;
+    border-radius:10px;
+  }
+  
+  .delivered-text,
+  .cancelled-text{
+    font-size:14px;
+  }
+  
+  .popup-content{
+    padding:22px 24px;
+    border-radius:14px;
+    max-width:320px;
+  }
+  
+  .popup-content h3{
+    font-size:18px;
+  }
+  
+  .popup-content p{
+    font-size:13px;
+  }
+  
+  .popup-buttons{
+    gap:12px;
+  }
+  
+  .yes-btn,
+  .no-btn{
+    padding:9px 18px;
+    font-size:13px;
+  }
+  
+  .lang-select select{
+    padding:6px 28px 6px 10px;
+    font-size:12px;
+  }
 }
 /* POPUP OVERLAY */
 /* POPUP OVERLAY */

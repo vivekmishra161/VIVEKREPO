@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
   <title>Admin Dashboard</title>
 
   <style>
+    *{box-sizing:border-box}
     body{margin:0;font-family:'Nunito Sans',sans-serif;background:#f3f4f6}
 
     .sidebar{
@@ -14,6 +16,8 @@
       height:100vh;
       position:fixed;
       padding:20px;
+      z-index:1000;
+      transition:transform 0.3s ease;
     }
 
     .sidebar a{
@@ -40,6 +44,22 @@
     .main{
       margin-left:240px;
       padding:30px;
+    }
+    
+    /* Mobile menu toggle button */
+    .menu-toggle{
+      display:none;
+      position:fixed;
+      top:15px;
+      left:15px;
+      z-index:1001;
+      background:#111827;
+      color:#fff;
+      border:none;
+      padding:10px 14px;
+      border-radius:8px;
+      font-size:18px;
+      cursor:pointer;
     }
 
     .cards{
@@ -114,13 +134,158 @@
   }
 }
 
+/* ===============================
+   MOBILE RESPONSIVE STYLES
+   =============================== */
+
+@media(max-width:900px){
+  .sidebar{
+    transform:translateX(-100%);
+  }
+  
+  .sidebar.open{
+    transform:translateX(0);
+  }
+  
+  .menu-toggle{
+    display:block;
+  }
+  
+  .main{
+    margin-left:0;
+    padding:70px 20px 30px;
+  }
+  
+  .cards{
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+  }
+  
+  .card{
+    padding:25px 20px;
+  }
+  
+  .analytics-grid{
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+  
+  .section-title{
+    margin-top:35px;
+    font-size:20px;
+  }
+}
+
+@media(max-width:600px){
+  .main{
+    padding:60px 15px 25px;
+  }
+  
+  .main h1{
+    font-size:24px;
+    margin-bottom:20px;
+  }
+  
+  .cards{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+  
+  .card{
+    padding:20px 18px;
+    border-radius:12px;
+  }
+  
+  .card h3{
+    font-size:16px;
+  }
+  
+  .card p{
+    font-size:13px;
+  }
+  
+  .section-title{
+    margin-top:30px;
+    margin-bottom:15px;
+    font-size:18px;
+  }
+  
+  .chart-card{
+    padding:16px 14px 20px;
+    border-radius:14px;
+  }
+  
+  .chart-card h3{
+    font-size:14px;
+    margin-bottom:12px;
+  }
+  
+  .chart-card canvas{
+    height:200px !important;
+  }
+  
+  .sidebar{
+    width:200px;
+    padding:15px;
+  }
+  
+  .brand{
+    margin-bottom:30px;
+  }
+  
+  .brand img{
+    width:32px;
+  }
+  
+  .brand span{
+    font-size:16px;
+  }
+  
+  .sidebar a{
+    padding:10px;
+    font-size:14px;
+  }
+  
+  .menu-toggle{
+    top:12px;
+    left:12px;
+    padding:8px 12px;
+    font-size:16px;
+  }
+}
+
+@media(max-width:400px){
+  .main{
+    padding:55px 10px 20px;
+  }
+  
+  .main h1{
+    font-size:20px;
+  }
+  
+  .card{
+    padding:16px 14px;
+  }
+  
+  .card h3{
+    font-size:14px;
+  }
+  
+  .chart-card canvas{
+    height:180px !important;
+  }
+}
+
   </style>
 </head>
 
 <body>
 
+<!-- Mobile Menu Toggle -->
+<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
 <!-- SIDEBAR -->
-<div class="sidebar">
+<div class="sidebar" id="sidebar">
   <div class="brand">
     <img src="https://th.bing.com/th/id/R.35647c0cec927537fa43ed1836a446c2?rik=7Lzu71WwPczowA&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fhyundai-logo-png-hyundai-car-logo-png-brand-image-1749.png&ehk=UI8O%2bS7ci5lpalKI9Rf1u%2bMYvCgw%2bVwAeupMAcxmk2g%3d&risl=&pid=ImgRaw&r=0">
     <span>AKC Admin</span>
@@ -282,6 +447,25 @@ if (pieCanvas) {
 }
 </script>
 
+<!-- Mobile Sidebar Toggle Script -->
+<script>
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.classList.toggle('open');
+}
+
+// Close sidebar when clicking outside on mobile
+document.addEventListener('click', function(e) {
+  const sidebar = document.getElementById('sidebar');
+  const menuToggle = document.querySelector('.menu-toggle');
+  
+  if (window.innerWidth <= 900) {
+    if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+      sidebar.classList.remove('open');
+    }
+  }
+});
+</script>
 
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout - Customer Details</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -404,6 +405,245 @@ label input[type="radio"] {
 @keyframes progressFill {
   from { width: 0%; }
   to { width: 100%; }
+}
+
+/* ===============================
+   MOBILE RESPONSIVE STYLES
+   =============================== */
+
+@media(max-width:768px){
+  body{
+    padding:20px 12px 40px;
+  }
+  
+  .checkout-header{
+    flex-direction:column;
+    padding:14px 20px;
+    gap:10px;
+    text-align:center;
+  }
+  
+  .checkout-left{
+    justify-content:center;
+  }
+  
+  .checkout-logo{
+    height:36px;
+  }
+  
+  .checkout-title{
+    font-size:18px;
+  }
+  
+  .checkout-right{
+    font-size:12px;
+  }
+  
+  .checkout-steps{
+    font-size:12px;
+    flex-wrap:wrap;
+    gap:8px;
+    justify-content:center;
+  }
+  
+  .box{
+    padding:22px 18px;
+    border-radius:20px;
+  }
+  
+  .box h2{
+    font-size:20px;
+    padding-bottom:12px;
+  }
+  
+  form{
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+  
+  label{
+    font-size:12px;
+  }
+  
+  input,
+  textarea,
+  select{
+    padding:11px 12px;
+    font-size:14px;
+    border-radius:12px;
+  }
+  
+  .row{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  
+  .muted{
+    padding:14px;
+    border-radius:14px;
+  }
+  
+  .muted span{
+    font-size:18px;
+  }
+  
+  h3{
+    font-size:16px;
+  }
+  
+  .btn{
+    padding:14px;
+    font-size:15px;
+    border-radius:14px;
+  }
+  
+  .popup-box{
+    width:90%;
+    padding:28px 24px;
+  }
+  
+  .success-icon{
+    width:80px;
+    height:80px;
+  }
+  
+  .success-icon img{
+    width:36px;
+  }
+  
+  .popup-box h3{
+    font-size:20px;
+  }
+  
+  .popup-box p{
+    font-size:13px;
+  }
+}
+
+@media(max-width:480px){
+  body{
+    padding:15px 10px 30px;
+  }
+  
+  .checkout-header{
+    padding:12px 15px;
+    border-radius:14px;
+    margin-bottom:15px;
+  }
+  
+  .checkout-logo{
+    height:32px;
+  }
+  
+  .checkout-title{
+    font-size:16px;
+  }
+  
+  .checkout-right{
+    display:none;
+  }
+  
+  .checkout-steps{
+    font-size:11px;
+    margin-bottom:12px;
+  }
+  
+  .box{
+    padding:18px 14px;
+    border-radius:16px;
+  }
+  
+  .box h2{
+    font-size:18px;
+    margin-bottom:10px;
+    padding-bottom:10px;
+  }
+  
+  form{
+    gap:12px;
+  }
+  
+  label{
+    font-size:11px;
+    margin-bottom:2px;
+  }
+  
+  input,
+  textarea,
+  select{
+    padding:10px;
+    font-size:13px;
+    border-radius:10px;
+  }
+  
+  textarea{
+    min-height:70px;
+  }
+  
+  .muted{
+    padding:12px;
+    font-size:14px;
+  }
+  
+  .muted span{
+    font-size:16px;
+  }
+  
+  h3{
+    font-size:14px;
+    margin-top:6px;
+  }
+  
+  label input[type="radio"]{
+    margin-right:4px;
+  }
+  
+  #upiBox::before{
+    font-size:12px;
+  }
+  
+  .btn{
+    padding:12px;
+    font-size:14px;
+    border-radius:12px;
+    margin-top:8px;
+  }
+  
+  .popup-box{
+    width:95%;
+    padding:24px 20px;
+    border-radius:20px;
+  }
+  
+  .success-icon{
+    width:70px;
+    height:70px;
+    margin-bottom:14px;
+  }
+  
+  .success-icon img{
+    width:32px;
+  }
+  
+  .popup-box h3{
+    font-size:18px;
+    margin-bottom:4px;
+  }
+  
+  .popup-box p{
+    font-size:12px;
+    margin-bottom:14px;
+  }
+  
+  .popup-progress{
+    height:5px;
+  }
+  
+  .lang-select select{
+    padding:6px 28px 6px 10px;
+    font-size:12px;
+  }
 }
 
   </style>
