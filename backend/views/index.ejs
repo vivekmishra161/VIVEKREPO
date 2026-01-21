@@ -1975,19 +1975,23 @@ function confirmSignout() {
 <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
 <script>
-function toggleMobileMenu() {
-  const sidebar = document.getElementById("mobileSidebar");
-  const overlay = document.getElementById("sidebarOverlay");
+document.addEventListener("DOMContentLoaded", function () {
+  const lang = "<%= lang %>";
+  const select = document.getElementById("sidebarLanguage");
 
-  if (!sidebar || !overlay) {
-    alert("Sidebar elements missing");
-    return;
-  }
+  if (!select) return;
 
-  sidebar.classList.toggle("active");
-  overlay.classList.toggle("active");
-}
+  // set selected value
+  select.value = lang;
+
+  // change language
+  select.addEventListener("change", function () {
+    document.cookie = "lang=" + this.value + "; path=/";
+    location.reload();
+  });
+});
 </script>
+
 
 </body>
 </html>
