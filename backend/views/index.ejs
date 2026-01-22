@@ -1661,6 +1661,45 @@ select.sort:focus{
 .mobile-sidebar.active {
   left: 0;
 }
+/* ==========================================
+   FIX PROMO SIZE ON MOBILE (FINAL)
+========================================== */
+
+@media (max-width: 600px) {
+
+  /* reduce promo height */
+  .promo-slider {
+    aspect-ratio: auto;
+    height: 210px;        /* 🔥 perfect mobile height */
+    border-radius: 16px;
+    margin: 10px 6px 16px;
+  }
+
+  .promo-slide {
+    padding: 16px;
+    justify-content: center;
+  }
+
+  .promo-slide .text {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .promo-slide .sub {
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  .promo-img {
+    width: 110px;
+    margin-top: 8px;
+  }
+
+  /* dots slightly up */
+  .promo-dots {
+    bottom: 10px;
+  }
+}
 
 </style>
 </head>
