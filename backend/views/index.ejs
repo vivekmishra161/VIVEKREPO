@@ -267,6 +267,32 @@
     transform:translateX(0);
     z-index:5;
   }
+  /* ==============================
+   PROMO SLIDER CORE FIX
+================================ */
+
+/* container */
+.promo-slider {
+  position: relative;
+  overflow: hidden;
+}
+
+/* all slides stacked */
+.promo-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+/* only active slide visible */
+.promo-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 5;
+}
+
 
   .promo-slide .text-box{
     max-width:45%;
@@ -1779,31 +1805,6 @@ select.sort:focus{
     background: #ffffff;
     border: 1px solid #ddd;
     color: #333;
-}
-/* SLIDER CONTAINER */
-.promo-slider {
-    width: 100%;
-    max-width: 1200px;
-    height: 220px;
-    margin: 20px auto;
-    border-radius: 20px;
-    overflow: hidden;
-    position: relative;
-    background: #000;
-}
-
-/* SLIDE */
-.promo-slide {
-    width: 100%;
-    height: 100%;
-}
-
-/* IMAGE FULL FIT */
-.promo-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;        /* 🔥 fills entire slide */
-    object-position: center;  /* keeps focus center */
 }
 
 </style>
