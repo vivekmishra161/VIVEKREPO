@@ -1592,34 +1592,99 @@ select.sort:focus{
     max-width: 300px;
   }
 }
+/* =========================
+   FINAL MOBILE HEADER
+========================= */
+
+.mobile-header {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  z-index: 3000;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* left menu */
+.menu-left {
+  position: absolute;
+  left: 12px;
+  font-size: 24px;
+}
+
+/* center brand */
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-logo {
+  height: 34px;
+}
+
+.header-title {
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.header-sub {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* SIDEBAR BRAND */
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.sidebar-brand img {
+  height: 36px;
+}
+
+.sidebar-brand h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 900;
+}
+.mobile-sidebar {
+  left: -300px;   /* hidden */
+}
+
+.mobile-sidebar.active {
+  left: 0;
+}
 
 </style>
 </head>
 <body>
 
 <!-- TOPBAR -->
-<header class="topbar">
+<header class="topbar mobile-header">
 
-  <div class="logo">
-    <a href="/" class="logo-link">
-      <img src="https://th.bing.com/th/id/R.35647c0cec927537fa43ed1836a446c2?rik=7Lzu71WwPczowA&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fhyundai-logo-png-hyundai-car-logo-png-brand-image-1749.png&ehk=UI8O%2bS7ci5lpalKI9Rf1u%2bMYvCgw%2bVwAeupMAcxmk2g%3d&risl=&pid=ImgRaw&r=0"
-           alt="AKC Auto Parts Logo">
-    </a>
+  <!-- TOGGLE LEFT -->
+  <button class="icon-btn menu-left" onclick="toggleMobileMenu()">☰</button>
 
-    <div class="brand">AKC AUTO PARTS</div>
-  </div>
+  <!-- LOGO CENTER -->
+  <div class="header-center">
+    <img src="https://th.bing.com/th/id/R.35647c0cec927537fa43ed1836a446c2?rik=7Lzu71WwPczowA&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fhyundai-logo-png-hyundai-car-logo-png-brand-image-1749.png&ehk=UI8O%2bS7ci5lpalKI9Rf1u%2bMYvCgw%2bVwAeupMAcxmk2g%3d&risl=&pid=ImgRaw&r=0"
+         class="header-logo">
 
-  <div class="muted header-subtext">
-    Parts for Hyundai • Tata • Bajaj
-  </div>
-
-  <div class="top-actions">
-    <button class="icon-btn mobile-menu-btn" onclick="toggleMobileMenu()">
-      ☰
-    </button>
+    <div class="header-text">
+      <div class="header-title">AKC AUTO PARTS</div>
+      <div class="header-sub">Parts for Hyundai • Tata • Bajaj</div>
+    </div>
   </div>
 
 </header>
+
 
 
 <script>
@@ -2217,6 +2282,11 @@ function confirmSignout() {
 </script>
 <!-- MAIN SIDEBAR -->
 <div id="mobileSidebar" class="mobile-sidebar">
+  <div class="sidebar-brand">
+  <img src="https://th.bing.com/th/id/R.35647c0cec927537fa43ed1836a446c2?rik=7Lzu71WwPczowA&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fhyundai-logo-png-hyundai-car-logo-png-brand-image-1749.png&ehk=UI8O%2bS7ci5lpalKI9Rf1u%2bMYvCgw%2bVwAeupMAcxmk2g%3d&risl=&pid=ImgRaw&r=0">
+  <h3>AKC Auto Parts</h3>
+</div>
+
   <div class="mobile-sidebar-content">
 
     <!-- USER INFO -->
