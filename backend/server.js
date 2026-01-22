@@ -19,7 +19,7 @@ app.use((req, res, next) => {
   next();
 });
 
-
+app.use(express.static(path.join(__dirname, "public")));
 /* =====================
    EXPRESS CONFIG
 ===================== */
