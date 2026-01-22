@@ -1792,22 +1792,30 @@ select.sort:focus{
     border: 1px solid #ddd;
     color: #333;
 }
+/* SLIDER CONTAINER */
 .promo-slider {
     width: 100%;
-    height: 160px;
-    border-radius: 18px;
+    max-width: 1200px;
+    height: 220px;
+    margin: 20px auto;
+    border-radius: 20px;
     overflow: hidden;
-    background: #000;
-    margin: 14px 10px;
     position: relative;
+    background: #000;
 }
 
-/* IMAGE FIT FIX */
+/* SLIDE */
+.promo-slide {
+    width: 100%;
+    height: 100%;
+}
+
+/* IMAGE FULL FIT */
 .promo-slide img {
     width: 100%;
     height: 100%;
-    object-fit: contain;   /* ✅ NO CROPPING */
-    background: #000;      /* black padding if needed */
+    object-fit: cover;        /* 🔥 fills entire slide */
+    object-position: center;  /* keeps focus center */
 }
 
 </style>
