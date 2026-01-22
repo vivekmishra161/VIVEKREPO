@@ -1792,6 +1792,23 @@ select.sort:focus{
     border: 1px solid #ddd;
     color: #333;
 }
+.promo-slider {
+    width: 100%;
+    height: 160px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #000;
+    margin: 14px 10px;
+    position: relative;
+}
+
+/* IMAGE FIT FIX */
+.promo-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;   /* ✅ NO CROPPING */
+    background: #000;      /* black padding if needed */
+}
 
 </style>
 </head>
