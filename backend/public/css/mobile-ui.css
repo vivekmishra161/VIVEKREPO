@@ -113,34 +113,33 @@ header,
     gap: 16px;
   }
 
-/* ===== MOBILE PRODUCT CARD IMAGE FIX ===== */
+/* ===== PRODUCT CARD IMAGE FIX ===== */
 
-.product-card,
-.card {
-  width: 100% !important;
-  margin: 0 auto;
-  border-radius: 18px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 10px 28px rgba(0,0,0,.12);
-}
-
-/* image wrapper (important) */
-.product-card .image-box,
-.card .image-box {
-  width: 100%;
-  height: 260px;   /* 🔥 INCREASE IMAGE HEIGHT HERE */
-  overflow: hidden;
-  border-radius: 18px 18px 0 0;
-}
-
-/* actual image */
 .product-card img,
+.product-image img,
 .card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;   /* 🔥 makes image look premium */
-  display: block;
+    width: 100%;
+    height: 220px;          /* 🔥 increase here */
+    object-fit: cover;      /* fills image properly */
+    border-radius: 12px 12px 0 0;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+    .product-card img,
+    .product-image img,
+    .card img {
+        height: 260px;      /* 🔥 bigger image on mobile */
+    }
+}
+
+/* small phones */
+@media (max-width: 480px) {
+    .product-card img,
+    .product-image img,
+    .card img {
+        height: 300px;      /* 🔥 full attractive look */
+    }
 }
 
 
