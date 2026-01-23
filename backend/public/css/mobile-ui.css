@@ -44,43 +44,29 @@ header,
     overflow: hidden;
   }
 
-  /* =========================================
-   FORCE BIG PROMO SLIDER HEIGHT (MOBILE)
-========================================= */
-
-@media (max-width: 768px) {
-
-  /* slider wrapper */
+  /* Slider itself */
   .promo-slider {
-    height: 500px !important;   /* 🔥 BIG HEIGHT */
-    min-height: 320px !important;
-    max-height: none !important;
-
-    width: 100vw !important;
-    margin-left: -15px !important; /* remove page padding */
-    margin-right: -15px !important;
-
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    overflow: hidden !important;
+    position: relative;
+    height: 500px;              /* Bigger height */
+    border-radius: 0;           /* ❌ no rounded background */
+    background: transparent;    /* ❌ remove black bg */
+    box-shadow: none;
   }
 
-  /* slide container */
+  /* Each slide */
   .promo-slide {
-    height: 100% !important;
+    position: absolute;
+    inset: 0;
   }
 
-  /* image fills entire big slide */
+  /* Image full bleed */
   .promo-slide img {
-    height: 100% !important;
-    width: 110% !important;  /* outside screen look */
-    object-fit: cover !important;
-    object-position: center !important;
-    transform: translateX(-5%) !important;
+    width: 110%;                /* 🔥 comes from outside screen */
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: translateX(-5%);
   }
-}
-
 
 }
 
