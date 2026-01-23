@@ -108,6 +108,45 @@ header,
   border: 1px solid #67e8f9;
   border-radius: 14px;
 }
+/* ==========================================
+   MOBILE PROMO SLIDER HEIGHT FIX
+========================================== */
+@media (max-width: 768px) {
+
+  /* promo slider container */
+  .promo-slider,
+  .promo-banner,
+  .slider,
+  .carousel {
+    min-height: 200px;
+    padding: 18px 16px;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* promo image */
+  .promo-slider img,
+  .promo-banner img,
+  .slider img,
+  .carousel img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 20px;
+  }
+
+  /* promo text */
+  .promo-text {
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1.3;
+    text-align: center;
+    padding: 10px;
+  }
+
+}
 
 /* ---------- CTA BUTTONS ---------- */
 .cta {
