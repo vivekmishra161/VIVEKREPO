@@ -27,7 +27,7 @@ const Order = sequelize.define("Order", {
   },
   utrNumber: {
   type: DataTypes.STRING,
-  allowNull: true
+  allowNull: false
 },
 
 });
