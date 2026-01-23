@@ -294,6 +294,7 @@ app.post("/order", async (req, res) => {
       items: safeItems, // ⭐ IMPORTANT
 
       paymentMethod,
+      utrNumber: paymentMethod === "UPI" ? utrNumber : null,
       paymentStatus:
         paymentMethod === "COD"
           ? "PAID"

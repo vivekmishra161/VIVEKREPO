@@ -18,11 +18,9 @@ const Order = sequelize.define("Order", {
 
   paymentMethod: DataTypes.STRING,
   paymentStatus: DataTypes.STRING,
+  utrNumber: DataTypes.STRING,
   status: DataTypes.STRING,
-  utrNumber: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
+
   // ✅ IMPORTANT FIX
   items: {
     type: DataTypes.JSON,   // 🔥 this fixes everything

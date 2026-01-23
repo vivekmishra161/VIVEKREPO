@@ -1147,15 +1147,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const phone = document.getElementById('custPhone').value.trim();
     const pin = document.getElementById('custPin').value.trim();
     const statusMsg = document.getElementById('statusMsg');
-    const paymentMethod =
-    document.querySelector('input[name="paymentMethod"]:checked')?.value;
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value;
     const utrNumber = document.getElementById("utrNumber")?.value.trim();
-    if (paymentMethod === "UPI" && !utrNumber) {
-  return statusMsg.textContent = "Please enter UTR number for online payment.";
-}
-
-
-
+    if (paymentMethod === "UPI" && !utrNumber) 
+    return statusMsg.textContent = "Please enter UTR number for online payment.";
     if (!cart.length) return statusMsg.textContent = "Cart is empty.";
     if (!name || !address || !city || !state || !phone || !pin)
       return statusMsg.textContent = "Please fill all fields.";
