@@ -11,7 +11,8 @@
   /* ---------------- BASE ---------------- */
   body {
     background: #f5f7fb;
-    padding-bottom: 90px;
+    padding: 0;
+    margin: 0;
   }
 
   h1, h2, h3 {
@@ -623,5 +624,8 @@ body {
     z-index: 999;
     box-shadow: 0 -10px 30px rgba(0,0,0,0.25);
     border-radius: 18px 18px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
