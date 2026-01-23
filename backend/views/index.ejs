@@ -2317,14 +2317,7 @@ function addToCartFromBtn(btn){
   const qty = Number(card.querySelector('.qty').value || 1);
   addToCart(id, qty);
 }
-function showCartPopup() {
-  const popup = document.getElementById("cartPopup");
-  popup.style.display = "flex";
 
-  setTimeout(() => {
-    popup.style.display = "none";
-  }, 1500);
-}
 
 
 /* ------------ Product View (new page) ------------ */
@@ -2525,6 +2518,15 @@ function toggleMobileMenu() {
     ✅ Added to cart
   </div>
 </div>
+<script>
+  function showCartPopup() {
+  const popup = document.getElementById("cartPopup");
+  popup.style.display = "flex";
 
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 1500);
+}
+</script>
 </body>
 </html>
