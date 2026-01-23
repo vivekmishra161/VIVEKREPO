@@ -111,7 +111,6 @@ header,
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: 16px;
-    height: 200px;
   }
 
   /* single product card */
@@ -120,6 +119,7 @@ header,
     width: 100% !important;
     margin: 0 auto;
     border-radius: 18px;
+    height: 100px;
   }
 
   /* product image */
