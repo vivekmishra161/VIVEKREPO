@@ -1,182 +1,196 @@
 /* ======================================================
    MOBILE-ONLY PROMOTIONAL UI
    Applies ONLY on phones
+=/* ======================================================
+   PREMIUM MOBILE UI — INDEX PAGE
+   Desktop unaffected
 ====================================================== */
 
 @media (max-width: 768px) {
 
-/* ---------- GLOBAL ---------- */
-body {
-  background: #f4f7fb;
-  padding-bottom: 90px;
-}
+  /* ---------------- BASE ---------------- */
+  body {
+    background: #f5f7fb;
+    padding-bottom: 90px;
+  }
 
-h1, h2, h3 {
-  font-weight: 900;
-}
+  h1, h2, h3 {
+    font-weight: 900;
+    letter-spacing: .2px;
+  }
 
-/* ---------- HEADER ---------- */
-header,
-.glass-header {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background: #ffffff;
-  border-radius: 0 0 18px 18px;
-  box-shadow: 0 8px 25px rgba(0,0,0,.12);
-}
+  /* ---------------- HEADER ---------------- */
+  header,
+  .glass-header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: #ffffff;
+    padding: 10px 14px;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.12);
+  }
 
-/* ---------- PROMO BANNER ---------- */
-.mobile-promo {
-  background: linear-gradient(135deg,#2563eb,#1e40af);
-  color: #fff;
-  padding: 14px 18px;
-  border-radius: 18px;
-  font-weight: 800;
-  margin: 14px;
-  text-align: center;
-  box-shadow: 0 10px 25px rgba(37,99,235,.35);
-}
+  /* ---------------- PROMO SLIDER ---------------- */
+  .promo-slider,
+  .slider,
+  .carousel,
+  .promo-container {
+    width: calc(100% - 28px);
+    height: 260px;
+    margin: 16px auto 20px;
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 18px 40px rgba(0,0,0,.22);
+  }
 
-/* ---------- PRODUCT PAGE ---------- */
-.container {
-  display: block !important;
-}
+  .promo-slider img,
+  .slider img,
+  .carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-.hero {
-  border-radius: 18px;
-  background: #ffffff;
-}
+  /* subtle dark overlay for text readability */
+  .promo-slider::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0,0,0,.45),
+      rgba(0,0,0,.05)
+    );
+  }
 
-.meta {
-  margin-top: 18px;
-  border-radius: 22px;
-  box-shadow: 0 12px 35px rgba(0,0,0,.15);
-}
+  /* ---------------- SECTION TITLES ---------------- */
+  h2 {
+    font-size: 18px;
+    margin: 12px 16px 8px;
+    font-weight: 900;
+  }
 
-/* ---------- PRICE ---------- */
-.price {
-  font-size: 28px;
-  font-weight: 900;
-}
-
-.old-price {
-  font-size: 14px;
-  opacity: .6;
-}
-/* ============================================
-   MOBILE PRODUCT CARD FIX
-============================================ */
-@media (max-width: 768px) {
-
-  /* product grid container */
+  /* ---------------- PRODUCT GRID ---------------- */
   .products,
   .product-grid,
   .grid {
     display: grid !important;
     grid-template-columns: 1fr !important;
-    gap: 16px;
+    gap: 18px;
+    padding: 0 14px 10px;
   }
 
-  /* single product card */
+  /* ---------------- PRODUCT CARD ---------------- */
   .product-card,
   .card {
-    width: 100% !important;
-    margin: 0 auto;
-    border-radius: 18px;
+    background: #ffffff;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 14px 38px rgba(0,0,0,.14);
+    transition: transform .25s ease, box-shadow .25s ease;
   }
 
-  /* product image */
+  .product-card:active,
+  .card:active {
+    transform: scale(.97);
+  }
+
   .product-card img,
   .card img {
     width: 100%;
-    height: auto;
-    border-radius: 16px;
+    height: 200px;
+    object-fit: contain;
+    background: #f8fafc;
+    padding: 12px;
   }
 
-  /* buttons */
+  /* ---------------- PRODUCT INFO ---------------- */
+  .product-title,
+  .card h3 {
+    font-size: 15px;
+    font-weight: 800;
+    padding: 12px 14px 4px;
+    line-height: 1.35;
+  }
+
+  .product-price,
+  .price {
+    font-size: 20px;
+    font-weight: 900;
+    color: #2563eb;
+    padding: 0 14px 6px;
+  }
+
+  .old-price {
+    font-size: 13px;
+    opacity: .55;
+  }
+
+  /* ---------------- CTA BUTTON ---------------- */
   .product-card button,
   .card button {
-    width: 100%;
+    width: calc(100% - 28px);
+    margin: 10px 14px 16px;
+    padding: 14px;
+    border-radius: 16px;
+    font-size: 15px;
+    font-weight: 900;
+    background: linear-gradient(135deg,#2563eb,#1e40af);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 10px 22px rgba(37,99,235,.35);
   }
 
-}
-
-/* ---------- DELIVERY ---------- */
-.delivery-box {
-  background: #ecfeff;
-  border: 1px solid #67e8f9;
-  border-radius: 14px;
-}
-/* ===============================
-   MOBILE PROMO SLIDER FIX
-================================ */
-
-@media (max-width: 768px) {
-
-  /* slider container */
-  .promo-slider,
-  .slider,
-  .carousel,
-  .promo-container {
-    width: 100%;
-    height: 300px;              /* FIXED HEIGHT */
-    overflow: hidden;
-    border-radius: 18px;
+  .product-card button:active {
+    transform: scale(.96);
   }
 
-  /* each slide */
-  .slide,
-  .carousel-item {
-    width: 100%;
-    height: 300px;              /* SAME HEIGHT */
+  /* ---------------- DELIVERY BOX ---------------- */
+  .delivery-box {
+    background: #ecfeff;
+    border: 1px solid #67e8f9;
+    border-radius: 14px;
+    padding: 10px 12px;
+    margin: 10px 14px;
+    font-weight: 700;
+  }
+
+  /* ---------------- FLOATING CTA BAR ---------------- */
+  .cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    padding: 12px 14px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 -12px 30px rgba(0,0,0,.25);
+    z-index: 9999;
   }
 
-  /* image inside slide */
-  .slide img,
-  .carousel-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;          /* VERY IMPORTANT */
-    display: block;
+  .btn {
+    flex: 1;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 16px;
+    font-weight: 900;
+  }
+
+  .btn.cart {
+    background: linear-gradient(135deg,#f97316,#ea580c);
+    color: #fff;
+  }
+
+  .btn.full {
+    background: linear-gradient(135deg,#2563eb,#1e40af);
+    color: #fff;
   }
 
 }
 
-
-/* ---------- CTA BUTTONS ---------- */
-.cta {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  padding: 12px 14px;
-  display: flex;
-  gap: 12px;
-  box-shadow: 0 -10px 30px rgba(0,0,0,.2);
-  z-index: 9999;
-}
-
-.btn {
-  flex: 1;
-  padding: 14px;
-  font-size: 16px;
-  border-radius: 14px;
-  font-weight: 900;
-}
-
-.btn.cart {
-  background: linear-gradient(135deg,#f97316,#ea580c);
-}
-
-.btn.full {
-  background: linear-gradient(135deg,#2563eb,#1e40af);
-  color: #fff;
-}
 
 /* =====================================
    MOBILE CART PAGE – PROFESSIONAL UI
@@ -339,4 +353,4 @@ form {
   transform: scale(0.96);
 }
 
-}
+
