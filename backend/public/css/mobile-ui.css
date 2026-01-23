@@ -103,6 +103,40 @@ header,
   color: #fff;
 }
 
+
+  /* product grid container */
+  .products,
+  .product-grid,
+  .grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  /* single product card */
+  .product-card,
+  .card {
+    width: 100% !important;
+    margin: 0 auto;
+    border-radius: 18px;
+  }
+
+  /* product image */
+  .product-card img,
+  .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+  }
+
+  /* buttons */
+  .product-card button,
+  .card button {
+    width: 100%;
+  }
+
+
+
 /* ---------- CART PAGE ---------- */
 .box {
   padding: 16px !important;
@@ -146,5 +180,6 @@ form {
 .btn:active {
   transform: scale(0.96);
 }
+
 
 }
