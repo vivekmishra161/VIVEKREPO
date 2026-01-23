@@ -297,7 +297,7 @@ app.post("/order", async (req, res) => {
       utrNumber: paymentMethod === "UPI" ? utrNumber : null,
       paymentStatus:
         paymentMethod === "COD"
-          ? "PAID"
+          ? "COD"
           : "PAYMENT_PENDING",
 
       status: "Pending"
