@@ -250,7 +250,6 @@ app.post("/order", async (req, res) => {
       items,
       paymentMethod,
       utrNumber
-      
     } = req.body;
 
     if (!items || items.length === 0) {
@@ -297,8 +296,8 @@ app.post("/order", async (req, res) => {
       paymentMethod,
       paymentStatus:
         paymentMethod === "COD"
-          ? "Cash On Delivery"
-          : "Pending",
+          ? "PAID"
+          : "PAYMENT_PENDING",
 
       status: "Pending"
     });
