@@ -1807,6 +1807,43 @@ select.sort:focus{
     border: 1px solid #ddd;
     color: #333;
 }
+/* ===============================
+   ADD TO CART POPUP
+================================ */
+
+.cart-popup {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.4);
+  z-index: 9999;
+}
+
+.cart-popup-box {
+  background: #ffffff;
+  padding: 18px 30px;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  animation: popScale 0.25s ease;
+}
+
+@keyframes popScale {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* mobile */
+@media(max-width:600px){
+  .cart-popup-box{
+    font-size:16px;
+    padding:16px 22px;
+  }
+}
 
 </style>
 </head>
@@ -2280,6 +2317,15 @@ function addToCartFromBtn(btn){
   const qty = Number(card.querySelector('.qty').value || 1);
   addToCart(id, qty);
 }
+function showCartPopup() {
+  const popup = document.getElementById("cartPopup");
+  popup.style.display = "flex";
+
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 1500);
+}
+
 
 /* ------------ Product View (new page) ------------ */
 function viewPart(id){
@@ -2473,6 +2519,12 @@ function toggleMobileMenu() {
   overlay.classList.toggle("active");
 }
 </script>
+<!-- ADD TO CART POPUP -->
+<div id="cartPopup" class="cart-popup">
+  <div class="cart-popup-box">
+    ✅ Added to cart
+  </div>
+</div>
 
 </body>
 </html>
