@@ -352,5 +352,189 @@ form {
 .btn:active {
   transform: scale(0.96);
 }
+/* =====================================================
+   PROFESSIONAL MOBILE PRODUCT PAGE UI
+   (Desktop completely unchanged)
+===================================================== */
+
+@media (max-width: 768px) {
+
+  /* ---------- PAGE BASE ---------- */
+  body {
+    background: #f6f8fc;
+    padding-bottom: 110px;
+  }
+
+  /* ---------- MAIN LAYOUT ---------- */
+  .container {
+    display: flex !important;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* ---------- PRODUCT IMAGE ---------- */
+  .hero {
+    background: #ffffff;
+    border-radius: 22px;
+    min-height: 260px;
+    padding: 12px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  }
+
+  .hero img {
+    max-height: 340px;
+    object-fit: contain;
+  }
+
+  /* ---------- THUMBNAILS ---------- */
+  .thumbs {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .thumbs button {
+    width: 64px;
+    height: 52px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+  }
+
+  /* ---------- PRODUCT INFO CARD ---------- */
+  .meta {
+    border-radius: 24px;
+    padding: 18px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.14);
+  }
+
+  .title {
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.35;
+  }
+
+  .subline {
+    font-size: 13px;
+  }
+
+  /* ---------- PRICE ---------- */
+  .price-row {
+    margin-top: 6px;
+  }
+
+  .price {
+    font-size: 24px;
+    font-weight: 900;
+    color: #ea580c;
+  }
+
+  .old-price {
+    font-size: 13px;
+  }
+
+  /* ---------- STOCK BADGE ---------- */
+  .stock {
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 999px;
+  }
+
+  /* ---------- DELIVERY ---------- */
+  .delivery-box {
+    margin-top: 10px;
+    background: #ecfeff;
+    border-radius: 14px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  /* ---------- RATING ---------- */
+  .rating {
+    margin-top: 8px;
+    font-size: 14px;
+  }
+
+  /* ---------- QUANTITY ---------- */
+  .qty-row {
+    margin-top: 12px;
+  }
+
+  .qty {
+    border-radius: 12px;
+  }
+
+  .qty button {
+    padding: 10px 14px;
+    font-size: 16px;
+  }
+
+  .qty input {
+    width: 60px;
+    font-size: 16px;
+  }
+
+  /* ---------- STICKY ADD TO CART ---------- */
+  .cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    padding: 14px;
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -14px 35px rgba(0,0,0,0.25);
+    z-index: 9999;
+  }
+
+  .cta .btn.cart {
+    width: 100%;
+    padding: 16px;
+    font-size: 17px;
+    border-radius: 18px;
+    font-weight: 900;
+    background: linear-gradient(135deg,#ea580c,#f97316);
+    color: #fff;
+  }
+
+  /* ---------- DETAILS ---------- */
+  .details {
+    border-radius: 22px;
+    padding: 18px;
+    margin-top: 10px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+  }
+
+  .details h4 {
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  /* ---------- REVIEWS ---------- */
+  .review-section {
+    border-radius: 22px;
+    padding: 18px;
+    margin-top: 24px;
+  }
+
+  .review-card {
+    border-radius: 14px;
+  }
+
+  /* ---------- RELATED PRODUCTS ---------- */
+  .related {
+    margin-top: 14px;
+    padding-bottom: 10px;
+  }
+
+  .rel-card {
+    border-radius: 16px;
+    min-width: 160px;
+  }
+
+  /* ---------- TOAST ---------- */
+  #toast {
+    border-radius: 14px;
+    font-size: 15px;
+  }
+}
 
 
