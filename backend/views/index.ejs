@@ -1871,11 +1871,15 @@ select.sort:focus{
 
 
 <script>
-document.getElementById("languageSelect").value = "<%= lang %>";
-
-document.getElementById("languageSelect").addEventListener("change", function () {
-  document.cookie = "lang=" + this.value + "; path=/";
-  location.reload();
+document.addEventListener('DOMContentLoaded', function() {
+  const langSelect = document.getElementById("sidebarLanguage");
+  if (langSelect) {
+    langSelect.value = "<%= lang %>";
+    langSelect.addEventListener("change", function () {
+      document.cookie = "lang=" + this.value + "; path=/";
+      location.reload();
+    });
+  }
 });
 </script>
 
