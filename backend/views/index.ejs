@@ -2179,9 +2179,6 @@ function renderProducts(list){
         <div class="price">₹${numberWithCommas(p.price)}</div>
       </div>
       <div style="display:flex; gap:8px; align-items:center; margin-top:8px;">
-        <select class="qty" aria-label="quantity">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
-        </select>
         <button class="btn" data-id="${p.id}" onclick="addToCartFromBtn(this)">Add to Cart</button>
         <button class="btn secondary" onclick="viewPart('${p.id}')">View</button>
       </div>
