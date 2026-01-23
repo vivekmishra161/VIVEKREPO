@@ -385,7 +385,8 @@ body {
 
 .product-image-section {
     width: 100%;
-    height: 55vh;
+    height: 360px;
+    object-fit: contain;
     background: radial-gradient(circle at top, #ffffff, #e5e7eb);
     display: flex;
     align-items: center;
@@ -419,8 +420,11 @@ body {
     border-radius: 32px;
     box-shadow: 0 25px 60px rgba(0,0,0,0.12);
 }
+.dotted-box,
+.empty-box {
+    display: none;
+}
 
-/* PRODUCT TITLE */
 .product-info h1 {
     font-size: 22px;
     font-weight: 800;
@@ -526,6 +530,7 @@ body {
     font-size: 19px;
     font-weight: 800;
     margin-bottom: 16px;
+    margin-top: 40px;
 }
 
 .related-list {
@@ -563,10 +568,10 @@ body {
 
 .review-section {
     margin-top: 40px;
-    padding: 26px;
+    padding: 22px;
     background: #ffffff;
     border-radius: 32px;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.12);
+    box-shadow: 0 14px 35px rgba(0,0,0,0.12);
     margin-bottom: 140px;
 }
 
@@ -609,13 +614,14 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 78px;
+    height: 60px;
     background: linear-gradient(135deg, #f97316, #fb923c);
     color: #ffffff;
-    font-size: 19px;
+    font-size: 15px;
     font-weight: 800;
     border: none;
     z-index: 999;
     box-shadow: 0 -10px 30px rgba(0,0,0,0.25);
+    border-radius: 18px 18px 0 0;
 }
 
