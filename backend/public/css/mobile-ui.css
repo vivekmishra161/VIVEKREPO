@@ -73,18 +73,43 @@ header,
 }
 
 /* ---------- CTA BUTTONS ---------- */
-.cta {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  padding: 12px 14px;
-  display: flex;
-  gap: 12px;
-  box-shadow: 0 -10px 30px rgba(0,0,0,.2);
-  z-index: 9999;
+/* =====================================
+   FIX CTA BUTTON POSITION ON MOBILE
+===================================== */
+
+@media (max-width: 768px) {
+
+  /* remove fixed bottom behavior */
+  .cta {
+    position: static !important;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Add to cart full width */
+  .cta .btn.cart {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 14px;
+  }
+
+  /* Back to shop button */
+  #backBtn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+  }
 }
+
 
 .btn {
   flex: 1;
