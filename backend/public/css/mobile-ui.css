@@ -194,6 +194,49 @@ form {
 .btn:active {
   transform: scale(0.96);
 }
+/* ===============================
+   PRODUCT VIEW PAGE LAYOUT FIX
+   =============================== */
+
+/* Make product main section flexible */
+.product-view-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Move title + price + stock upward */
+.product-title,
+.product-price,
+.product-stock,
+.delivery-card {
+  order: 1;
+  margin-top: 8px;
+}
+
+/* Quantity + add to cart stays middle */
+.product-actions {
+  order: 2;
+  margin-top: 15px;
+}
+
+/* Push description & specs downward */
+.product-description,
+.product-specifications {
+  order: 3;
+  margin-top: 25px;
+}
+
+/* Better spacing for description box */
+.product-description {
+  padding-top: 15px;
+  border-top: 1px solid #e6e6e6;
+}
+
+/* Specifications clean look */
+.product-specifications {
+  margin-top: 20px;
+  padding-top: 10px;
+}
 
 
 }
