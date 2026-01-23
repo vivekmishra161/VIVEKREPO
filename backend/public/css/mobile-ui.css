@@ -179,21 +179,6 @@ header,
   color: #fff;
 }
 
-/* ---------- CART PAGE ---------- */
-.box {
-  padding: 16px !important;
-  border-radius: 20px;
-}
-
-.total-box {
-  position: sticky;
-  bottom: 0;
-  background: linear-gradient(135deg,#1e40af,#2563eb);
-  color: #fff;
-  font-size: 20px;
-  border-radius: 18px;
-  margin-top: 20px;
-}
 /* ==========================================
    MOBILE CART REDESIGN
 ========================================== */
