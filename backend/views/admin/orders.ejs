@@ -412,7 +412,8 @@ td:last-child{
   <th>Part ID</th>
   <th>Total</th>
   <th>Payment Type</th>
-<th>Payment Status</th>
+  <th>Payment Status</th>
+  <th>UTR</th>
   <th>Status</th>
   <th>Date</th>
 </tr>
@@ -472,9 +473,13 @@ td:last-child{
 
   </select>
 </td>
-
-
-
+<td>
+  <% if(o.utrNumber){ %>
+    <strong><%= o.utrNumber %></strong>
+  <% } else { %>
+    -
+  <% } %>
+</td>
 
   <!-- STATUS -->
   <td>

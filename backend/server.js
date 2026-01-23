@@ -248,7 +248,8 @@ app.post("/order", async (req, res) => {
       pin,
       total,
       items,
-      paymentMethod
+      paymentMethod,
+      utrNumber
       
     } = req.body;
 

@@ -745,7 +745,7 @@ img {
     </div>
   </a>
 
-  <div class="checkout-right">,
+  <div class="checkout-right">
     <%= t.partsFor %>
   </div>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -840,6 +840,15 @@ img {
   <p><strong>UPI ID:</strong> vivekmishra261105@okhdfcbank</p>
 
   <img id="upiQrImage" alt="Scan to Pay UPI">
+<div id="utrBox" style="display:none; margin-top:12px;">
+  <label style="font-weight:800;">Enter UTR Number</label>
+  <input 
+    type="text" 
+    id="utrNumber"
+    placeholder="Example: 324567890123"
+    style="margin-top:6px;"
+  >
+</div>
 
   
   <p class="muted">
@@ -1094,17 +1103,18 @@ function showUPIQR(cart) {
 document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
   radio.addEventListener('change', () => {
     const upiBox = document.getElementById("upiBox");
+    const utrBox = document.getElementById("utrBox");
 
     if (radio.value === "UPI" && radio.checked) {
       upiBox.style.display = "block";
-      showUPIQR(cart); // ✅ now works
+      utrBox.style.display = "block";
+      showUPIQR(cart);
     } else {
       upiBox.style.display = "none";
+      utrBox.style.display = "none";
     }
   });
 });
-
-
 
 let cart = []; // 🌍 GLOBAL
 
@@ -1139,6 +1149,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusMsg = document.getElementById('statusMsg');
     const paymentMethod =
     document.querySelector('input[name="paymentMethod"]:checked')?.value;
+    const utrNumber = document.getElementById("utrNumber")?.value.trim();
+    if (paymentMethod === "UPI" && !utrNumber) {
+  return statusMsg.textContent = "Please enter UTR number for online payment.";
+}
 
 
 
@@ -1164,7 +1178,8 @@ document.addEventListener('DOMContentLoaded', () => {
         pin,
         total: totalAmount,
         items: orderItems,
-        paymentMethod   // ⭐ REQUIRED
+        paymentMethod,   // ⭐ REQUIRED
+        utrNumber
 
         })
       });
