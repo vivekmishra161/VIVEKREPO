@@ -47,7 +47,7 @@ header,
   /* Slider itself */
   .promo-slider {
     position: relative;
-    height: 220px;              /* Bigger height */
+    height: 400px;              /* Bigger height */
     border-radius: 0;           /* ❌ no rounded background */
     background: transparent;    /* ❌ remove black bg */
     box-shadow: none;
