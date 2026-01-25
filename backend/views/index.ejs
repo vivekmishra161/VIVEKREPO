@@ -244,32 +244,40 @@
     flex:1;
   }
 
-/* PROMO SLIDER */
+/* =================================================
+   DESKTOP — FULL WIDTH PROMO SLIDER
+================================================= */
+
 .promo-slider {
-    width: 100%;
-    max-width: 1400px;
-    height: 400px;              /* 🔥 BIGGER SLIDE */
-    margin: 20px auto 30px;
-    border-radius: 0;
-    overflow: hidden;
-    position: relative;
-    background: transparent;
-    box-shadow: none ;
+  width: 100vw;
+  max-width: 100vw;
+
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+
+  height: 420px;
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
 }
 
-/* SLIDE STACK */
 .promo-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.9s ease;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
 }
+
+
 .promo-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;          /* 🔥 STRETCH TO FULL SLIDE */
-    object-position: center;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
+
+
 
   .promo-slide.active{
     opacity:1;
@@ -280,27 +288,8 @@
    PROMO SLIDER CORE FIX
 ================================ */
 
-/* container */
-.promo-slider {
-  position: relative;
-  overflow: hidden;
-}
 
-/* all slides stacked */
-.promo-slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.8s ease;
-  pointer-events: none;
-}
 
-/* only active slide visible */
-.promo-slide.active {
-  opacity: 1;
-  pointer-events: auto;
-  z-index: 5;
-}
 
 
   .promo-slide .text-box{
