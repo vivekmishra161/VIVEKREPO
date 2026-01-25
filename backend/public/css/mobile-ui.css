@@ -110,14 +110,21 @@ header,
   /* full-width edge-to-edge */
   .promo-slider {
     width: 100vw;
-    height: 220px;        /* 🔥 perfect mobile height */
+    height: 400px;        /* 🔥 perfect mobile height */
     margin: 0 0 18px;
     border-radius: 0;
   }
 
-  .promo-slide img {
-    object-fit: cover;
-  }
+ .promo-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  min-width: 100%;
+  min-height: 100%;
+}
+
 
   .promo-dots {
     bottom: 10px;
