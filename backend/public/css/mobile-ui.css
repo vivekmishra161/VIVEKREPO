@@ -312,6 +312,56 @@ form {
   margin-top: 20px;
   padding-top: 10px;
 }
+/* ===================================================
+   FINAL MOBILE PROMO — CLEAN & STABLE
+=================================================== */
 
+@media (max-width: 600px) {
+
+  /* remove page padding effect */
+  .wrap {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* promo container */
+  .promo-slider {
+    width: 100vw;
+    height: 220px;                 /* 🔥 perfect mobile height */
+    margin: 0;
+    border-radius: 0;
+    overflow: hidden;
+    position: relative;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* slides */
+  .promo-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  .promo-slide.active {
+    opacity: 1;
+    z-index: 2;
+  }
+
+  /* image — full screen feel */
+  .promo-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;             /* 🔥 fills properly */
+    object-position: center;
+    display: block;
+  }
+
+  /* dots position */
+  .promo-dots {
+    bottom: 10px;
+  }
+}
 
 }
