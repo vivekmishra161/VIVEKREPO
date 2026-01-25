@@ -81,9 +81,14 @@ app.use('/admin', require('./routes/adminproduct'));
 
 app.use("/", require("./routes/index"));
 
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", async (req, res) => {
+  const products = await getProducts();
+
+  res.render("index", {
+    products
+  });
 });
+
 
 app.get("/signin", (req, res) => res.render("signin", { popup: "" }));
 app.get("/signup", (req, res) => res.render("signup", { popup: "" }));
