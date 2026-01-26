@@ -1846,10 +1846,69 @@ select.sort:focus{
     padding:16px 22px;
   }
 }
+/* ======================
+   LOADING SCREEN
+====================== */
+
+#page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader-box {
+  text-align: center;
+}
+
+.loader-box img {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+.loader-box p {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+}
+
+.loader-box span {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* loading animation */
+.loader-box span::after {
+  content: '';
+  animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+  0% { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+}
 
 </style>
 </head>
 <body>
+<!-- LOADING SCREEN -->
+<div id="page-loader">
+  <div class="loader-box">
+    <img src="https://th.bing.com/th/id/R.35647c0cec927537fa43ed1836a446c2?rik=7Lzu71WwPczowA&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fhyundai-logo-png-hyundai-car-logo-png-brand-image-1749.png&ehk=UI8O%2bS7ci5lpalKI9Rf1u%2bMYvCgw%2bVwAeupMAcxmk2g%3d&risl=&pid=ImgRaw&r=0" alt="AKC Auto Parts" />
+    <p>Starting AKC Auto Parts server...</p>
+    <span>Please wait</span>
+  </div>
+</div>
 
 <!-- TOPBAR -->
 <header class="topbar mobile-header">
@@ -2528,5 +2587,12 @@ function toggleMobileMenu() {
   }, 1500);
 }
 </script>
+<script>
+  window.addEventListener("load", function () {
+    const loader = document.getElementById("page-loader");
+    loader.style.display = "none";
+  });
+</script>
+
 </body>
 </html>
