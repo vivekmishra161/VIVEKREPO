@@ -12,19 +12,6 @@ const sequelize = require("./config/database");
 const User = require("./models/user");
 
 const { getProducts } = require("./models/productData");
-// ===============================
-// PRODUCTS API (Google Sheets)
-// ===============================
-app.get("/api/products", async (req, res) => {
-  try {
-    const products = await getProducts();
-    res.json(products);
-  } catch (err) {
-    console.log("❌ Product API error:", err.message);
-    res.json([]);
-  }
-});
-
 
 const app = express();
 app.use((req, res, next) => {
