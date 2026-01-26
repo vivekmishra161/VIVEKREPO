@@ -12,6 +12,19 @@ const sequelize = require("./config/database");
 const User = require("./models/user");
 
 const { getProducts } = require("./models/productData");
+// ===============================
+// PRODUCTS API (Google Sheets)
+// ===============================
+app.get("/api/products", async (req, res) => {
+  try {
+    const products = await getProducts();
+    res.json(products);
+  } catch (err) {
+    console.log("❌ Product API error:", err.message);
+    res.json([]);
+  }
+});
+
 
 const app = express();
 app.use((req, res, next) => {
@@ -81,9 +94,14 @@ app.use('/admin', require('./routes/adminproduct'));
 
 app.use("/", require("./routes/index"));
 
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", async (req, res) => {
+  const products = await getProducts();
+
+  res.render("index", {
+    products
+  });
 });
+
 
 app.get("/signin", (req, res) => res.render("signin", { popup: "" }));
 app.get("/signup", (req, res) => res.render("signup", { popup: "" }));
