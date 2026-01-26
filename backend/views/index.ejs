@@ -2007,35 +2007,158 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- PRODUCTS GRID -->
-    <div class="grid">
-  <% products.forEach(p => { %>
-
-    <div class="card">
-      <img src="<%= p.image %>" alt="<%= p.name %>">
-
-      <h3 class="title"><%= p.name %></h3>
-      <div class="id"><%= p.id %></div>
-
-      <div class="price">₹ <%= p.price.toLocaleString() %></div>
-
-      <div class="actions">
-        <input type="number" value="1" min="1" class="qty">
-        <button class="btn cart"
-          onclick="addToCart('<%= p.id %>')">
-          Add to Cart
-        </button>
-      </div>
-    </div>
-
-  <% }) %>
-</div>
-
+    <div class="grid" id="productGrid" aria-live="polite"></div>
 
   </section>
 </main>
 
 
 <script>
+/* ------------ DATA: products ------------- */
+const products = [];
+
+// ✅ createPart with safe category images + fallback
+function createPart(manufacturer, name, cat, baseId, price){
+  const categoryImages = {
+    Engine: "https://di-uploads-pod14.dealerinspire.com/toyotaoforlando/uploads/2021/02/car-engine.jpg",
+    Brake: "https://www.gotodobbs.com/wp-content/uploads/2016/08/disc-brake-and-pads-on-a-vehicle.jpg",
+    Electrical: "https://easycarelectrics.com/wp-content/uploads/2021/12/Car-Electrical-System-Wiring.jpg",
+    Suspension: "https://di-uploads-pod16.dealerinspire.com/toyotaofnorthcharlotte/uploads/2020/03/N-Charlotte-car-suspension-system.jpg",
+    Body: "https://png.pngtree.com/thumb_back/fh260/background/20230929/pngtree-an-auto-car-is-displayed-with-its-assembly-line-attached-image_13343909.jpg",
+    Cooling: "https://upgradedvehicle.com/wp-content/uploads/2023/08/Basics-of-a-Car-Cooling-System.jpg",
+    Exhaust: "https://as2.ftcdn.net/v2/jpg/09/28/95/83/1000_F_928958372_sgcGDtOWJiACPZ3z2xtgO4yHsWd3NpU1.jpg",
+    Fuel: "https://www.rd.com/wp-content/uploads/2017/03/04-Why-Do-Cars-Have-Gas-Tanks-on-the-Left-or-Right-_128298575-welcomia-ft.jpg",
+    Glass: "https://tse1.mm.bing.net/th/id/OIP.mstA0tgCwz1Q5DCbRhtF0gHaE7?w=630&h=419&rs=1&pid=ImgDetMain&o=7&rm=3",
+    Wiper: "https://tse3.mm.bing.net/th/id/OIP.XJ0E_z839j7xY73WuHgHIgHaEo?w=1200&h=750&rs=1&pid=ImgDetMain&o=7&rm=3",
+    Interior: "https://tse1.mm.bing.net/th/id/OIP.QIkxkXghoTkCGxABO-gHkAHaDL?w=1200&h=515&rs=1&pid=ImgDetMain&o=7&rm=3"
+  };
+  const img = categoryImages[cat] || `https://via.placeholder.com/400x240?text=${encodeURIComponent(name)}`;
+
+  return { manufacturer, name, category:cat, id: baseId, price: price, img };
+}
+
+const hy = [
+  ["737000B010", "PANEL ASSY-TAIL GATE", "Body", 12935.28],
+  ["8611025100", "GLASS-WINDSHIELD", "Glass", 7203.5],
+  ["2461022600", "ADJUSTER ASSY-ROCKER ARM LASH", "Engine", 5287.8],
+  ["715221A000", "PANEL-REAR SIDE OUTER,RH", "Body", 4959.24],
+  ["287001A200", "PIPE-TAIL W/MUFFLER", "Exhaust", 4843.02],
+  ["8661025000", "COVER ASSY-RR BUMPER", "Body", 4068.42],
+  ["253101A000", "RADIATOR ASSY", "Cooling", 3452.52],
+  ["8661105000", "COVER-RR BUMPER", "Body", 3285.0],
+  ["6640025000", "PANEL ASSY-HOOD", "Body", 3204.67],
+  ["865101A000", "COVER ASSY-FR BUMPER", "Body", 3051.6],
+  ["866110B000", "COVER-RR BUMPER", "Body", 2601.24],
+  ["583051AA00", "SHOE & LINING KIT-RR BRAKE", "Brake", 2312.0],
+  ["2191025010", "BRACKET ASSY-ROLL STOPPER,FR", "Suspension", 2293.93],
+  ["663111A000", "PANEL-FENDER,LH", "Body", 2061.74],
+  ["663211A000", "PANEL-FENDER,RH", "Body", 2061.74],
+  ["2431227000", "BELT-VALVE TIMING", "Engine", 2045.07],
+  ["8651105000", "COVER-FR BUMPER", "Body", 1973.66],
+  ["3517022600", "SENSOR ASSY-THROTTLE POSITION", "Engine", 1963.47],
+  ["8711005541", "GLASS-TAIL GATE", "Glass", 1946.87],
+  ["6450105060", "PANEL ASSY-FNDR APRON,LH", "Body", 1913.88],
+  ["8661105600", "COVER-RR BUMPER", "Body", 1805.06],
+  ["8711005551", "GLASS-TAIL GATE", "Glass", 1777.89],
+  ["9725925100", "SWITCH ASSY-A/C", "Electrical", 1704.24],
+  ["5775525000", "BALL JOINT ASSY,INR", "Suspension", 1687.92],
+  ["8636005600", "GRILLE ASSY-RADIATOR", "Body", 1564.37],
+  ["8772225510CA", "MOULDING ASSY-FRT DR W/LINE,RH", "Body", 1240.86],
+  ["5483017010", "LINK ASSY-FRONT STABILIZER,LH", "Suspension", 1096.92],
+  ["5483017020", "LINK ASSY-FRONT STABILIZER,RH", "Suspension", 1096.92],
+  ["3198143000", "CARTRIDGE & SENSOR ASSY", "Engine", 976.83],
+  ["8772225000CA", "MOULDING ASSY-FRT DR W/LINE,RH", "Body", 965.73],
+  ["865811A000", "BRACKET-FR BPR UPR SUPT", "Body", 931.77],
+  ["5450325A00", "BALL JOINT KIT-SUSP LWR ARM", "Suspension", 889.58],
+  ["5810225A00", "SEAL KIT-FR DISC BRAKE", "Brake", 844.72],
+  ["529601V000", "CAP ASSY-WHEEL HUB", "Body", 809.98],
+  ["876101J700", "MIRROR ASSY-OUTSIDE RR VIEW,LH", "Body", 809.65],
+  ["8773225000CA", "MOULDING ASSY-RR DR W/LINE,RH", "Body", 794.87],
+  ["5583025000", "LINK-STABILIZER BAR", "Suspension", 783.02],
+  ["876101A901CA", "MIRROR ASSY-O/S REAR VIEW,LH", "Body", 780.94],
+  ["597701V000", "CABLE ASSY-PARKING BRAKE,RH", "Brake", 757.31],
+  ["9241025000", "LENS & HSG-REAR COMB LAMP,LH", "Electrical", 628.53],
+  ["863201C000", "EMBLEM-GETZ", "Body", 595.34],
+  ["8632305100", "EMBLEM-1.1 L", "Body", 584.98],
+  ["8773125510CA", "MOULDING ASSY-RR DR W/LINE,LH", "Body", 560.61],
+  ["8636105101", "GRILLE-RADIATOR", "Body", 521.28],
+  ["838301R000", "MOULDING ASSY-RR DR DELTA,LH", "Body", 514.69],
+  ["838401R000", "MOULDING ASSY-RR DR DELTA,RH", "Body", 514.69],
+  ["8761125100", "MIRROR & HOLDER ASSY-O/S RR VI", "Body", 511.35],
+  ["8762125400", "MIRROR & HOLDER-OUTSIDE RR,RH", "Body", 511.35],
+  ["8240305510", "REGULATOR ASSY-FR DR P/WDO LH", "Electrical", 510.23],
+  ["9241002200", "SWITCH ASSY-FR FOG LAMP", "Electrical", 509.07],
+  ["5531122000", "INSULATOR-STRUT", "Suspension", 501.17],
+  ["8612128A00", "DAM-GLASS", "Glass", 457.45],
+  ["5481325000", "BUSH-STABILIZER BAR", "Suspension", 448.3],
+  ["8641036010", "BUMPER-HOOD OVERSLAM", "Body", 430.95],
+  ["6951005500", "DOOR ASSY-FUEL FILLER", "Fuel", 424.72],
+  ["817201J020", "HANDLE ASSY-TAIL GATE", "Body", 422.27],
+  ["565550X500", "RACK BUSH", "Suspension", 408.64],
+  ["8340305510", "REGULATOR ASSY-RR DR P/WDO LH", "Electrical", 360.44],
+  ["815114A000", "BUMPER-F/FILLER DR O/SLAM", "Body", 339.04],
+  ["5461202000", "BEARING-STRUT", "Suspension", 325.53],
+  ["876210P970", "MIRROR & HOLDER-OUTSIDE RR,RH", "Body", 323.16],
+  ["876110B000", "MIRROR & HOLDER ASSY-O/S RR VI", "Body", 320.51],
+  ["876210B000", "MIRROR & HOLDER-OUTSIDE RR,RH", "Body", 320.51],
+  ["5830105A00", "CYLINDER KIT-RR WHEEL BRAKE", "Brake", 316.9],
+  ["865821A000", "BRACKET-FR BPR LWR SUPT", "Body", 310.59],
+  ["8683102000", "GUARD ASSY-FRONT WHEEL MUD,LH", "Body", 309.7],
+  ["8683202000", "GUARD ASSY-FRONT WHEEL MUD,RH", "Body", 309.7],
+  ["3341202000", "RELIEF DIAPH", "Engine", 304.92],
+  ["5723122000", "BELT V-POWER STEERING PUMP", "Engine", 300.54],
+  ["865841A000", "BRACKET-FR BPR CORNER SUPT,LH", "Body", 299.04],
+  ["865851A000", "BRACKET-FR BPR CORNER SUPT,RH", "Body", 299.04],
+  ["529601C300", "CAP ASSY-WHEEL HUB", "Body", 298.45],
+  ["988201C000", "BLADE ASSY-WIPER,RR", "Wiper", 284.86],
+  ["8265025000CA", "HANDLE ASSY-FRONT DOOR OUTSIDE", "Body", 265.65],
+  ["8266025000CA", "HANDLE ASSY-FRONT DOOR OUTSIDE", "Body", 265.65],
+  ["9882105000", "BLADE-W/SHLD WIPER", "Wiper", 254.1],
+  ["254121E300", "HOSE-RADIATOR LOWER", "Cooling", 232.85],
+  ["8365025000CA", "HANDLE ASSY-REAR DOOR OUTSIDE", "Body", 232.45],
+  ["8366025000CA", "HANDLE ASSY-REAR DOOR OUTSIDE", "Body", 232.45],
+  ["9183038000", "LP-S/B FUSE 30A", "Electrical", 230.65],
+  ["2915025000", "COVER-UNDER", "Body", 196.18],
+  ["5810202A00", "SEAL KIT-FR DISC BRAKE", "Brake", 183.99],
+  ["8651605000", "MESH-FRONT BUMPER,LH", "Body", 183.85],
+  ["815900X900", "CATCH & CABLE ASSY-FUEL FILLER", "Fuel", 182.16],
+  ["923300B010", "LENS & HOUSING ASSY-S/RPTR", "Electrical", 177.04],
+  ["5296022800", "CAP ASSY-WHEEL HUB", "Body", 163.64],
+  ["868111A000", "GUARD ASSY-FRONT WHEEL,LH", "Body", 161.82],
+  ["868121A000", "GUARD ASSY-FRONT WHEEL,RH", "Body", 161.82],
+  ["8651505000", "BRACKET-FR BUMPER SIDE UPR,RH", "Body", 150.78],
+  ["8651705000", "MESH-FRONT BUMPER,RH", "Body", 147.08],
+  ["8644002001", "W/STRIP-HOOD", "Body", 120.81],
+  ["8636205100", "MESH-RADIATOR GRILLE", "Body", 112.88],
+  ["8263022001LM", "HANDLE ASSY-DOOR WINDOW REGULA", "Interior", 106.23],
+  ["8659334000", "GROMMET-SCREW", "Body", 99.9],
+  ["865831A000", "BRACKET-FR BPR CTR SUPT", "Body", 99.85],
+  ["865241V000", "COVER-BLANKING FRT FOG,RH", "Body", 86.2],
+  ["8684205500", "GUARD ASSY-REAR WHEEL MUD,RH", "Body", 71.94],
+  ["711170U000", "BRACKET ASSY-FENDER MTG,LH", "Body", 64.85],
+  ["711270U000", "BRACKET ASSY-FENDER MTG,RH", "Body", 64.85],
+  ["8766025010", "COVER-FR DR QUADRANT INR LH", "Body", 60.7],
+  ["9863025900", "NOZZLE ASSY-WINDSHIELD WASHER", "Wiper", 58.38],
+  ["8939114001IJ", "KNOB-LATCH ROD", "Interior", 57.68],
+  ["8661505600", "BRACKET-RR BUMPER SIDE,LH", "Body", 55.26],
+  ["8661605600", "BRACKET-RR BUMPER SIDE,RH", "Body", 55.26],
+  ["8683225000", "GUARD ASSY-FRONT WHEEL MUD,RH", "Body", 51.94],
+  ["8135533000", "SHIM-DR STRIKER", "Interior", 38.06],
+  ["9835205000", "CAP-W/WPR ARM", "Wiper", 35.97],
+  ["1893720252", "FUSE-AUTO 20(A)", "Electrical", 29.58]
+];
+
+hy.forEach(it => {
+  products.push(
+    createPart(
+      "Hyundai",
+      it[1], // name
+      it[2], // category
+      it[0], // id
+      it[3]  // price
+    )
+  );
+});
 
 
 /* ------------ Cart LocalStorage ------------ */
@@ -2073,23 +2196,13 @@ function showMessage(message, type = 'success'){
 const productGrid = document.getElementById('productGrid');
 const resultsCount = document.getElementById('resultsCount');
 
-function renderProducts(products) {
-  const grid = document.getElementById("productGrid");
-
-  grid.innerHTML = products.map(p => `
-    <div class="card">
-      <img src="${p.image}">
-      <h3>${p.name}</h3>
-      <p>${p.id}</p>
-      <div class="price">₹${p.price}</div>
-
-      <button onclick="addToCart('${p.id}')">
-        Add to Cart
-      </button>
-    </div>
-  `).join("");
-}
-
+function renderProducts(list){
+  productGrid.innerHTML = '';
+  if(!list.length){
+    productGrid.innerHTML = `<div style="grid-column:1/-1; padding:18px; background:#fff; border-radius:10px">No products found</div>`;
+    resultsCount.textContent = 'Showing 0 products';
+    return;
+  }
 
   list.forEach(p=>{
     const div = document.createElement('div');
@@ -2121,7 +2234,6 @@ function getActiveCategories(){
   return Array.from(document.querySelectorAll('.filter-category:checked')).map(n=>n.value);
 }
 function applyFilters() {
-
   const q =
     (document.getElementById('miniSearch')?.value || '').toLowerCase();
 
@@ -2134,7 +2246,7 @@ function applyFilters() {
   const sort =
     document.getElementById('sortSelect')?.value || 'relevance';
 
-  let filtered = allProducts.filter(p => {
+  let filtered = products.filter(p => {
 
     const matchQ =
       !q ||
@@ -2152,17 +2264,16 @@ function applyFilters() {
     return matchQ && matchM && matchC;
   });
 
-  if (sort === 'price-asc')
-    filtered.sort((a,b)=>a.price - b.price);
-
-  if (sort === 'price-desc')
-    filtered.sort((a,b)=>b.price - a.price);
-
-  if (sort === 'name-asc')
-    filtered.sort((a,b)=>a.name.localeCompare(b.name));
+  if (sort === 'price-asc') filtered.sort((a,b)=>a.price - b.price);
+  if (sort === 'price-desc') filtered.sort((a,b)=>b.price - a.price);
+  if (sort === 'name-asc') filtered.sort((a,b)=>a.name.localeCompare(b.name));
 
   renderProducts(filtered);
 }
+
+
+
+
 
 function quickFilterManufacturer(){
   const v = document.getElementById('manufacturerSelect').value;
@@ -2192,21 +2303,14 @@ function resetFilters(){
 
 
 /* ------------ Cart ------------ */
-function addToCart(productId, qty = 1) {
+function addToCart(productId, qty){
   const cart = loadCart();
-
   const existing = cart.find(i => i.id === productId);
-
-  if (existing) {
-    existing.qty += qty;
-  } else {
-    cart.push({ id: productId, qty });
-  }
-
+  if(existing) existing.qty += qty;
+  else cart.push({ id: productId, qty });
   saveCart(cart);
-  showMessage("Item added to cart.", "success");
+  showMessage('Item added to cart.', 'success');
 }
-
 function addToCartFromBtn(btn){
   const card = btn.closest('.card');
   const id = btn.getAttribute('data-id');
