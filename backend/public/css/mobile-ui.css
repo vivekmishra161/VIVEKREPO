@@ -112,6 +112,7 @@ header,
     width: 100vw;
     height: 400px;        /* 🔥 perfect mobile height */
     margin: 0 0 18px;
+    margin-bottom: 30px;
     border-radius: 0;
   }
 
