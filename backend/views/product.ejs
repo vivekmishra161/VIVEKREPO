@@ -1484,31 +1484,6 @@ if (!product) {
 
   // Add event listeners for buttons
   document.getElementById('backBtn').addEventListener('click', ()=> location.href = '/');
-document.getElementById("addCartBtn").addEventListener("click", () => {
-  const qty = Number(document.getElementById("qtyInput").value || 1);
-
-  let cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
-
-  const existing = cart.find(item => item.id === product.id);
-
-  if (existing) {
-    existing.qty += qty;
-  } else {
-    cart.push({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      finalPrice: product.finalPrice,
-      discount: product.discount,
-      qty: qty
-    });
-  }
-
-  localStorage.setItem("akc_cart_v1", JSON.stringify(cart));
-  alert("Added to cart ✅");
-});
-
-
   document.getElementById('buyNowBtn').addEventListener('click', ()=> {
     if (isLoggedIn !== 'true') {
       // show sign-in modal
@@ -1528,13 +1503,21 @@ function increaseQty(){ const el = document.getElementById('qtyInput'); el.value
 function decreaseQty(){ const el = document.getElementById('qtyInput'); el.value = Math.max(1, Number(el.value || 1) - 1); }
 
 function addToCart(productId, qty) {
-  let cart = loadCart();
   qty = Number(qty) || 1;
 
-  // discounted price already calculated from backend
-  const finalPrice = Number(product.finalPrice || product.price);
+  let cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
 
-  const existing = cart.find(i => i.id === productId);
+  // 🔥 APPLY DISCOUNT HERE
+  let discountedPrice = product.price;
+
+  if (product.discount && product.discount > 0) {
+    discountedPrice =
+      product.price - (product.price * product.discount) / 100;
+  }
+
+  discountedPrice = Math.round(discountedPrice);
+
+  const existing = cart.find(i => i.id === product.id);
 
   if (existing) {
     existing.qty += qty;
@@ -1542,16 +1525,15 @@ function addToCart(productId, qty) {
     cart.push({
       id: product.id,
       name: product.name,
-      price: finalPrice, // ✅ ONLY discounted price
+      price: discountedPrice, // ✅ ONLY discounted price
       qty: qty
     });
   }
 
-  saveCart(cart);
+  localStorage.setItem("akc_cart_v1", JSON.stringify(cart));
+
   showToast("Added to cart");
 }
-
-
 
 /* toast */
 function showToast(message) {
