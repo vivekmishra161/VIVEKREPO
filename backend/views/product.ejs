@@ -1538,11 +1538,11 @@ function addToCart(productId, qty) {
     existing.qty += qty;
   } else {
     cart.push({
-      id: product.id,                 // backend EJS product
+      id: product.id,
       name: product.name,
-      price: product.price,
-      finalPrice: product.finalPrice,
-      discount: product.discount,
+      price: Number(product.price),
+      finalPrice: Number(product.finalPrice || product.price),
+      discount: Number(product.discount || 0),
       qty: qty
     });
   }
