@@ -919,10 +919,10 @@ function calcTotal(cart) {
   return total;
 }
 
-const total = calcTotal(cart);
+// const total = calcTotal(cart);
 
-document.getElementById("totalDisplay").textContent =
-  new Intl.NumberFormat("en-IN").format(total);
+// document.getElementById("totalDisplay").textContent =
+//   new Intl.NumberFormat("en-IN").format(total);
 
 function buildUPILink(cart) {
   const amount = calcTotal(cart).toFixed(2); // dynamic total
