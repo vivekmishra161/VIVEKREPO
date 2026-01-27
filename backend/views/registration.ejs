@@ -884,7 +884,9 @@ img {
 
 
 <script>
-/* CART STORAGE */
+  
+let cart = []; // 🌍 GLOBAL
+
 const LS_CART_KEY = 'akc_cart_v1';
 
 function loadCart(){
@@ -954,21 +956,35 @@ function showUPIQR(cart) {
 
 document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
   radio.addEventListener('change', () => {
+
+    // ✅ ensure cart is loaded
+    if (!cart || cart.length === 0) {
+      cart = loadCart();
+    }
+
     const upiBox = document.getElementById("upiBox");
     const utrBox = document.getElementById("utrBox");
 
     if (radio.value === "UPI" && radio.checked) {
+
       upiBox.style.display = "block";
       utrBox.style.display = "block";
-      showUPIQR(cart);
+
+      if (cart.length > 0) {
+        showUPIQR(cart);
+      } else {
+        alert("Cart is empty");
+      }
+
     } else {
       upiBox.style.display = "none";
       utrBox.style.display = "none";
     }
+
   });
 });
 
-let cart = []; // 🌍 GLOBAL
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
