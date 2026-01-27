@@ -1521,15 +1521,29 @@ function increaseQty(){ const el = document.getElementById('qtyInput'); el.value
 function decreaseQty(){ const el = document.getElementById('qtyInput'); el.value = Math.max(1, Number(el.value || 1) - 1); }
 
 /* add to cart */
-function addToCart(productId, qty){
+function addToCart(productId, qty) {
   let cart = loadCart();
   qty = Number(qty) || 1;
-  const existing = cart.find(i=>i.id === productId);
-  if (existing) existing.qty += qty;
-  else cart.push({ id: productId, qty });
+
+  const existing = cart.find(i => i.id === productId);
+
+  if (existing) {
+    existing.qty += qty;
+  } else {
+    cart.push({
+      id: product.id,                 // backend EJS product
+      name: product.name,
+      price: product.price,
+      finalPrice: product.finalPrice,
+      discount: product.discount,
+      qty: qty
+    });
+  }
+
   saveCart(cart);
-  showToast('Added to cart');
+  showToast("Added to cart");
 }
+
 
 /* toast */
 function showToast(message) {
