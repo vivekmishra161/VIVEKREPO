@@ -752,8 +752,11 @@ function renderCart() {
   }
 
   cart.forEach(item => {
-    const subtotal = item.finalPrice * item.qty;
-    grandTotal += subtotal;
+    const price = Number(item.finalPrice || item.price || 0);
+    const subtotal = price * item.qty;
+
+    grandTotal += Number(subtotal);
+
 
     const tr = document.createElement("tr");
 
