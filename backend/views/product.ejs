@@ -1507,17 +1507,9 @@ function addToCart(productId, qty) {
 
   let cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
 
-  // 🔥 APPLY DISCOUNT HERE
-  let discountedPrice = product.price;
+  const finalPrice = Number(product.finalPrice);
 
-  if (product.discount && product.discount > 0) {
-    discountedPrice =
-      product.price - (product.price * product.discount) / 100;
-  }
-
-  discountedPrice = Math.round(discountedPrice);
-
-  const existing = cart.find(i => i.id === product.id);
+  const existing = cart.find(i => i.id === productId);
 
   if (existing) {
     existing.qty += qty;
@@ -1525,15 +1517,15 @@ function addToCart(productId, qty) {
     cart.push({
       id: product.id,
       name: product.name,
-      price: discountedPrice, // ✅ ONLY discounted price
+      price: finalPrice,   // ✅ DISCOUNTED PRICE ONLY
       qty: qty
     });
   }
 
   localStorage.setItem("akc_cart_v1", JSON.stringify(cart));
-
   showToast("Added to cart");
 }
+
 
 /* toast */
 function showToast(message) {
