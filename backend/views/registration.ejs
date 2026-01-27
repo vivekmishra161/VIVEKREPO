@@ -908,11 +908,17 @@ function calcTotal(cart) {
   let total = 0;
 
   cart.forEach(item => {
-    total += item.finalPrice * item.qty;
+    const price =
+      Number(item.finalPrice ?? item.price ?? 0);
+
+    const qty = Number(item.qty ?? 1);
+
+    total += price * qty;
   });
 
   return total;
 }
+
 const total = calcTotal(cart);
 
 document.getElementById("totalDisplay").textContent =
