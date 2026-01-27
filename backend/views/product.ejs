@@ -1121,7 +1121,14 @@ img {
     </div>
 
     <div class="cta">
-      <button class="btn cart" id="addCartBtn">Add to Cart</button>
+      <button
+  class="btn cart"
+  id="addCartBtn"
+  onclick="addToCart('<%= product.id %>', document.getElementById('qtyInput').value)"
+>
+  Add to Cart
+</button>
+
     </div>
 
     <div style="display:flex; gap:10px; margin-top:8px; align-items:center;">
