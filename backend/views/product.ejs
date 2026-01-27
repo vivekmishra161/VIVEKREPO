@@ -1202,6 +1202,9 @@ img {
 
   </div>
 </div>
+<script>
+  const PRODUCT = <%- JSON.stringify(product) %>;
+</script>
 
 <script>
 /* =========================
@@ -1507,17 +1510,17 @@ function addToCart(productId, qty) {
 
   let cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
 
-  const finalPrice = Number(product.finalPrice);
+  const finalPrice = Number(PRODUCT.finalPrice || PRODUCT.price);
 
-  const existing = cart.find(i => i.id === productId);
+  const existing = cart.find(i => i.id === PRODUCT.id);
 
   if (existing) {
     existing.qty += qty;
   } else {
     cart.push({
-      id: product.id,
-      name: product.name,
-      price: finalPrice,   // ✅ DISCOUNTED PRICE ONLY
+      id: PRODUCT.id,
+      name: PRODUCT.name,
+      price: finalPrice,   // ✅ guaranteed value
       qty: qty
     });
   }
@@ -1525,6 +1528,7 @@ function addToCart(productId, qty) {
   localStorage.setItem("akc_cart_v1", JSON.stringify(cart));
   showToast("Added to cart");
 }
+
 
 
 /* toast */
