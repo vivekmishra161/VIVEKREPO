@@ -99,7 +99,7 @@ header,
    MOBILE — PERFECT HEIGHT
 ===================================================== */
 
-@media (max-width: 100px) {
+@media (max-width: 600px) {
 
   /* remove container padding */
   .wrap {
