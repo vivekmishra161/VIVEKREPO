@@ -1083,6 +1083,7 @@ img {
 
     <% } %>
   </div>
+ </div>
 
       </div>
       <div style="margin-left:auto">
@@ -1476,10 +1477,30 @@ if (!product) {
 
   // Add event listeners for buttons
   document.getElementById('backBtn').addEventListener('click', ()=> location.href = '/');
-  document.getElementById('addCartBtn').addEventListener('click', ()=> {
-    const qty = Math.max(1, Number(document.getElementById('qtyInput').value || 1));
-    addToCart(product.id, qty);
-  });
+document.getElementById("addToCartBtn").addEventListener("click", () => {
+  const qty = Number(document.getElementById("qtyInput").value);
+
+  let cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
+
+  const existing = cart.find(item => item.id === productData.id);
+
+  if (existing) {
+    existing.qty += qty;
+  } else {
+    cart.push({
+      id: productData.id,
+      name: productData.name,
+      price: productData.price,
+      finalPrice: productData.finalPrice,
+      discount: productData.discount,
+      qty
+    });
+  }
+
+  localStorage.setItem("akc_cart_v1", JSON.stringify(cart));
+  alert("Product added to cart");
+});
+
   document.getElementById('buyNowBtn').addEventListener('click', ()=> {
     if (isLoggedIn !== 'true') {
       // show sign-in modal
@@ -1670,5 +1691,19 @@ function getDeliveryDate(daysAhead = 6) {
 getDeliveryDate(6);
 
 </script>
+<script>
+  // 🔥 BACKEND → FRONTEND BRIDGE
+  const productData = {
+    id: "<%= product.id %>",
+    name: "<%= product.name.replace(/"/g, '\\"') %>",
+    manufacturer: "<%= product.manufacturer %>",
+    category: "<%= product.category %>",
+    price: <%= product.price %>,
+    finalPrice: <%= product.finalPrice %>,
+    discount: <%= product.discount %>,
+    stock: "<%= product.stock %>"
+  };
+</script>
+
 </body>
 </html>
