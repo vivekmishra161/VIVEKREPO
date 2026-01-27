@@ -7,23 +7,23 @@ const API_KEY = "AIzaSyDfyx80D4bHDx6aD4E5gZVq5nqC0GbTjuk";
 const RANGE = "Sheet1!A2:G109";
 
 function applyDiscount(price, discount) {
-  discount = Number(discount || 0);
+  const d = Number(discount);
 
-  if (discount > 0) {
-    const discountAmount = (price * discount) / 100;
-    const finalPrice = price - discountAmount;
-
+  if (!d || isNaN(d) || d <= 0) {
     return {
-      discount,
-      finalPrice: Math.round(finalPrice)
+      discount: 0,
+      finalPrice: price
     };
   }
 
+  const finalPrice = price - (price * d) / 100;
+
   return {
-    discount: 0,
-    finalPrice: price
+    discount: d,
+    finalPrice: Math.round(finalPrice)
   };
 }
+
 
 async function getProducts() {
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
@@ -35,7 +35,8 @@ async function getProducts() {
 
   return data.values.map(row => {
     const price = Number(row[4]) || 0;
-    const discountData = applyDiscount(price, row[6]);
+    const discountData = applyDiscount(price, row[6] || 0);
+
 
     return {
       id: row[0] || "",
