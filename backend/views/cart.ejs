@@ -790,6 +790,21 @@ function renderCart() {
   });
 
   document.getElementById("grandTotal").innerText = grandTotal;
+  updateCheckoutButton();
+}
+function updateCheckoutButton() {
+  const cart = loadCart();
+  const btn = document.getElementById("checkoutBtn");
+
+  if (cart.length > 0) {
+    btn.disabled = false;
+    btn.style.opacity = "1";
+    btn.style.cursor = "pointer";
+  } else {
+    btn.disabled = true;
+    btn.style.opacity = "0.5";
+    btn.style.cursor = "not-allowed";
+  }
 }
 
 function updateQty(id, qty) {
@@ -802,7 +817,14 @@ function updateQty(id, qty) {
 
   saveCart(cart);
   renderCart();
+  updateCheckoutButton();
 }
+document.getElementById("checkoutBtn").addEventListener("click", () => {
+  if (loadCart().length === 0) return;
+
+  window.location.href = "/checkout";
+});
+
 document.getElementById("checkoutBtn").onclick = () => {
   const cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
 
@@ -818,6 +840,7 @@ function removeItem(id) {
   let cart = loadCart().filter(item => item.id !== id);
   saveCart(cart);
   renderCart();
+  updateCheckoutButton();
 }
 
 renderCart();
