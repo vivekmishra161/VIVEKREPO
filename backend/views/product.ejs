@@ -1050,8 +1050,53 @@ img {
     <h1 class="title" id="prodTitle">Product Title</h1>
     <div class="price-row">
       <div>
-        <div class="price" id="prodPrice">₹0</div>
-        <div class="old-price" id="prodOldPrice"></div>
+        <div class="price-row">
+  <div>
+    <% if (product.discount > 0) { %>
+
+      <div class="price">
+        ₹<%= product.finalPrice %>
+      </div>
+
+      <div class="old-price">
+        ₹<%= product.price %>
+      </div>
+
+      <div style="
+        margin-top:6px;
+        background:#16a34a;
+        color:white;
+        padding:4px 10px;
+        font-size:12px;
+        font-weight:700;
+        border-radius:6px;
+        display:inline-block;
+      ">
+        <%= product.discount %>% OFF
+      </div>
+
+    <% } else { %>
+
+      <div class="price">
+        ₹<%= product.price %>
+      </div>
+
+    <% } %>
+  </div>
+
+  <div style="margin-left:auto">
+    <% 
+      let stockClass = "red";
+      if (product.stock === "In Stock") stockClass = "green";
+      else if (product.stock === "Limited") stockClass = "orange";
+    %>
+
+    <div class="stock <%= stockClass %>">
+      <%= product.stock %>
+    </div>
+  </div>
+</div>
+
       </div>
       <div style="margin-left:auto">
           <% 

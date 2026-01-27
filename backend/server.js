@@ -257,22 +257,14 @@ app.post("/order", async (req, res) => {
     }
 
     // 🔥 FETCH PRODUCTS FROM GOOGLE SHEETS
-    const products = await getProducts();
+   const safeItems = items.map(item => ({
+  id: item.id,
+  name: item.name,
+  price: Number(item.price), // discounted price
+  discount: Number(item.discount || 0),
+  qty: Number(item.qty)
+}));
 
-    const safeItems = [];
-
-    for (let cartItem of items) {
-      const product = products.find(p => p.id === cartItem.id);
-
-      if (!product) continue;
-
-      safeItems.push({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        qty: Number(cartItem.qty)
-      });
-    }
 
     if (safeItems.length === 0) {
       return res.json({ success: false, message: "Invalid cart items" });
