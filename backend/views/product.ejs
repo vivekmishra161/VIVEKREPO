@@ -1691,19 +1691,7 @@ function getDeliveryDate(daysAhead = 6) {
 getDeliveryDate(6);
 
 </script>
-<script>
-  // 🔥 BACKEND → FRONTEND BRIDGE
-  const productData = {
-    id: "<%= product.id %>",
-    name: "<%= product.name.replace(/"/g, '\\"') %>",
-    manufacturer: "<%= product.manufacturer %>",
-    category: "<%= product.category %>",
-    price: <%= product.price %>,
-    finalPrice: <%= product.finalPrice %>,
-    discount: <%= product.discount %>,
-    stock: "<%= product.stock %>"
-  };
-</script>
+
 
 </body>
 </html>
