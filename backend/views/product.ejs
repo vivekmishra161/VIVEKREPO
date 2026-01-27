@@ -1084,19 +1084,6 @@ img {
     <% } %>
   </div>
 
-  <div style="margin-left:auto">
-    <% 
-      let stockClass = "red";
-      if (product.stock === "In Stock") stockClass = "green";
-      else if (product.stock === "Limited") stockClass = "orange";
-    %>
-
-    <div class="stock <%= stockClass %>">
-      <%= product.stock %>
-    </div>
-  </div>
-</div>
-
       </div>
       <div style="margin-left:auto">
           <% 
