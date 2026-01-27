@@ -1534,15 +1534,21 @@ function addToCart(productId, qty) {
 
   const existing = cart.find(i => i.id === productId);
 
+  const originalPrice = Number(product.price);
+  const discount = Number(product.discount || 0);
+  const finalPrice = discount > 0
+    ? Math.round(originalPrice - (originalPrice * discount) / 100)
+    : originalPrice;
+
   if (existing) {
     existing.qty += qty;
   } else {
     cart.push({
       id: product.id,
       name: product.name,
-      price: Number(product.price),
-      finalPrice: Number(product.finalPrice || product.price),
-      discount: Number(product.discount || 0),
+      price: originalPrice,
+      finalPrice: finalPrice,
+      discount: discount,
       qty: qty
     });
   }
@@ -1550,6 +1556,7 @@ function addToCart(productId, qty) {
   saveCart(cart);
   showToast("Added to cart");
 }
+
 
 /* toast */
 function showToast(message) {
