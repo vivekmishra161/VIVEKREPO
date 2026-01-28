@@ -1538,27 +1538,37 @@ function decreaseQty(){ const el = document.getElementById('qtyInput'); el.value
 function addToCart(productId, qty) {
   qty = Number(qty) || 1;
 
-  let cart = JSON.parse(localStorage.getItem(LS_CART_KEY)) || [];
+  let cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
 
-  // PRODUCT already exists on page
-  const finalPrice = PRODUCT.finalPrice || PRODUCT.price;
+  // 🔥 discounted unit price
+  const discountedUnitPrice =
+    PRODUCT.finalPrice ||
+    (PRODUCT.discount
+      ? Math.round(PRODUCT.price - (PRODUCT.price * PRODUCT.discount) / 100)
+      : PRODUCT.price);
+
+  // ✅ final payable price
+  const finalPrice = discountedUnitPrice * qty;
 
   const existing = cart.find(i => i.id === PRODUCT.id);
 
   if (existing) {
     existing.qty += qty;
+    existing.price += finalPrice;
   } else {
     cart.push({
       id: PRODUCT.id,
       name: PRODUCT.name,
-      price: finalPrice,   // ✅ discounted price
+      price: finalPrice,   // ✅ FINAL AMOUNT ONLY
       qty: qty,
+      img: PRODUCT.img
     });
   }
 
   localStorage.setItem("akc_cart_v1", JSON.stringify(cart));
   showToast("Added to cart");
 }
+
 
 /* toast */
 function showToast(message) {
