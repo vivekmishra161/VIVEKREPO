@@ -2031,15 +2031,15 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="chip" id="resultsCount">Showing 60 products</div>
         <div class="search">
       <form action="/search" method="GET">
-         <input
-          
-  type="search"
-  name="q"
-  placeholder="Search by part number or name"
-  autofocus
-/>
+  <input
+    type="search"
+    name="q"
+    placeholder="Search by part number or name"
+    value="<%= typeof query !== 'undefined' ? query : '' %>"
+    required
+  />
+</form>
 
-      </form>
 
     </div>
         <select class="select" id="manufacturerSelect" onchange="quickFilterManufacturer()">

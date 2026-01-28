@@ -96,7 +96,11 @@ app.get("/", async (req, res) => {
 }));
 
 
-    res.render("index", { products });
+    res.render("index", {
+      products,
+      query: req.query.q
+   });
+
 
   } catch (err) {
     console.log("❌ Homepage DB error:", err.message);
