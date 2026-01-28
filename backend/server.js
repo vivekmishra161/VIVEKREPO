@@ -103,8 +103,54 @@ app.get("/", async (req, res) => {
     res.render("index", { products: [] });
   }
 });
-
 const { Op } = require("sequelize");
+
+app.get("/api/products", async (req, res) => {
+  const {
+    category,
+    minPrice,
+    maxPrice,
+    search
+  } = req.query;
+
+  const where = {};
+
+  if (category) {
+    where.category = category;
+  }
+
+  if (minPrice || maxPrice) {
+    where.final_price = {};
+    if (minPrice) where.final_price[Op.gte] = Number(minPrice);
+    if (maxPrice) where.final_price[Op.lte] = Number(maxPrice);
+  }
+
+  if (search) {
+    where[Op.or] = [
+      { part_no: { [Op.iLike]: `%${search}%` } },
+      { name: { [Op.iLike]: `%${search}%` } }
+    ];
+  }
+
+  const results = await Product.findAll({
+    where,
+    limit: 40,
+    order: [["id", "DESC"]]
+  });
+
+  res.json(results.map(p => ({
+    id: p.part_no,
+    name: p.name,
+    manufacturer: "Hyundai",
+    category: p.category,
+    price: p.price,
+    finalPrice: p.final_price,
+    discount: p.discount,
+    stock: p.stock,
+    image: `/images/products/${p.part_no}.jpg`
+  })));
+});
+
 
 app.get("/api/search", async (req, res) => {
   const q = req.query.q?.trim();
