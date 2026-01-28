@@ -712,9 +712,14 @@ img {
     <button class="btn secondary btn-float" onclick="window.location.href='/'">
       ⬅ <%= t.continueShopping %>
     </button>
-    <button id="checkoutBtn" class="btn btn-float" onclick="goToRegistration()" disabled style="opacity: 0.5; cursor: not-allowed;">
-      <%= t.checkout %> →
-    </button>
+    <button
+  id="checkoutBtn"
+  class="btn btn-float"
+  onclick="handleCheckout()"
+>
+  <%= t.checkout %> →
+</button>
+
   </div>
 </div>
 
@@ -825,16 +830,6 @@ document.getElementById("checkoutBtn").addEventListener("click", () => {
   window.location.href = "/registration";
 });
 
-document.getElementById("checkoutBtn").onclick = () => {
-  const cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
-
-  if (cart.length === 0) {
-    alert("Cart is empty");
-    return;
-  }
-
-  window.location.href = "/checkout";
-};
 
 function removeItem(id) {
   let cart = loadCart().filter(item => item.id !== id);
@@ -845,6 +840,36 @@ function removeItem(id) {
 
 renderCart();
 </script>
+<script>
+  const isLoggedIn = <%= user ? "true" : "false" %>;
+
+  function handleCheckout() {
+    const cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
+
+    if (cart.length === 0) {
+      alert("Cart is empty");
+      return;
+    }
+
+    // ❌ not logged in
+    if (!isLoggedIn) {
+      document.getElementById("signinPopup").style.display = "flex";
+      return;
+    }
+
+    // ✅ logged in
+    window.location.href = "/registration";
+  }
+
+  function goToSignin() {
+    window.location.href = "/signin";
+  }
+
+  function closePopup() {
+    document.getElementById("signinPopup").style.display = "none";
+  }
+</script>
+
 
 <!-- ---------------- SIGN-IN POPUP HTML ---------------- -->
 <div id="signinPopup" class="popup-overlay">
