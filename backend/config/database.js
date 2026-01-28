@@ -1,24 +1,23 @@
 const { Sequelize } = require("sequelize");
 
-console.log("DATABASE_URL set:", !!process.env.DATABASE_URL);
+let sequelize = null;
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: "postgres",
-  protocol: "postgres",
-  logging: false,
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  },
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    },
-    connectTimeoutMillis: 30000
-  }
-});
+if (process.env.DATABASE_URL) {
+  console.log("✅ Using Render database");
+
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: "postgres",
+    protocol: "postgres",
+    logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
+  });
+} else {
+  console.log("⚠️ DATABASE_URL not set — skipping DB connection locally");
+}
 
 module.exports = sequelize;

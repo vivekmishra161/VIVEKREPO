@@ -93,6 +93,7 @@ app.get("/cart", (req, res) => {
     isLoggedIn: req.session.user ? true : false
   });
 });
+app.use("/admin", require("./routes/sync"));
 
 app.get("/product", async (req, res) => {
   const id = req.query.id;
