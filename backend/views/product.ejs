@@ -1540,13 +1540,19 @@ function addToCart(productId, qty) {
 
   let cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
 
-  // ✅ find correct product
   const item = products.find(p => p.id === productId);
 
   if (!item) {
     alert("Product not found");
     return;
   }
+
+  // ✅ calculate final price
+  const finalPrice = item.finalPrice
+    ? Number(item.finalPrice)
+    : item.discount
+      ? Math.round(item.price - (item.price * item.discount) / 100)
+      : Number(item.price);
 
   const existing = cart.find(i => i.id === item.id);
 
@@ -1556,7 +1562,9 @@ function addToCart(productId, qty) {
     cart.push({
       id: item.id,
       name: item.name,
-      price: item.price,
+      price: finalPrice,        // ✅ discounted price
+      originalPrice: item.price, // optional (for display)
+      discount: item.discount || 0,
       qty: qty,
       img: item.img
     });
