@@ -884,27 +884,6 @@ img {
 
 
 <script>
-  
-const CART_KEY = "akc_cart_v1";
-
-function loadCart() {
-  const data = localStorage.getItem(CART_KEY);
-  return data ? JSON.parse(data) : [];
-}
-
-let cart = loadCart();
-let total = 0;
-
-cart.forEach(item => {
-  const price = parseFloat(item.finalPrice || item.price || 0);
-  const qty = parseInt(item.qty || 1);
-
-  total += price * qty;
-});
-
-document.getElementById("totalDisplay").innerText =
-  total.toFixed(2);
-
 
 /* PRODUCT LISTS */
 const products = [];
@@ -1100,6 +1079,25 @@ document.addEventListener('DOMContentLoaded', () => {
       statusMsg.textContent = "Error placing order.";
     }
   });
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const CART_KEY = "akc_cart_v1";
+  const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+
+  let total = 0;
+
+  cart.forEach(item => {
+    const price = Number(item.price); // ✅ REAL FIELD
+    const qty = Number(item.qty || 1);
+    total += price * qty;
+  });
+
+  document.getElementById("totalDisplay").innerText =
+    total.toFixed(2);
+
+});
+
 </script>
 
 </body>
