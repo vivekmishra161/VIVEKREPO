@@ -8,24 +8,43 @@ router.get("/sync-products", async (req, res) => {
   try {
     const products = await getProducts();
 
-    let count = 0;
+    let created = 0;
+    let updated = 0;
 
     for (const p of products) {
-      await Product.upsert({
-        part_no: p.id,
-        name: p.name,
-        category: p.category,
-        price: p.price,
-        discount: p.discount,
-        final_price: p.finalPrice,
-        stock: p.stock
+      const existing = await Product.findOne({
+        where: { part_no: p.id }
       });
-      count++;
+
+      if (existing) {
+        await existing.update({
+          name: p.name,
+          category: p.category,
+          price: p.price,
+          discount: p.discount,
+          final_price: p.finalPrice,
+          stock: p.stock
+        });
+        updated++;
+      } else {
+        await Product.create({
+          part_no: p.id,
+          name: p.name,
+          category: p.category,
+          price: p.price,
+          discount: p.discount,
+          final_price: p.finalPrice,
+          stock: p.stock
+        });
+        created++;
+      }
     }
 
     res.json({
       success: true,
-      synced: count
+      created,
+      updated,
+      total: products.length
     });
 
   } catch (err) {
