@@ -1049,44 +1049,36 @@ img {
         <div style="font-size:13px;color:var(--muted)" id="prodId">ID</div>
       </div>
     </div>
+<% products.forEach(p => { %>
 
-    <h1 class="title" id="prodTitle">Product Title</h1>
-    <div class="price-row">
-      <div>
-        <div class="price-row">
-  <div>
-    <% if (product.discount > 0) { %>
+<div class="product-card">
 
-      <div class="price">
-        ₹<%= product.finalPrice %>
-      </div>
+  <img src="<%= p.image || '/images/no-image.png' %>">
 
-      <div class="old-price">
-        ₹<%= product.price %>
-      </div>
+  <h3><%= p.name %></h3>
 
-      <div style="
-        margin-top:6px;
-        background:#16a34a;
-        color:white;
-        padding:4px 10px;
-        font-size:12px;
-        font-weight:700;
-        border-radius:6px;
-        display:inline-block;
-      ">
-        <%= product.discount %>% OFF
-      </div>
-
-    <% } else { %>
-
-      <div class="price">
-        ₹<%= product.price %>
-      </div>
-
+  <p>₹<%= p.finalPrice %>
+    <% if (p.discount > 0) { %>
+      <span class="mrp">₹<%= p.price %></span>
+      <span><%= p.discount %>% OFF</span>
     <% } %>
-  </div>
- </div>
+  </p>
+
+  <a href="/product?id=<%= p.id %>">
+    View Product
+  </a>
+
+  <button
+    class="add-to-cart"
+    data-id="<%= p.id %>"
+    data-name="<%= p.name %>"
+    data-price="<%= p.finalPrice %>">
+    Add to Cart
+  </button>
+
+</div>
+
+<% }) %>
 
       </div>
       <div style="margin-left:auto">
@@ -1251,142 +1243,7 @@ function createPart(manufacturer, name, cat, baseId, price){
   };
 }
 
-const hy = [
-  ["737000B010", "PANEL ASSY-TAIL GATE", "Body", 12935.28],
-  ["8611025100", "GLASS-WINDSHIELD", "Glass", 7203.5],
-  ["2461022600", "ADJUSTER ASSY-ROCKER ARM LASH", "Engine", 5287.8],
-  ["715221A000", "PANEL-REAR SIDE OUTER,RH", "Body", 4959.24],
-  ["287001A200", "PIPE-TAIL W/MUFFLER", "Exhaust", 4843.02],
-  ["8661025000", "COVER ASSY-RR BUMPER", "Body", 4068.42],
-  ["253101A000", "RADIATOR ASSY", "Cooling", 3452.52],
-  ["8661105000", "COVER-RR BUMPER", "Body", 3285.0],
-  ["6640025000", "PANEL ASSY-HOOD", "Body", 3204.67],
-  ["865101A000", "COVER ASSY-FR BUMPER", "Body", 3051.6],
-  ["866110B000", "COVER-RR BUMPER", "Body", 2601.24],
-  ["583051AA00", "SHOE & LINING KIT-RR BRAKE", "Brake", 2312.0],
-  ["2191025010", "BRACKET ASSY-ROLL STOPPER,FR", "Suspension", 2293.93],
-  ["663111A000", "PANEL-FENDER,LH", "Body", 2061.74],
-  ["663211A000", "PANEL-FENDER,RH", "Body", 2061.74],
-  ["2431227000", "BELT-VALVE TIMING", "Engine", 2045.07],
-  ["8651105000", "COVER-FR BUMPER", "Body", 1973.66],
-  ["3517022600", "SENSOR ASSY-THROTTLE POSITION", "Engine", 1963.47],
-  ["8711005541", "GLASS-TAIL GATE", "Glass", 1946.87],
-  ["6450105060", "PANEL ASSY-FNDR APRON,LH", "Body", 1913.88],
-  ["8661105600", "COVER-RR BUMPER", "Body", 1805.06],
-  ["8711005551", "GLASS-TAIL GATE", "Glass", 1777.89],
-  ["9725925100", "SWITCH ASSY-A/C", "Electrical", 1704.24],
-  ["5775525000", "BALL JOINT ASSY,INR", "Suspension", 1687.92],
-  ["8636005600", "GRILLE ASSY-RADIATOR", "Body", 1564.37],
-  ["8772225510CA", "MOULDING ASSY-FRT DR W/LINE,RH", "Body", 1240.86],
-  ["5483017010", "LINK ASSY-FRONT STABILIZER,LH", "Suspension", 1096.92],
-  ["5483017020", "LINK ASSY-FRONT STABILIZER,RH", "Suspension", 1096.92],
-  ["3198143000", "CARTRIDGE & SENSOR ASSY", "Engine", 976.83],
-  ["8772225000CA", "MOULDING ASSY-FRT DR W/LINE,RH", "Body", 965.73],
-  ["865811A000", "BRACKET-FR BPR UPR SUPT", "Body", 931.77],
-  ["5450325A00", "BALL JOINT KIT-SUSP LWR ARM", "Suspension", 889.58],
-  ["5810225A00", "SEAL KIT-FR DISC BRAKE", "Brake", 844.72],
-  ["529601V000", "CAP ASSY-WHEEL HUB", "Body", 809.98],
-  ["876101J700", "MIRROR ASSY-OUTSIDE RR VIEW,LH", "Body", 809.65],
-  ["8773225000CA", "MOULDING ASSY-RR DR W/LINE,RH", "Body", 794.87],
-  ["5583025000", "LINK-STABILIZER BAR", "Suspension", 783.02],
-  ["876101A901CA", "MIRROR ASSY-O/S REAR VIEW,LH", "Body", 780.94],
-  ["597701V000", "CABLE ASSY-PARKING BRAKE,RH", "Brake", 757.31],
-  ["9241025000", "LENS & HSG-REAR COMB LAMP,LH", "Electrical", 628.53],
-  ["863201C000", "EMBLEM-GETZ", "Body", 595.34],
-  ["8632305100", "EMBLEM-1.1 L", "Body", 584.98],
-  ["8773125510CA", "MOULDING ASSY-RR DR W/LINE,LH", "Body", 560.61],
-  ["8636105101", "GRILLE-RADIATOR", "Body", 521.28],
-  ["838301R000", "MOULDING ASSY-RR DR DELTA,LH", "Body", 514.69],
-  ["838401R000", "MOULDING ASSY-RR DR DELTA,RH", "Body", 514.69],
-  ["8761125100", "MIRROR & HOLDER ASSY-O/S RR VI", "Body", 511.35],
-  ["8762125400", "MIRROR & HOLDER-OUTSIDE RR,RH", "Body", 511.35],
-  ["8240305510", "REGULATOR ASSY-FR DR P/WDO LH", "Electrical", 510.23],
-  ["9241002200", "SWITCH ASSY-FR FOG LAMP", "Electrical", 509.07],
-  ["5531122000", "INSULATOR-STRUT", "Suspension", 501.17],
-  ["8612128A00", "DAM-GLASS", "Glass", 457.45],
-  ["5481325000", "BUSH-STABILIZER BAR", "Suspension", 448.3],
-  ["8641036010", "BUMPER-HOOD OVERSLAM", "Body", 430.95],
-  ["6951005500", "DOOR ASSY-FUEL FILLER", "Fuel", 424.72],
-  ["817201J020", "HANDLE ASSY-TAIL GATE", "Body", 422.27],
-  ["565550X500", "RACK BUSH", "Suspension", 408.64],
-  ["8340305510", "REGULATOR ASSY-RR DR P/WDO LH", "Electrical", 360.44],
-  ["815114A000", "BUMPER-F/FILLER DR O/SLAM", "Body", 339.04],
-  ["5461202000", "BEARING-STRUT", "Suspension", 325.53],
-  ["876210P970", "MIRROR & HOLDER-OUTSIDE RR,RH", "Body", 323.16],
-  ["876110B000", "MIRROR & HOLDER ASSY-O/S RR VI", "Body", 320.51],
-  ["876210B000", "MIRROR & HOLDER-OUTSIDE RR,RH", "Body", 320.51],
-  ["5830105A00", "CYLINDER KIT-RR WHEEL BRAKE", "Brake", 316.9],
-  ["865821A000", "BRACKET-FR BPR LWR SUPT", "Body", 310.59],
-  ["8683102000", "GUARD ASSY-FRONT WHEEL MUD,LH", "Body", 309.7],
-  ["8683202000", "GUARD ASSY-FRONT WHEEL MUD,RH", "Body", 309.7],
-  ["3341202000", "RELIEF DIAPH", "Engine", 304.92],
-  ["5723122000", "BELT V-POWER STEERING PUMP", "Engine", 300.54],
-  ["865841A000", "BRACKET-FR BPR CORNER SUPT,LH", "Body", 299.04],
-  ["865851A000", "BRACKET-FR BPR CORNER SUPT,RH", "Body", 299.04],
-  ["529601C300", "CAP ASSY-WHEEL HUB", "Body", 298.45],
-  ["988201C000", "BLADE ASSY-WIPER,RR", "Wiper", 284.86],
-  ["8265025000CA", "HANDLE ASSY-FRONT DOOR OUTSIDE", "Body", 265.65],
-  ["8266025000CA", "HANDLE ASSY-FRONT DOOR OUTSIDE", "Body", 265.65],
-  ["9882105000", "BLADE-W/SHLD WIPER", "Wiper", 254.1],
-  ["254121E300", "HOSE-RADIATOR LOWER", "Cooling", 232.85],
-  ["8365025000CA", "HANDLE ASSY-REAR DOOR OUTSIDE", "Body", 232.45],
-  ["8366025000CA", "HANDLE ASSY-REAR DOOR OUTSIDE", "Body", 232.45],
-  ["9183038000", "LP-S/B FUSE 30A", "Electrical", 230.65],
-  ["2915025000", "COVER-UNDER", "Body", 196.18],
-  ["5810202A00", "SEAL KIT-FR DISC BRAKE", "Brake", 183.99],
-  ["8651605000", "MESH-FRONT BUMPER,LH", "Body", 183.85],
-  ["815900X900", "CATCH & CABLE ASSY-FUEL FILLER", "Fuel", 182.16],
-  ["923300B010", "LENS & HOUSING ASSY-S/RPTR", "Electrical", 177.04],
-  ["5296022800", "CAP ASSY-WHEEL HUB", "Body", 163.64],
-  ["868111A000", "GUARD ASSY-FRONT WHEEL,LH", "Body", 161.82],
-  ["868121A000", "GUARD ASSY-FRONT WHEEL,RH", "Body", 161.82],
-  ["8651505000", "BRACKET-FR BUMPER SIDE UPR,RH", "Body", 150.78],
-  ["8651705000", "MESH-FRONT BUMPER,RH", "Body", 147.08],
-  ["8644002001", "W/STRIP-HOOD", "Body", 120.81],
-  ["8636205100", "MESH-RADIATOR GRILLE", "Body", 112.88],
-  ["8263022001LM", "HANDLE ASSY-DOOR WINDOW REGULA", "Interior", 106.23],
-  ["8659334000", "GROMMET-SCREW", "Body", 99.9],
-  ["865831A000", "BRACKET-FR BPR CTR SUPT", "Body", 99.85],
-  ["865241V000", "COVER-BLANKING FRT FOG,RH", "Body", 86.2],
-  ["8684205500", "GUARD ASSY-REAR WHEEL MUD,RH", "Body", 71.94],
-  ["711170U000", "BRACKET ASSY-FENDER MTG,LH", "Body", 64.85],
-  ["711270U000", "BRACKET ASSY-FENDER MTG,RH", "Body", 64.85],
-  ["8766025010", "COVER-FR DR QUADRANT INR LH", "Body", 60.7],
-  ["9863025900", "NOZZLE ASSY-WINDSHIELD WASHER", "Wiper", 58.38],
-  ["8939114001IJ", "KNOB-LATCH ROD", "Interior", 57.68],
-  ["8661505600", "BRACKET-RR BUMPER SIDE,LH", "Body", 55.26],
-  ["8661605600", "BRACKET-RR BUMPER SIDE,RH", "Body", 55.26],
-  ["8683225000", "GUARD ASSY-FRONT WHEEL MUD,RH", "Body", 51.94],
-  ["8135533000", "SHIM-DR STRIKER", "Interior", 38.06],
-  ["9835205000", "CAP-W/WPR ARM", "Wiper", 35.97],
-  ["1893720252", "FUSE-AUTO 20(A)", "Electrical", 29.58]
-];
-hy.forEach(it => {
-  products.push(
-    createPart(
-      "Hyundai",
-      it[1], // name
-      it[2], // category
-      it[0], // id
-      it[3]  // price
-    )
-  );
-});
-const ta = [
-  ["Diesel Engine","Engine", 8000],["Heavy Brake Shoe","Brake", 2600],["Hydraulic Pump","Engine", 7000],["Axle Shaft","Body", 5400],["Gearbox","Engine", 9000],
-  ["Turbocharger","Engine", 9500],["Fuel Injector","Engine", 4800],["Transmission Assembly","Engine", 15000],["Leaf Spring","Suspension", 4200],["Wheel Hub","Body", 3100],
-  ["Radiator Tank","Engine", 6000],["AC Blower","Electrical", 2800],["Diesel Filter","Engine", 1300],["Heavy Tyre","Body", 5500],["Clutch Booster","Engine", 4300],
-  ["Propeller Shaft","Engine", 7200],["Starter Motor","Electrical", 3900],["Alternator Heavy","Electrical", 5800],["Steering Column","Body", 3600],["Air Drum","Body", 2700]
-];
-ta.forEach((it,i)=> products.push(createPart("Tata", it[0], it[1], `TA${200+i}`, it[2])));
 
-const bj = [
-  ["Bike Engine","Engine", 6000],["Front Brake","Brake", 900],["Rear Brake","Brake", 850],["Silencer","Body", 2000],["Bike Chain","Body", 1200],
-  ["Carburetor","Engine", 1800],["Fuel Tank","Body", 2500],["Headlamp","Electrical", 950],["Backlight","Electrical", 650],["Shock Absorber","Suspension", 1900],
-  ["Meter Console","Electrical", 2100],["Battery","Electrical", 2200],["Air Filter","Engine", 450],["Clutch Wire","Engine", 300],["Throttle Body","Engine", 2600],
-  ["Piston Kit","Engine", 2800],["Brake Lever","Brake", 450],["Indicator Light","Electrical", 220],["Alloy Wheel","Body", 3200],["Bike Seat","Body", 1500]
-];
-bj.forEach((it,i)=> products.push(createPart("Bajaj", it[0], it[1], `BJ${300+i}`, it[2])));
 
 /* helpers */
 function qs(name){ return new URLSearchParams(location.search).get(name); }

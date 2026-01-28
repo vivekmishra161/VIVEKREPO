@@ -94,15 +94,16 @@ app.get("/cart", (req, res) => {
   });
 });
 
-app.get("/product", async (req, res) => {
-  const id = req.query.id;
+app.get("/products", async (req, res) => {
+  try {
+    const products = await getProducts();
 
-  const products = await getProducts();
-  const product = products.find(p => p.id === id);
+    res.render("products", { products });
 
-  if (!product) return res.send("Product not found");
-
-  res.render("product", { product });
+  } catch (err) {
+    console.log(err);
+    res.send("Products not loading");
+  }
 });
 
 /* =====================
