@@ -1780,6 +1780,53 @@ getDeliveryDate(6);
     };
   }
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const prodDescription = document.getElementById("prodDescription");
+  const specTable = document.getElementById("specTable");
+
+  console.log("DESC ELEMENT:", prodDescription);
+  console.log("SPEC ELEMENT:", specTable);
+
+  if (!prodDescription || !specTable) {
+    console.error("Description or spec element not found in DOM");
+    return;
+  }
+
+  if (!product) {
+    prodDescription.textContent = "Product data not found.";
+    return;
+  }
+
+  // ✅ DESCRIPTION
+  prodDescription.textContent =
+    product.description || "No description available.";
+
+  // ✅ SPECIFICATIONS
+  specTable.innerHTML = "";
+
+  if (product.specs && Object.keys(product.specs).length > 0) {
+    for (const key in product.specs) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${key}</td>
+        <td>${product.specs[key]}</td>
+      `;
+      specTable.appendChild(tr);
+    }
+  } else {
+    specTable.innerHTML = `
+      <tr>
+        <td colspan="2" style="color:#6b7280">
+          No specifications available.
+        </td>
+      </tr>
+    `;
+  }
+
+});
+</script>
 
 
 </body>
