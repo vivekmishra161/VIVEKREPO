@@ -1203,10 +1203,6 @@ img {
   </div>
 </div>
 <script>
-  const PRODUCT = <%- JSON.stringify(product) %>;
-</script>
-
-<script>
 /* =========================
    Product view page script
    ========================= */
@@ -1452,21 +1448,32 @@ if (!product) {
   prodIdEl.textContent = product.id;
   prodPrice.textContent = '₹' + numberWithCommas(product.price);
   prodOldPrice.textContent = ''; // you can set product.oldPrice if available
+// ---------- DESCRIPTION ----------
 prodDescription.textContent =
-  PRODUCT.description || "No description available.";
+  product.description || "No description available.";
 
+// ---------- SPECIFICATIONS ----------
 specTable.innerHTML = "";
 
-if (PRODUCT.specs) {
-  for (const key in PRODUCT.specs) {
+if (product.specs && Object.keys(product.specs).length > 0) {
+  for (const key in product.specs) {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${key}</td>
-      <td>${PRODUCT.specs[key]}</td>
+      <td>${product.specs[key]}</td>
     `;
     specTable.appendChild(tr);
   }
+} else {
+  specTable.innerHTML = `
+    <tr>
+      <td colspan="2" style="color:#6b7280">
+        No specifications available.
+      </td>
+    </tr>
+  `;
 }
+
 
   // stars (UI only)
   const starsWrap = document.getElementById('stars');
