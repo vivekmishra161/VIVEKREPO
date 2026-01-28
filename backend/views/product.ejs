@@ -1540,14 +1540,17 @@ function addToCart(productId, qty) {
 
   let cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
 
-  // 🔥 discounted unit price
-  const discountedUnitPrice =
-    PRODUCT.finalPrice ||
-    (PRODUCT.discount
-      ? Math.round(PRODUCT.price - (PRODUCT.price * PRODUCT.discount) / 100)
-      : PRODUCT.price);
+  // ✅ calculate discounted unit price
+  let discountedUnitPrice = PRODUCT.price;
 
-  // ✅ final payable price
+  if (PRODUCT.discount && PRODUCT.discount > 0) {
+    discountedUnitPrice =
+      PRODUCT.price - (PRODUCT.price * PRODUCT.discount) / 100;
+  }
+
+  discountedUnitPrice = Math.round(discountedUnitPrice);
+
+  // ✅ final payable amount
   const finalPrice = discountedUnitPrice * qty;
 
   const existing = cart.find(i => i.id === PRODUCT.id);
@@ -1559,14 +1562,16 @@ function addToCart(productId, qty) {
     cart.push({
       id: PRODUCT.id,
       name: PRODUCT.name,
-      price: finalPrice,   // ✅ FINAL AMOUNT ONLY
+      price: finalPrice, // FINAL AMOUNT ONLY
       qty: qty,
+      img: PRODUCT.img
     });
   }
 
   localStorage.setItem("akc_cart_v1", JSON.stringify(cart));
   showToast("Added to cart");
 }
+
 
 
 /* toast */
