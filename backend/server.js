@@ -107,46 +107,49 @@ const { Op } = require("sequelize");
 
 app.get("/api/products", async (req, res) => {
   const {
-    search = "",
-    manufacturer = "",
-    category = "",
-    sort = "relevance",
-    limit = 40
+    category,
+    minPrice,
+    maxPrice,
+    search
   } = req.query;
 
-  let query = `
-    SELECT *
-    FROM products
-    WHERE 1=1
-  `;
-  const values = [];
-
-  if (search) {
-    values.push(`%${search}%`);
-    query += ` AND (name ILIKE $${values.length} OR part_no ILIKE $${values.length})`;
-  }
-
-  if (manufacturer) {
-    values.push(manufacturer);
-    query += ` AND manufacturer = $${values.length}`;
-  }
+  const where = {};
 
   if (category) {
-    values.push(category);
-    query += ` AND category = $${values.length}`;
+    where.category = category;
   }
 
-  if (sort === "price-asc") query += " ORDER BY final_price ASC";
-  else if (sort === "price-desc") query += " ORDER BY final_price DESC";
-  else if (sort === "name-asc") query += " ORDER BY name ASC";
-  else query += " ORDER BY id DESC";
+  if (minPrice || maxPrice) {
+    where.final_price = {};
+    if (minPrice) where.final_price[Op.gte] = Number(minPrice);
+    if (maxPrice) where.final_price[Op.lte] = Number(maxPrice);
+  }
 
-  query += ` LIMIT ${Number(limit)}`;
+  if (search) {
+    where[Op.or] = [
+      { part_no: { [Op.iLike]: `%${search}%` } },
+      { name: { [Op.iLike]: `%${search}%` } }
+    ];
+  }
 
-  const result = await pool.query(query, values);
-  res.json(result.rows);
+  const results = await Product.findAll({
+    where,
+    limit: 40,
+    order: [["id", "DESC"]]
+  });
+
+  res.json(results.map(p => ({
+    id: p.part_no,
+    name: p.name,
+    manufacturer: "Hyundai",
+    category: p.category,
+    price: p.price,
+    finalPrice: p.final_price,
+    discount: p.discount,
+    stock: p.stock,
+    image: `/images/products/${p.part_no}.jpg`
+  })));
 });
-
 
 
 app.get("/api/search", async (req, res) => {
