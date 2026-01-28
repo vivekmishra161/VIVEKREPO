@@ -983,10 +983,14 @@ const form = document.getElementById("customerForm");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  if (!cart.length) {
-    document.getElementById("statusMsg").innerText = "Cart is empty.";
-    return;
-  }
+  const statusMsg = document.getElementById("statusMsg");
+
+  const name = document.getElementById("custName").value.trim();
+  const address = document.getElementById("custAddress").value.trim();
+  const city = document.getElementById("custCity").value.trim();
+  const state = document.getElementById("custState").value;
+  const phone = document.getElementById("custPhone").value.trim();
+  const pin = document.getElementById("custPin").value.trim();
 
   const paymentMethod =
     document.querySelector('input[name="paymentMethod"]:checked')?.value;
@@ -994,11 +998,30 @@ form.addEventListener("submit", async (e) => {
   const utrNumber =
     document.getElementById("utrNumber")?.value.trim();
 
-  if (paymentMethod === "UPI" && !utrNumber) {
-    document.getElementById("statusMsg").innerText =
-      "Please enter UTR number.";
-    return;
-  }
+  if (!cart.length)
+    return statusMsg.innerText = "Cart is empty.";
+
+  if (!name || !address || !city || !state || !phone || !pin)
+    return statusMsg.innerText = "Please fill all fields.";
+
+  if (phone.length !== 10)
+    return statusMsg.innerText = "Phone must be 10 digits.";
+
+  if (paymentMethod === "UPI" && !utrNumber)
+    return statusMsg.innerText = "Please enter UTR number.";
+
+  // ✅ RECALCULATE TOTAL AGAIN
+  let finalTotal = 0;
+
+  cart.forEach(item => {
+    const price =
+      Number(item.finalPrice) ||
+      Number(item.price) ||
+      0;
+
+    const qty = Number(item.qty || 1);
+    finalTotal += price * qty;
+  });
 
   const orderItems = cart.map(i => ({
     id: i.id,
@@ -1007,28 +1030,43 @@ form.addEventListener("submit", async (e) => {
     qty: i.qty
   }));
 
-  const res = await fetch("/order", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      total,
-      items: orderItems,
-      paymentMethod,
-      utrNumber
-    })
-  });
+  try {
+    const res = await fetch("/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        address,
+        city,
+        state,
+        phone,
+        pin,
+        total: finalTotal,
+        items: orderItems,
+        paymentMethod,
+        utrNumber
+      })
+    });
 
-  const data = await res.json();
+    const data = await res.json();
 
-  if (data.success) {
-    localStorage.removeItem(CART_KEY);
-    document.getElementById("orderSuccessPopup").classList.add("show");
+    if (data.success) {
+      localStorage.removeItem(CART_KEY);
+      document.getElementById("orderSuccessPopup").classList.add("show");
 
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 1500);
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
+    } else {
+      statusMsg.innerText = "Order failed. Try again.";
+    }
+
+  } catch (err) {
+    console.error(err);
+    statusMsg.innerText = "Server error. Please try later.";
   }
 });
+
 </script>
 
 
