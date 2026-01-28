@@ -2162,30 +2162,44 @@ function showMessage(message, type = 'success'){
 const productGrid = document.getElementById('productGrid');
 const resultsCount = document.getElementById('resultsCount');
 
-function renderProducts(list){
+function renderProducts(list) {
+  // ALWAYS show grid again
+  productGrid.style.display = "grid";
+
   productGrid.innerHTML = '';
-  if(!list.length){
-    productGrid.innerHTML = `<div style="grid-column:1/-1; padding:18px; background:#fff; border-radius:10px">No products found</div>`;
+
+  if (!list || list.length === 0) {
+    productGrid.innerHTML = `
+      <div style="grid-column:1/-1; padding:18px; background:#fff; border-radius:10px">
+        No products found
+      </div>
+    `;
     resultsCount.textContent = 'Showing 0 products';
     return;
   }
 
-  list.forEach(p=>{
+  list.forEach(p => {
     const div = document.createElement('div');
     div.className = 'card';
+
+    const imageSrc = p.image || p.img || '/images/no-image.png';
+
     div.innerHTML = `
-      <img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy">
+      <img src="${imageSrc}" alt="${escapeHtml(p.name)}" loading="lazy">
+
       <div style="display:flex; justify-content:space-between; gap:10px; align-items:center;">
         <div>
           <p class="title">${escapeHtml(p.name)}</p>
-          <div class="id">${p.id} • <span class="muted">${p.manufacturer}</span></div>
+          <div class="id">${p.id} • <span class="muted">${p.manufacturer || 'Hyundai'}</span></div>
         </div>
-        <div class="price">₹${numberWithCommas(p.price)}</div>
+        <div class="price">₹${numberWithCommas(p.finalPrice || p.price)}</div>
       </div>
+
       <div style="display:flex; gap:8px; align-items:center; margin-top:8px;">
         <button class="btn secondary" onclick="viewPart('${p.id}')">View</button>
       </div>
     `;
+
     productGrid.appendChild(div);
   });
 
@@ -2503,30 +2517,30 @@ function toggleMobileMenu() {
 <script>
 const searchInput = document.getElementById("liveSearch");
 
-let searchTimeout = null;
+let timer = null;
 
 searchInput.addEventListener("input", () => {
-  clearTimeout(searchTimeout);
+  clearTimeout(timer);
 
-  const query = searchInput.value.trim();
+  const q = searchInput.value.trim();
 
-  // ✅ when empty → restore homepage products
-  if (query.length === 0) {
+  // 🔁 back to default products
+  if (q.length === 0) {
     renderProducts(defaultProducts);
     return;
   }
 
-  // 🔒 avoid unnecessary DB hits
-  if (query.length < 2) return;
+  // prevent unnecessary calls
+  if (q.length < 2) return;
 
-  searchTimeout = setTimeout(async () => {
+  timer = setTimeout(async () => {
     try {
-      const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+      const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
       const data = await res.json();
 
       renderProducts(data);
-    } catch (err) {
-      console.error("Search error", err);
+    } catch (e) {
+      console.error("Live search error", e);
     }
   }, 300);
 });
