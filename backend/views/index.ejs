@@ -1897,6 +1897,36 @@ select.sort:focus{
   50% { content: '..'; }
   75% { content: '...'; }
 }
+.filter-dropdown {
+  position: relative;
+}
+
+.filter-btn {
+  background: #fff;
+  border: 1px solid #dcdcdc;
+  padding: 10px 16px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.filter-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  display: none;
+  width: 100%;
+  z-index: 10;
+}
+
+.filter-dropdown.active .filter-menu {
+  display: block;
+}
 
 </style>
 </head>
@@ -2047,20 +2077,35 @@ document.addEventListener('DOMContentLoaded', function() {
           <option value="Tata">Tata</option>
           <option value="Bajaj">Bajaj</option>
         </select>
-        <select id="categorySelect" onchange="filterByCategory(this.value)">
+        <div class="filter-dropdown" id="categoryDropdown">
+            <button class="filter-btn">
+              <span id="categoryLabel">All Categories</span>
+               <i class="arrow"></i>
+            </button>
 
-          <option value=""><%= t.allCategories %></option>
-          <option value="Engine">Engine</option>
-          <option value="Brake">Brake</option>
-          <option value="Electrical">Electrical</option>
-          <option value="Suspension">Suspension</option>
-          <option value="Body">Body</option>
-          <option value="Fuel">Fuel</option>
-          <option value="Cooling">Cooling</option>
-          <option value="Exhaust">Exhaust</option>
-          <option value="Glass">Glass</option>
-          <option value="Interior">Interior</option>
-          <option value="Wiper">Wiper</option>
+          <div class="filter-dropdown" id="categoryDropdown">
+  <button class="filter-btn">
+    <span id="categoryLabel">All Categories</span>
+    <i class="arrow"></i>
+  </button>
+
+  <ul class="filter-menu">
+    <li onclick="selectCategory('')">All Categories</li>
+    <li onclick="selectCategory('Body')">Body</li>
+    <li onclick="selectCategory('Engine')">Engine</li>
+    <li onclick="selectCategory('Glass')">Glass</li>
+    <li onclick="selectCategory('Brake')">Brake</li>
+    <li onclick="selectCategory('Cooling')">Cooling</li>
+    <li onclick="selectCategory('Interior')">Interior</li>
+    <li onclick="selectCategory('Exhaust')">Exhaust</li>
+    <li onclick="selectCategory('Suspension')">Suspension</li>
+    <li onclick="selectCategory('Wiper')">Wiper</li>
+    <li onclick="selectCategory('Fuel')">Fuel</li>
+    <li onclick="selectCategory('Electrical')">Electrical</li>
+
+  </ul>
+</div>
+
       
           </select>
       </div>
@@ -2473,7 +2518,20 @@ async function loadProducts(filters = {}) {
 function filterByCategory(category) {
   loadProducts({ category });
 }
+function selectCategory(category) {
+  document.getElementById("categoryLabel").innerText =
+    category || "All Categories";
 
+  document.getElementById("categoryDropdown")
+    .classList.remove("active");
+
+  loadProducts({ category });
+}
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    btn.parentElement.classList.toggle("active");
+  });
+});
 
 /* ------------ Cart ------------ */
 function addToCart(productId, qty){
