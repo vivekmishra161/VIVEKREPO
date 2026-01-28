@@ -882,9 +882,7 @@ img {
 </div>
 
 
-
 <script>
-
 const CART_KEY = "akc_cart_v1";
 
 function loadCart() {
@@ -892,205 +890,147 @@ function loadCart() {
   return data ? JSON.parse(data) : [];
 }
 
-let cart = loadCart();
+let cart = [];
+let total = 0;
 
+/* ======================
+   CALCULATE TOTAL ON LOAD
+====================== */
+document.addEventListener("DOMContentLoaded", () => {
 
-/* PRODUCT LISTS */
-const products = [];
-function createPart(manufacturer, name, cat, baseId, price){
-  return { manufacturer, name, category:cat, id:baseId, price };
-}
-
-
-function numberWithCommas(x){
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-function calcTotal(cart) {
-  let total = 0;
+  cart = loadCart();
 
   cart.forEach(item => {
-    const price = parseFloat(item.finalPrice || item.price || 0);
-    const qty = parseInt(item.qty || 1);
+    const price =
+      Number(item.finalPrice) ||
+      Number(item.price) ||
+      0;
 
+    const qty = Number(item.qty || 1);
     total += price * qty;
   });
 
-  return total;
-}
+  document.getElementById("totalDisplay").innerText =
+    total.toFixed(2);
+});
 
+/* ======================
+   UPI QR GENERATION
+====================== */
 
-
-// const total = calcTotal(cart);
-
-// document.getElementById("totalDisplay").textContent =
-//   new Intl.NumberFormat("en-IN").format(total);
-
-function buildUPILink(cart) {
-  const amount = calcTotal(cart).toFixed(2); // dynamic total
-
-  const upiLink =
+function buildUPILink(amount) {
+  return (
     `upi://pay` +
     `?pa=vivekmishra261105@okhdfcbank` +
     `&pn=AKC Auto Parts` +
     `&am=${amount}` +
     `&cu=INR` +
-    `&tn=Order Payment` +
-    `&tr=AKC${Date.now()}`;
-
-  return upiLink;
+    `&tn=Order Payment`
+  );
 }
 
-function generateUPIQR(cart) {
-  const upiLink = buildUPILink(cart);
-
-  const qrUrl =
-    `https://api.qrserver.com/v1/create-qr-code/` +
-    `?size=180x180` +
-    `&data=${encodeURIComponent(upiLink)}` +
-    `&t=${Date.now()}`; // cache buster
-
-  return qrUrl;
-}
-
-
-
-
-function showUPIQR(cart) {
+function showUPIQR() {
   const img = document.getElementById("upiQrImage");
-  img.src = generateUPIQR(cart);
+
+  const upiLink = buildUPILink(total.toFixed(2));
+
+  img.src =
+    "https://api.qrserver.com/v1/create-qr-code/?" +
+    "size=180x180&data=" +
+    encodeURIComponent(upiLink);
+
   img.style.display = "block";
 }
 
-document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
-  radio.addEventListener('change', () => {
+/* ======================
+   PAYMENT METHOD
+====================== */
 
-    // ✅ ensure cart is loaded
-    if (!cart || cart.length === 0) {
-      cart = loadCart();
-    }
+document
+  .querySelectorAll('input[name="paymentMethod"]')
+  .forEach(radio => {
 
-    const upiBox = document.getElementById("upiBox");
-    const utrBox = document.getElementById("utrBox");
+    radio.addEventListener("change", () => {
 
-    if (radio.value === "UPI" && radio.checked) {
+      const upiBox = document.getElementById("upiBox");
+      const utrBox = document.getElementById("utrBox");
 
-      upiBox.style.display = "block";
-      utrBox.style.display = "block";
+      if (radio.value === "UPI") {
 
-      if (cart.length > 0) {
-        showUPIQR(cart);
-      } else {
-        alert("Cart is empty");
-      }
+        if (cart.length === 0) {
+          alert("Cart is empty");
+          return;
+        }
 
-    } else {
-      upiBox.style.display = "none";
-      utrBox.style.display = "none";
-    }
+        upiBox.style.display = "block";
+        utrBox.style.display = "block";
 
-  });
-});
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  const rawCart = loadCart();
- cart = rawCart.map(i => ({
-  id: i.id,
-  name: i.name,
-  finalPrice: Number(i.finalPrice),
-  discount: Number(i.discount || 0),
-  qty: Number(i.qty)
-}));
-
-
-  const total = calcTotal(cart);
-  document.getElementById('totalDisplay').textContent =
-    new Intl.NumberFormat('en-IN', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }).format(total);
-});
-
-
-  const form = document.getElementById('customerForm');
-
-  form.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-
-    const name = document.getElementById('custName').value.trim();
-    const address = document.getElementById('custAddress').value.trim();
-    const city = document.getElementById('custCity').value.trim();
-    const state = document.getElementById('custState').value;
-    const phone = document.getElementById('custPhone').value.trim();
-    const pin = document.getElementById('custPin').value.trim();
-    const statusMsg = document.getElementById('statusMsg');
-    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value;
-    const utrNumber = document.getElementById("utrNumber")?.value.trim();
-    if (paymentMethod === "UPI" && !utrNumber) 
-    return statusMsg.textContent = "Please enter UTR number for online payment.";
-    if (!cart.length) return statusMsg.textContent = "Cart is empty.";
-    if (!name || !address || !city || !state || !phone || !pin)
-      return statusMsg.textContent = "Please fill all fields.";
-    if (phone.length !== 10)
-      return statusMsg.textContent = "Phone must be 10 digits.";
-
-    const orderItems = cart.map(i => ({
-  id: i.id,
-  name: i.name,
-  price: i.finalPrice,
-  discount: i.discount,
-  qty: i.qty
-}));
-
-    const totalAmount = calcTotal(cart);
-
-    try {
-      const res = await fetch('/order', {
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify({
-        name,
-        address,
-        city,
-        state,
-        phone,
-        pin,
-        total: totalAmount,
-        items: orderItems,
-        paymentMethod,   // ⭐ REQUIRED
-        utrNumber
-
-        })
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-
-        // Show success popup
-        document.getElementById("orderSuccessPopup").classList.add("show");
-
-        // Clear cart
-        localStorage.removeItem(CART_KEY);
-
-        // Redirect after short delay
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 1500);
+        showUPIQR();
 
       } else {
-        statusMsg.textContent = "Error placing order.";
+        upiBox.style.display = "none";
+        utrBox.style.display = "none";
       }
-
-    } catch (err) {
-      console.error(err);
-      statusMsg.textContent = "Error placing order.";
-    }
+    });
   });
 
+/* ======================
+   PLACE ORDER
+====================== */
+
+const form = document.getElementById("customerForm");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  if (!cart.length) {
+    document.getElementById("statusMsg").innerText = "Cart is empty.";
+    return;
+  }
+
+  const paymentMethod =
+    document.querySelector('input[name="paymentMethod"]:checked')?.value;
+
+  const utrNumber =
+    document.getElementById("utrNumber")?.value.trim();
+
+  if (paymentMethod === "UPI" && !utrNumber) {
+    document.getElementById("statusMsg").innerText =
+      "Please enter UTR number.";
+    return;
+  }
+
+  const orderItems = cart.map(i => ({
+    id: i.id,
+    name: i.name,
+    price: i.finalPrice || i.price,
+    qty: i.qty
+  }));
+
+  const res = await fetch("/order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      total,
+      items: orderItems,
+      paymentMethod,
+      utrNumber
+    })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    localStorage.removeItem(CART_KEY);
+    document.getElementById("orderSuccessPopup").classList.add("show");
+
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1500);
+  }
+});
 </script>
+
 
 </body>
 </html>
