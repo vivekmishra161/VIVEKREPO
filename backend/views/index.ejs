@@ -2077,29 +2077,21 @@ document.addEventListener('DOMContentLoaded', function() {
           <option value="Tata">Tata</option>
           <option value="Bajaj">Bajaj</option>
         </select>
-        <select>
-        <div class="filter-dropdown" id="categoryDropdown">
-            <button class="filter-btn">
-              <span id="categoryLabel">All Categories</span>
-               <i class="arrow"></i>
-            </button>
-  <ul class="filter-menu">
-    <li onclick="selectCategory('')">All Categories</li>
-    <li onclick="selectCategory('Body')">Body</li>
-    <li onclick="selectCategory('Engine')">Engine</li>
-    <li onclick="selectCategory('Glass')">Glass</li>
-    <li onclick="selectCategory('Brake')">Brake</li>
-    <li onclick="selectCategory('Cooling')">Cooling</li>
-    <li onclick="selectCategory('Interior')">Interior</li>
-    <li onclick="selectCategory('Exhaust')">Exhaust</li>
-    <li onclick="selectCategory('Suspension')">Suspension</li>
-    <li onclick="selectCategory('Wiper')">Wiper</li>
-    <li onclick="selectCategory('Fuel')">Fuel</li>
-    <li onclick="selectCategory('Electrical')">Electrical</li>
+        <select class="select" id="categorySelect" onchange="applyFilters()">
+  <option value="">All Categories</option>
+  <option value="Body">Body</option>
+  <option value="Engine">Engine</option>
+  <option value="Glass">Glass</option>
+  <option value="Brake">Brake</option>
+  <option value="Cooling">Cooling</option>
+  <option value="Interior">Interior</option>
+  <option value="Exhaust">Exhaust</option>
+  <option value="Suspension">Suspension</option>
+  <option value="Wiper">Wiper</option>
+  <option value="Fuel">Fuel</option>
+  <option value="Electrical">Electrical</option>
+</select>
 
-  </ul>
-</div>
- </select>
       </div>
 
       <div style="display:flex; gap:8px; align-items:center;">
@@ -2758,21 +2750,36 @@ function toggleMobileMenu() {
   });
 </script>
 <script>
-let timer = null;
+let searchTimer;
 
-document.getElementById("liveSearch").addEventListener("input", e => {
-  clearTimeout(timer);
-
-  const value = e.target.value.trim();
-
-  timer = setTimeout(() => {
-    if (!value) {
-      loadProducts(); // back to default 40
-    } else {
-      loadProducts({ search: value });
-    }
+document.getElementById("liveSearch").addEventListener("input", () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    applyFilters();
   }, 300);
 });
+
+
+</script>
+<script>
+  async function applyFilters() {
+  const search = document.getElementById("liveSearch").value;
+  const manufacturer = document.getElementById("manufacturerSelect").value;
+  const category = document.getElementById("categorySelect").value;
+  const sort = document.getElementById("sortSelect").value;
+
+  const params = new URLSearchParams({
+    search,
+    manufacturer,
+    category,
+    sort
+  });
+
+  const res = await fetch(`/api/products?${params}`);
+  const data = await res.json();
+
+  renderProducts(data);
+}
 
 </script>
 </body>
