@@ -1540,37 +1540,34 @@ function addToCart(productId, qty) {
 
   let cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
 
-  // ✅ calculate discounted unit price
-  let discountedUnitPrice = PRODUCT.price;
+  // discounted price shown on UI
+  let unitPrice = <%= product.finalPrice || product.price %>;
 
-  if (PRODUCT.discount && PRODUCT.discount > 0) {
-    discountedUnitPrice =
-      PRODUCT.price - (PRODUCT.price * PRODUCT.discount) / 100;
-  }
+  const finalAmount = unitPrice * qty;
 
-  discountedUnitPrice = Math.round(discountedUnitPrice);
-
-  // ✅ final payable amount
-  const finalPrice = discountedUnitPrice * qty;
-
-  const existing = cart.find(i => i.id === PRODUCT.id);
+  const existing = cart.find(i => i.id === productId);
 
   if (existing) {
     existing.qty += qty;
-    existing.price += finalPrice;
+    existing.price += finalAmount;
   } else {
     cart.push({
-      id: PRODUCT.id,
-      name: PRODUCT.name,
-      price: finalPrice, // FINAL AMOUNT ONLY
+      id: productId,
+      name: "<%= product.name %>",
+      price: finalAmount,   // FINAL PAYABLE PRICE
       qty: qty,
-      img: PRODUCT.img
+      img: "<%= product.img %>"
     });
   }
 
   localStorage.setItem("akc_cart_v1", JSON.stringify(cart));
-  showToast("Added to cart");
+
+  const toast = document.getElementById("toast");
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 1200);
 }
+
+
 
 
 
