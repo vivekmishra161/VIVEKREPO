@@ -1049,36 +1049,44 @@ img {
         <div style="font-size:13px;color:var(--muted)" id="prodId">ID</div>
       </div>
     </div>
-<% products.forEach(p => { %>
 
-<div class="product-card">
+    <h1 class="title" id="prodTitle">Product Title</h1>
+    <div class="price-row">
+      <div>
+        <div class="price-row">
+  <div>
+    <% if (product.discount > 0) { %>
 
-  <img src="<%= p.image || '/images/no-image.png' %>">
+      <div class="price">
+        ₹<%= product.finalPrice %>
+      </div>
 
-  <h3><%= p.name %></h3>
+      <div class="old-price">
+        ₹<%= product.price %>
+      </div>
 
-  <p>₹<%= p.finalPrice %>
-    <% if (p.discount > 0) { %>
-      <span class="mrp">₹<%= p.price %></span>
-      <span><%= p.discount %>% OFF</span>
+      <div style="
+        margin-top:6px;
+        background:#16a34a;
+        color:white;
+        padding:4px 10px;
+        font-size:12px;
+        font-weight:700;
+        border-radius:6px;
+        display:inline-block;
+      ">
+        <%= product.discount %>% OFF
+      </div>
+
+    <% } else { %>
+
+      <div class="price">
+        ₹<%= product.price %>
+      </div>
+
     <% } %>
-  </p>
-
-  <a href="/product?id=<%= p.id %>">
-    View Product
-  </a>
-
-  <button
-    class="add-to-cart"
-    data-id="<%= p.id %>"
-    data-name="<%= p.name %>"
-    data-price="<%= p.finalPrice %>">
-    Add to Cart
-  </button>
-
-</div>
-
-<% }) %>
+  </div>
+ </div>
 
       </div>
       <div style="margin-left:auto">
