@@ -235,10 +235,6 @@ app.post("/order", async (req, res) => {
   try {
     console.log("➡️ ORDER BODY:", req.body);
 
-    if (!req.session.user) {
-      return res.json({ success: false, message: "Not logged in" });
-    }
-
     const {
       name,
       address,
@@ -256,23 +252,26 @@ app.post("/order", async (req, res) => {
       return res.json({ success: false, message: "Cart is empty" });
     }
 
-    // 🔥 FETCH PRODUCTS FROM GOOGLE SHEETS
-   const safeItems = items.map(item => ({
-  id: item.id,
-  name: item.name,
-  price: Number(item.price), // discounted price
-  discount: Number(item.discount || 0),
-  qty: Number(item.qty)
-}));
+    const safeItems = items.map(item => ({
+      id: item.id,
+      name: item.name,
+      price: Number(item.price),
+      discount: Number(item.discount || 0),
+      qty: Number(item.qty || 1)
+    }));
 
+    let calculatedTotal = 0;
 
-    if (safeItems.length === 0) {
-      return res.json({ success: false, message: "Invalid cart items" });
+    safeItems.forEach(i => {
+      calculatedTotal += i.price * i.qty;
+    });
+
+    if (calculatedTotal <= 0) {
+      return res.json({ success: false, message: "Invalid total" });
     }
 
-    // ✅ SAVE ORDER
     const order = await Order.create({
-      userId: req.session.user.id,
+      userId: req.session.user?.id || null,
 
       customerName: name,
       address,
@@ -281,12 +280,12 @@ app.post("/order", async (req, res) => {
       phone,
       pin,
 
-      totalPrice: total,
-
-      items: safeItems, // ⭐ IMPORTANT
+      totalPrice: calculatedTotal,
+      items: safeItems,
 
       paymentMethod,
       utrNumber: paymentMethod === "UPI" ? utrNumber : null,
+
       paymentStatus:
         paymentMethod === "COD"
           ? "COD"
@@ -295,20 +294,18 @@ app.post("/order", async (req, res) => {
       status: "Pending"
     });
 
-    console.log("✅ ORDER SAVED:", order._id || order.id);
+    console.log("✅ ORDER SAVED:", order.id);
 
-    // optional cart clear
     req.session.cart = [];
 
     res.json({ success: true });
 
   } catch (err) {
-    console.log("❌ FINAL ORDER ERROR:");
-    console.log(err);
-
+    console.error("❌ ORDER ERROR:", err);
     res.json({ success: false, message: err.message });
   }
 });
+
 app.post("/cancel-order/:id", async (req, res) => {
   try {
     const orderId = req.params.id;
@@ -326,6 +323,12 @@ app.post("/cancel-order/:id", async (req, res) => {
   }
 });
 
+app.get("/registration", (req, res) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+  res.render("registration");
+});
 
 /* =====================
    REVIEWS ROUTES
