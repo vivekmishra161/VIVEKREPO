@@ -885,6 +885,16 @@ img {
 
 <script>
 
+const CART_KEY = "akc_cart_v1";
+
+function loadCart() {
+  const data = localStorage.getItem(CART_KEY);
+  return data ? JSON.parse(data) : [];
+}
+
+let cart = loadCart();
+
+
 /* PRODUCT LISTS */
 const products = [];
 function createPart(manufacturer, name, cat, baseId, price){
@@ -1063,7 +1073,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("orderSuccessPopup").classList.add("show");
 
         // Clear cart
-        localStorage.removeItem(LS_CART_KEY);
+        localStorage.removeItem(CART_KEY);
 
         // Redirect after short delay
         setTimeout(() => {
@@ -1081,11 +1091,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 document.addEventListener("DOMContentLoaded", () => {
-
-  const CART_KEY = "akc_cart_v1";
-  const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
-
-  let total = 0;
 
   cart.forEach(item => {
     const price = Number(item.price); // ✅ REAL FIELD
