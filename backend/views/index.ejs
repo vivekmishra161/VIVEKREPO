@@ -2030,7 +2030,15 @@ document.addEventListener('DOMContentLoaded', function() {
       <div style="display:flex; gap:10px; align-items:center;">
         <div class="chip" id="resultsCount">Showing 60 products</div>
         <div class="search">
-      <input id="miniSearch" placeholder="Search by parts..." oninput="applyFilters()" />
+      <form action="/search" method="GET">
+         <input
+          type="text"
+          name="q"
+          placeholder="Search by part number or name"
+          required
+            />
+      </form>
+
     </div>
         <select class="select" id="manufacturerSelect" onchange="quickFilterManufacturer()">
           <option value=""><%= t.allManufacturers %></option>

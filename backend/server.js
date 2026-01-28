@@ -103,6 +103,37 @@ app.get("/", async (req, res) => {
     res.render("index", { products: [] });
   }
 });
+const { Op } = require("sequelize");
+
+app.get("/search", async (req, res) => {
+  const q = req.query.q;
+
+  if (!q) return res.redirect("/");
+
+  const results = await Product.findAll({
+    where: {
+      [Op.or]: [
+        { part_no: { [Op.iLike]: `%${q}%` } },
+        { name: { [Op.iLike]: `%${q}%` } }
+      ]
+    },
+    limit: 50
+  });
+
+  const products = results.map(p => ({
+    id: p.part_no,
+    name: p.name,
+    manufacturer: "Hyundai",
+    category: p.category,
+    price: p.price,
+    discount: p.discount || 0,
+    finalPrice: p.final_price,
+    stock: p.stock,
+    image: `/images/products/${p.part_no}.jpg`
+  }));
+
+  res.render("index", { products });
+});
 
 
 app.get("/signin", (req, res) => res.render("signin", { popup: "" }));
