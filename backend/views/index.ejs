@@ -2564,7 +2564,7 @@ function escapeHtml(str){ return String(str).replace(/[&<>"']/g, (m)=>({ "&":"&a
 function numberWithCommas(x){ return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 
 document.addEventListener('DOMContentLoaded', ()=>{
-  renderProducts(products);
+  renderProducts(products.length ? products : defaultProducts);
   updateCartBadge();
   const maxPrice = Math.max(...products.map(p=>p.price));
   document.getElementById('priceMax').value = maxPrice + 500;
