@@ -83,15 +83,18 @@ app.get("/", async (req, res) => {
       limit: 40
     });
 
-    const products = dbProducts.map(p => ({
-      id: p.part_no,                 // cart uses this
-      name: p.name,
-      price: p.price,
-      discount: p.discount || 0,
-      finalPrice: p.final_price,
-      stock: p.stock,
-      image: `/images/products/${p.part_no}.jpg`
-    }));
+   const products = dbProducts.map(p => ({
+  id: p.part_no,
+  name: p.name,
+  manufacturer: "Hyundai",     // 👈 important
+  category: p.category,        // 👈 important
+  price: p.price,
+  discount: p.discount || 0,
+  finalPrice: p.final_price,
+  stock: p.stock,
+  image: `/images/products/${p.part_no}.jpg`
+}));
+
 
     res.render("index", { products });
 
