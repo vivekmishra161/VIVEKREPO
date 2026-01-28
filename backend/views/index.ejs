@@ -2047,7 +2047,8 @@ document.addEventListener('DOMContentLoaded', function() {
           <option value="Tata">Tata</option>
           <option value="Bajaj">Bajaj</option>
         </select>
-        <select class="select" id="categorySelect" onchange="quickFilterCategory()">
+        <select id="categorySelect" onchange="filterByCategory(this.value)">
+
           <option value=""><%= t.allCategories %></option>
           <option value="Engine">Engine</option>
           <option value="Brake">Brake</option>
@@ -2461,78 +2462,16 @@ function renderProducts(list) {
 }
 
 /* ------------ Filters ------------ */
-function getActiveManufacturers(){
-  return Array.from(document.querySelectorAll('.filter-manufacturer:checked')).map(n=>n.value);
+async function loadProducts(filters = {}) {
+  const params = new URLSearchParams(filters).toString();
+
+  const res = await fetch(`/api/products?${params}`);
+  const data = await res.json();
+
+  renderProducts(data);
 }
-function getActiveCategories(){
-  return Array.from(document.querySelectorAll('.filter-category:checked')).map(n=>n.value);
-}
-function applyFilters() {
-  const q =
-    (document.getElementById('miniSearch')?.value || '').toLowerCase();
-
-  const manufacturer =
-    document.getElementById('manufacturerSelect')?.value || '';
-
-  const category =
-    document.getElementById('categorySelect')?.value || '';
-
-  const sort =
-    document.getElementById('sortSelect')?.value || 'relevance';
-
-  let filtered = products.filter(p => {
-
-    const matchQ =
-      !q ||
-      p.name.toLowerCase().includes(q) ||
-      p.id.toLowerCase().includes(q);
-
-    const matchM =
-      !manufacturer ||
-      p.manufacturer.toLowerCase() === manufacturer.toLowerCase();
-
-    const matchC =
-      !category ||
-      p.category.toLowerCase() === category.toLowerCase();
-
-    return matchQ && matchM && matchC;
-  });
-
-  if (sort === 'price-asc') filtered.sort((a,b)=>a.price - b.price);
-  if (sort === 'price-desc') filtered.sort((a,b)=>b.price - a.price);
-  if (sort === 'name-asc') filtered.sort((a,b)=>a.name.localeCompare(b.name));
-
-  renderProducts(filtered);
-}
-
-
-
-
-
-function quickFilterManufacturer(){
-  const v = document.getElementById('manufacturerSelect').value;
-  document.querySelectorAll('.filter-manufacturer').forEach(ch=>{
-    ch.checked = (v === '' ? true : ch.value === v);
-  });
-  applyFilters();
-}
-function quickFilterCategory() {
-  const v = document.getElementById('categorySelect').value.toLowerCase();
-
-  document.querySelectorAll('.filter-category').forEach(ch => {
-    ch.checked = (v === '' || ch.value.toLowerCase() === v);
-  });
-
-  applyFilters();
-}
-
-function resetFilters(){
-  document.getElementById('miniSearch').value = '';
-  document.getElementById('manufacturerSelect').value = '';
-  document.getElementById('categorySelect').value = '';
-  document.getElementById('sortSelect').value = 'relevance';
-
-  applyFilters();
+function filterByCategory(category) {
+  loadProducts({ category });
 }
 
 
@@ -2769,32 +2708,18 @@ function toggleMobileMenu() {
   });
 </script>
 <script>
-const searchInput = document.getElementById("liveSearch");
-
 let timer = null;
 
-searchInput.addEventListener("input", () => {
+document.getElementById("liveSearch").addEventListener("input", e => {
   clearTimeout(timer);
 
-  const q = searchInput.value.trim();
+  const value = e.target.value.trim();
 
-  // 🔁 back to default products
-  if (q.length === 0) {
-    renderProducts(defaultProducts);
-    return;
-  }
-
-  // prevent unnecessary calls
-  if (q.length < 2) return;
-
-  timer = setTimeout(async () => {
-    try {
-      const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
-      const data = await res.json();
-
-      renderProducts(data);
-    } catch (e) {
-      console.error("Live search error", e);
+  timer = setTimeout(() => {
+    if (!value) {
+      loadProducts(); // back to default 40
+    } else {
+      loadProducts({ search: value });
     }
   }, 300);
 });
