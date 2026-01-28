@@ -1452,18 +1452,21 @@ if (!product) {
   prodIdEl.textContent = product.id;
   prodPrice.textContent = '₹' + numberWithCommas(product.price);
   prodOldPrice.textContent = ''; // you can set product.oldPrice if available
-  prodDescription.textContent = product.description || '—';
+prodDescription.textContent =
+  PRODUCT.description || "No description available.";
 
-  // specs
-  specTable.innerHTML = '';
-  const specs = product.specs || {};
-  for (const k in specs){
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td style="width:40%;">${k}</td><td>${specs[k]}</td>`;
+specTable.innerHTML = "";
+
+if (PRODUCT.specs) {
+  for (const key in PRODUCT.specs) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${key}</td>
+      <td>${PRODUCT.specs[key]}</td>
+    `;
     specTable.appendChild(tr);
   }
-
- 
+}
 
   // stars (UI only)
   const starsWrap = document.getElementById('stars');
@@ -1543,6 +1546,34 @@ function showToast(message) {
   }, 2000);
 }
 
+const relatedBox = document.getElementById("related");
+
+const relatedItems = products
+  .filter(p => p.category === PRODUCT.category && p.id !== PRODUCT.id)
+  .slice(0, 8);
+
+relatedItems.forEach(item => {
+  const div = document.createElement("div");
+  div.className = "rel-card";
+
+  div.innerHTML = `
+    <img src="${item.img}" alt="${item.name}">
+    <div style="font-size:14px;font-weight:700;text-align:center">
+      ${item.name}
+    </div>
+    <div style="color:#6b7280;font-size:13px">
+      ₹${item.price}
+    </div>
+    <button
+      style="padding:6px 10px;border-radius:8px;border:1px solid #ddd;background:#fff;cursor:pointer"
+      onclick="location.href='/product?id=${item.id}'"
+    >
+      View
+    </button>
+  `;
+
+  relatedBox.appendChild(div);
+});
 
 /* sign modal */
 function closeModal(){ document.getElementById('signModal').style.display = 'none'; }
@@ -1691,6 +1722,15 @@ function getDeliveryDate(daysAhead = 6) {
 // call it with 4 days
 getDeliveryDate(6);
 
+</script>
+<script>
+  const backBtn = document.getElementById("backBtn");
+
+  if (backBtn) {
+    backBtn.onclick = () => {
+      window.location.href = "/";
+    };
+  }
 </script>
 
 
