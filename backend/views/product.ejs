@@ -1398,7 +1398,12 @@ const isLoggedIn = "<%= session && session.user ? 'true' : 'false' %>";
 
 /* Render product from query param */
 const productId = qs('id') || ''; // expects /product?id=HY100
-const product = products.find(p => p.id === productId) || null;
+const product = products.find(
+  p => String(p.id).trim() === String(productId).trim()
+);
+console.log("URL ID:", productId);
+console.log("FOUND PRODUCT:", product);
+
 
 if (!product) {
   document.body.innerHTML = '<div style="max-width:900px;margin:40px auto;padding:18px;background:#fff;border-radius:12px;text-align:center">Product not found — <a href="/">Back to shop</a></div>';
@@ -1449,31 +1454,43 @@ if (!product) {
   prodPrice.textContent = '₹' + numberWithCommas(product.price);
   prodOldPrice.textContent = ''; // you can set product.oldPrice if available
 // ---------- DESCRIPTION ----------
-prodDescription.textContent =
-  product.description || "No description available.";
+document.addEventListener("DOMContentLoaded", () => {
 
-// ---------- SPECIFICATIONS ----------
-specTable.innerHTML = "";
+  const prodDescription = document.getElementById("prodDescription");
+  const specTable = document.getElementById("specTable");
 
-if (product.specs && Object.keys(product.specs).length > 0) {
-  for (const key in product.specs) {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${key}</td>
-      <td>${product.specs[key]}</td>
-    `;
-    specTable.appendChild(tr);
+  if (!product) {
+    console.error("Product not found");
+    return;
   }
-} else {
-  specTable.innerHTML = `
-    <tr>
-      <td colspan="2" style="color:#6b7280">
-        No specifications available.
-      </td>
-    </tr>
-  `;
-}
 
+  // ---------- DESCRIPTION ----------
+  prodDescription.textContent =
+    product.description || "No description available.";
+
+  // ---------- SPECIFICATIONS ----------
+  specTable.innerHTML = "";
+
+  if (product.specs && Object.keys(product.specs).length > 0) {
+    for (const key in product.specs) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${key}</td>
+        <td>${product.specs[key]}</td>
+      `;
+      specTable.appendChild(tr);
+    }
+  } else {
+    specTable.innerHTML = `
+      <tr>
+        <td colspan="2" style="color:#6b7280">
+          No specifications available.
+        </td>
+      </tr>
+    `;
+  }
+
+});
 
   // stars (UI only)
   const starsWrap = document.getElementById('stars');
