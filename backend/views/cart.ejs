@@ -824,11 +824,6 @@ function updateQty(id, qty) {
   renderCart();
   updateCheckoutButton();
 }
-document.getElementById("checkoutBtn").addEventListener("click", () => {
-  if (loadCart().length === 0) return;
-
-  window.location.href = "/registration";
-});
 
 
 function removeItem(id) {
