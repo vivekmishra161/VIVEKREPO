@@ -7,6 +7,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const Order = require("./models/order");
 const Review = require("./models/review");
+const Product = require("./models/product");
 
 const sequelize = require("./config/database");
 const User = require("./models/user");
@@ -75,15 +76,31 @@ app.use("/admin", require("./routes/admindashboard"));
 app.use("/admin", require("./routes/adminorders"));
 app.use("/admin", require("./routes/adminusers"));
 app.use('/admin', require('./routes/adminproduct'));
+app.get("/", async (req, res) => {
+  try {
+    const dbProducts = await Product.findAll({
+      order: [["id", "DESC"]],
+      limit: 40
+    });
 
+    const products = dbProducts.map(p => ({
+      id: p.part_no,                 // cart uses this
+      name: p.name,
+      price: p.price,
+      discount: p.discount || 0,
+      finalPrice: p.final_price,
+      stock: p.stock,
+      image: `/images/products/${p.part_no}.jpg`
+    }));
 
+    res.render("index", { products });
 
-
-app.use("/", require("./routes/index"));
-
-app.get("/", (req, res) => {
-  res.render("index");
+  } catch (err) {
+    console.log("❌ Homepage DB error:", err.message);
+    res.render("index", { products: [] });
+  }
 });
+
 
 app.get("/signin", (req, res) => res.render("signin", { popup: "" }));
 app.get("/signup", (req, res) => res.render("signup", { popup: "" }));
