@@ -1540,7 +1540,8 @@ function addToCart(productId, qty) {
 
   let cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
 
-  const finalPrice = Number(PRODUCT.finalPrice || PRODUCT.price);
+  // PRODUCT already exists on page
+  const finalPrice = PRODUCT.finalPrice || PRODUCT.price;
 
   const existing = cart.find(i => i.id === PRODUCT.id);
 
@@ -1550,14 +1551,15 @@ function addToCart(productId, qty) {
     cart.push({
       id: PRODUCT.id,
       name: PRODUCT.name,
-      price: finalPrice,   // ✅ guaranteed value
-      qty: qty
+      price: finalPrice,   // ✅ discounted price
+      qty: qty,
     });
   }
 
   localStorage.setItem("akc_cart_v1", JSON.stringify(cart));
   showToast("Added to cart");
 }
+
 
 
 
