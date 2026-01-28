@@ -271,7 +271,8 @@ app.post("/order", async (req, res) => {
     }
 
     const order = await Order.create({
-      userId: req.session.user?.id || null,
+      userId: req.session.user ? req.session.user.id : 0,
+
 
       customerName: name,
       address,
