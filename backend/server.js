@@ -96,23 +96,22 @@ app.get("/", async (req, res) => {
 }));
 
 
-    res.render("index", {
-      products,
-      query: req.query.q
-   });
-
+    res.render("index", { products });
 
   } catch (err) {
     console.log("❌ Homepage DB error:", err.message);
     res.render("index", { products: [] });
   }
 });
+
 const { Op } = require("sequelize");
 
-app.get("/search", async (req, res) => {
-  const q = req.query.q;
+app.get("/api/search", async (req, res) => {
+  const q = req.query.q?.trim();
 
-  if (!q) return res.redirect("/");
+  if (!q || q.length < 2) {
+    return res.json([]);
+  }
 
   const results = await Product.findAll({
     where: {
@@ -121,7 +120,7 @@ app.get("/search", async (req, res) => {
         { name: { [Op.iLike]: `%${q}%` } }
       ]
     },
-    limit: 50
+    limit: 20
   });
 
   const products = results.map(p => ({
@@ -136,9 +135,8 @@ app.get("/search", async (req, res) => {
     image: `/images/products/${p.part_no}.jpg`
   }));
 
-  res.render("index", { products });
+  res.json(products);
 });
-
 
 app.get("/signin", (req, res) => res.render("signin", { popup: "" }));
 app.get("/signup", (req, res) => res.render("signup", { popup: "" }));
