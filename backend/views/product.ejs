@@ -1540,24 +1540,32 @@ function addToCart(productId, qty) {
 
   let cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
 
-  const finalPrice = Number(PRODUCT.finalPrice || PRODUCT.price);
+  // ✅ find correct product
+  const item = products.find(p => p.id === productId);
 
-  const existing = cart.find(i => i.id === PRODUCT.id);
+  if (!item) {
+    alert("Product not found");
+    return;
+  }
+
+  const existing = cart.find(i => i.id === item.id);
 
   if (existing) {
     existing.qty += qty;
   } else {
     cart.push({
-      id: PRODUCT.id,
-      name: PRODUCT.name,
-      price: finalPrice,   // ✅ guaranteed value
-      qty: qty
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      qty: qty,
+      img: item.img
     });
   }
 
   localStorage.setItem("akc_cart_v1", JSON.stringify(cart));
   showToast("Added to cart");
 }
+
 
 
 
