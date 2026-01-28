@@ -1827,7 +1827,66 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
+<script>
+  // ================================
+// RELATED PRODUCTS (FINAL FIX)
+// ================================
 
+const relatedBox = document.getElementById("related");
+
+if (relatedBox && product) {
+
+  relatedBox.innerHTML = "";
+
+  const relatedItems = products
+    .filter(p =>
+      p.category === product.category &&
+      p.id !== product.id
+    )
+    .slice(0, 8);
+
+  if (relatedItems.length === 0) {
+    relatedBox.innerHTML = `
+      <div style="color:#6b7280;font-size:14px;">
+        No related products found.
+      </div>
+    `;
+  }
+
+  relatedItems.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "rel-card";
+
+    card.innerHTML = `
+      <img src="${item.img}" alt="${item.name}">
+      <div style="font-size:14px;font-weight:700;text-align:center">
+        ${item.name}
+      </div>
+      <div style="color:#6b7280;font-size:13px">
+        ₹${item.price}
+      </div>
+
+      <button
+        style="
+          margin-top:6px;
+          padding:6px 12px;
+          border-radius:8px;
+          border:1px solid #e5e7eb;
+          background:#fff;
+          cursor:pointer;
+          font-weight:600;
+        "
+        onclick="location.href='/product?id=${item.id}'"
+      >
+        View
+      </button>
+    `;
+
+    relatedBox.appendChild(card);
+  });
+}
+
+</script>
 
 </body>
 </html>
