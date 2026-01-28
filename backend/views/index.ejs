@@ -1897,35 +1897,102 @@ select.sort:focus{
   50% { content: '..'; }
   75% { content: '...'; }
 }
+/* ================================
+   FILTER BUTTON (MANUFACTURER + CATEGORY)
+================================ */
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 18px;
+  height: 44px;
+
+  background: #ffffff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 14px;
+
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition: all 0.2s ease;
+}
+
+/* Hover */
+.filter-btn:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+  background: #f5f8ff;
+}
+
+/* Active / selected */
+.filter-btn.active-filter {
+  border-color: #2563eb;
+  background: #f1f5ff;
+  color: #2563eb;
+}
+
+/* Arrow */
+.filter-btn .arrow {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #6b7280;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+
+/* Arrow rotate when open */
+.filter-dropdown.active .arrow {
+  transform: rotate(180deg);
+  border-top-color: #2563eb;
+}
+
+/* Dropdown container */
 .filter-dropdown {
   position: relative;
 }
 
-.filter-btn {
-  background: #fff;
-  border: 1px solid #dcdcdc;
-  padding: 10px 16px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-}
-
+/* Dropdown menu */
 .filter-menu {
   position: absolute;
-  top: 110%;
+  top: 52px;
   left: 0;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.08);
-  display: none;
+
   width: 100%;
-  z-index: 10;
+  background: #ffffff;
+
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+
+  padding: 6px 0;
+  display: none;
+  z-index: 100;
 }
 
+/* Show menu */
 .filter-dropdown.active .filter-menu {
   display: block;
+}
+
+/* Dropdown item */
+.filter-menu li {
+  padding: 10px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #111827;
+  transition: background 0.15s ease;
+}
+
+.filter-menu li:hover {
+  background: #f3f6ff;
+  color: #2563eb;
 }
 
 </style>
