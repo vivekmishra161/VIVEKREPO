@@ -1538,7 +1538,7 @@ function decreaseQty(){ const el = document.getElementById('qtyInput'); el.value
 function addToCart(productId, qty) {
   qty = Number(qty) || 1;
 
-  let cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
+  let cart = JSON.parse(localStorage.getItem(LS_CART_KEY)) || [];
 
   // PRODUCT already exists on page
   const finalPrice = PRODUCT.finalPrice || PRODUCT.price;
@@ -1559,9 +1559,6 @@ function addToCart(productId, qty) {
   localStorage.setItem("akc_cart_v1", JSON.stringify(cart));
   showToast("Added to cart");
 }
-
-
-
 
 /* toast */
 function showToast(message) {
