@@ -1090,19 +1090,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-document.addEventListener("DOMContentLoaded", () => {
-
-  cart.forEach(item => {
-    const price = Number(item.price); // ✅ REAL FIELD
-    const qty = Number(item.qty || 1);
-    total += price * qty;
-  });
-
-  document.getElementById("totalDisplay").innerText =
-    total.toFixed(2);
-
-});
-
 </script>
 
 </body>
