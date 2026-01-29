@@ -27,6 +27,7 @@ function applyDiscount(price, discount) {
 
 async function getProducts() {
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+  
 
   const res = await fetch(url);
   const data = await res.json();
@@ -37,6 +38,7 @@ async function getProducts() {
     const price = Number(row[4]) || 0;
     const discountData = applyDiscount(price, row[6] || 0);
 
+console.log("MANUFACTURER RAW →", row[1]);
 
     return {
       id: row[0]?.toString().trim(),
