@@ -1927,6 +1927,13 @@ select.sort:focus{
 .filter-dropdown.active .filter-menu {
   display: block;
 }
+.card img.product-img {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #f8fafc;
+}
 
 </style>
 </head>
@@ -2466,12 +2473,14 @@ function renderProducts(list) {
     const div = document.createElement('div');
     div.className = 'card';
 
-    const imageSrc = p.image || p.img || '/images/categories/brake.jpg';
+    const imageSrc = p.image || p.img || '/images/categories/brake.jpg?v=1';
 
     div.innerHTML = `
-      <img src="${imageSrc}" alt="${escapeHtml(p.name)}" loading="lazy">
-
-      <div style="display:flex; justify-content:space-between; gap:10px; align-items:center;">
+      <img class="product-img"
+         src="${imageSrc}"
+         alt="${escapeHtml(p.name)}"
+         loading="lazy">
+       <div style="display:flex; justify-content:space-between; gap:10px; align-items:center;">
         <div>
           <p class="title">${escapeHtml(p.name)}</p>
           <div class="id">${p.id} • <span class="muted">${p.manufacturer}</span></div>
