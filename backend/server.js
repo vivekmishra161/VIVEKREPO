@@ -232,35 +232,36 @@ app.get("/product", async (req, res) => {
       return res.redirect("/");
     }
 
+    // 🔥 FETCH FROM DATABASE ONLY
     const product = await Product.findOne({
       where: { part_no: partNo }
     });
 
     if (!product) {
-      return res.status(404).render("404");
+      return res.render("product-not-found", { id: partNo });
     }
 
+    // 🔥 SEND DB PRODUCT TO EJS
     res.render("product", {
       product: {
         id: product.part_no,
         name: product.name,
-        manufacturer: product.manufacturer || "Hyundai",
         category: product.category,
+        manufacturer: product.manufacturer || "Hyundai",
         price: product.price,
         discount: product.discount || 0,
         finalPrice: product.final_price,
-        stock: product.stock,
-        image: `/images/products/${product.part_no}.jpg`,
-        description: product.description
-      },
-      session: req.session
+        stock: product.stock || "In Stock",
+        image: `/images/products/${product.part_no}.jpg`
+      }
     });
 
   } catch (err) {
-    console.error("❌ Product route error:", err);
+    console.error("❌ PRODUCT PAGE ERROR:", err);
     res.status(500).send("Server error");
   }
 });
+
 
 
 /* =====================
