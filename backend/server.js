@@ -172,7 +172,7 @@ app.get("/api/products", async (req, res) => {
         finalPrice: p.final_price,
         discount: p.discount,
         stock: p.stock,
-        image: `/images/categories/${p.category.toLowerCase()}.jpg`
+        image: `/images/products/${p.part_no}.jpg`
       }))
     );
   } catch (err) {
