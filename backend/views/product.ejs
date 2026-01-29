@@ -1207,6 +1207,7 @@ img {
 </div>
 <script>
   const product = <%- JSON.stringify(product) %>;
+   const productId = product.id; // ✅ SINGLE SOURCE
 </script>
 
 <script>
@@ -1473,9 +1474,6 @@ document.getElementById('shareTw').addEventListener('click', (e)=> {
 
 </script>
 <script>
-const productid = new URLSearchParams(location.search).get("id");
-
-
 function loadRating() {
   fetch(`/rating/${productId}`)
     .then(res => res.json())
