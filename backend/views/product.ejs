@@ -1081,7 +1081,7 @@ img {
     <% } else { %>
 
       <div class="price">
-        ₹<%= product.price %>
+        ₹ <%= Number(product.price).toFixed(2) %>
       </div>
 
     <% } %>
