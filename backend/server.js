@@ -108,59 +108,78 @@ const { Op } = require("sequelize");
 app.get("/api/products", async (req, res) => {
   try {
     const {
-      search = "",
-      manufacturer = "",
-      category = "",
+      category,
+      manufacturer,
+      minPrice,
+      maxPrice,
+      search,
       sort = "relevance"
     } = req.query;
 
-    let where = {};
+    const where = {};
     let order = [];
 
-    // 🔍 Search
-    if (search) {
-      where[Op.or] = [
-        { name: { [Op.iLike]: `%${search}%` } },
-        { part_no: { [Op.iLike]: `%${search}%` } }
-      ];
-    }
-
-    // 🏭 Manufacturer
-    if (manufacturer) {
-      where.manufacturer = manufacturer;
-    }
-
-    // 📦 Category
+    // 📦 Category filter
     if (category) {
       where.category = category;
     }
 
-    // 💰 Sorting (THIS WAS MISSING)
+    // 🏭 Manufacturer filter
+    if (manufacturer) {
+      where.manufacturer = manufacturer;
+    }
+
+    // 💰 Price range
+    if (minPrice || maxPrice) {
+      where.final_price = {};
+      if (minPrice) where.final_price[Op.gte] = Number(minPrice);
+      if (maxPrice) where.final_price[Op.lte] = Number(maxPrice);
+    }
+
+    // 🔍 Search
+    if (search) {
+      where[Op.or] = [
+        { part_no: { [Op.iLike]: `%${search}%` } },
+        { name: { [Op.iLike]: `%${search}%` } }
+      ];
+    }
+
+    // 🔃 SORTING (THIS IS THE KEY FIX)
     if (sort === "price-asc") {
       order = [["final_price", "ASC"]];
     } else if (sort === "price-desc") {
       order = [["final_price", "DESC"]];
+    } else if (sort === "name-asc") {
+      order = [["name", "ASC"]];
     } else {
+      // relevance / default
       order = [["id", "DESC"]];
     }
 
-    const products = await Product.findAll({
+    const results = await Product.findAll({
       where,
       order,
       limit: 40
     });
 
-   res.json(results.map(p => ({
-    id: p.part_no,
-    name: p.name,
-    manufacturer: "Hyundai",
-    category: p.category,
-    price: p.price,
-    finalPrice: p.final_price,
-    discount: p.discount,
-    stock: p.stock,
-    image: `/images/products/${p.part_no}.jpg`
-  })));
+    res.json(
+      results.map(p => ({
+        id: p.part_no,
+        name: p.name,
+        manufacturer: p.manufacturer,
+        category: p.category,
+        price: p.price,
+        finalPrice: p.final_price,
+        discount: p.discount,
+        stock: p.stock,
+        image: `/images/products/${p.part_no}.jpg`
+      }))
+    );
+  } catch (err) {
+    console.error("PRODUCT FILTER ERROR:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 
 
