@@ -4,7 +4,7 @@ const SHEET_ID = "1X4KhQUY-evoKQOKB1qOyX2Y1_EyAGsYU-SHaIk99wPs";
 const API_KEY = "AIzaSyDfyx80D4bHDx6aD4E5gZVq5nqC0GbTjuk";
 
 // A → G
-const RANGE = "Sheet1!A2:G109";
+const RANGE = "Sheet1!A2:h1000000";
 
 function applyDiscount(price, discount) {
   const d = Number(discount);
