@@ -1005,6 +1005,50 @@ img {
   color: #111827;
   font-weight: 500;
 }
+/* ===============================
+   PRODUCT IMAGE UI
+================================ */
+
+.product-image-box {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 25px;
+
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.product-image-box img {
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+/* hover zoom */
+.product-image-box img:hover {
+  transform: scale(1.08);
+}
+
+/* mobile */
+@media (max-width: 600px) {
+  .product-image-box {
+    padding: 14px;
+  }
+
+  .product-image-box img {
+    max-height: 220px;
+  }
+}
 
   </style>
 </head>
@@ -1663,6 +1707,9 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
 });
 </script>
+<div class="product-image-box">
+  <img id="heroImg" src="/images/categories/${product.category.toLowerCase()}.jpg" alt="Product image">
+</div>
 
 </body>
 </html>
