@@ -1688,7 +1688,7 @@ if (relatedBox && product) {
     card.className = "rel-card";
 
     card.innerHTML = `
-      <img src="${item.img}" alt="${item.name}">
+      <img src="${getProductImage(item)}" alt="${item.name}">
       <div style="font-size:14px;font-weight:700;text-align:center">
         ${item.name}
       </div>
@@ -1721,8 +1721,7 @@ if (relatedBox && product) {
 document.addEventListener("DOMContentLoaded", () => {
 
   // IMAGE
-  document.getElementById("heroImg").src =
-    `/images/products/${product.id}.jpg`;
+  document.getElementById("heroImg").src = getProductImage(product);
 
   // TEXT
   document.getElementById("prodTitle").textContent = product.name;
@@ -1772,6 +1771,19 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
 });
 </script>
+<script>
+  function getProductImage(product) {
+  if (product.image && product.image !== "") {
+    return product.image;
+  }
 
+  if (product.category) {
+    return `/images/categories/${product.category.toLowerCase()}.jpg`;
+  }
+
+  return "/images/categories/default.jpg";
+}
+
+</script>
 </body>
 </html>

@@ -2469,7 +2469,7 @@ function renderProducts(list) {
     const imageSrc = p.image || p.img || '/images/no-image.png';
 
     div.innerHTML = `
-      <img src="${imageSrc}" alt="${escapeHtml(p.name)}" loading="lazy">
+      <img src="${getProductImage(product)}" alt="${product.name}" loading="lazy">
 
       <div style="display:flex; justify-content:space-between; gap:10px; align-items:center;">
         <div>
@@ -2781,6 +2781,20 @@ async function applyFilters() {
   renderProducts(data);
 }
 
+
+</script>
+<script>
+  function getProductImage(product) {
+  if (product.image && product.image !== "") {
+    return product.image;
+  }
+
+  if (product.category) {
+    return `/images/categories/${product.category.toLowerCase()}.jpg`;
+  }
+
+  return "/images/categories/default.jpg";
+}
 
 </script>
 </body>
