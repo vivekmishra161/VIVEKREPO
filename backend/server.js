@@ -164,7 +164,7 @@ app.get("/api/products", async (req, res) => {
 
     res.json(
       results.map(p => ({
-        id: p.part_no,
+        id: String(row.id).trim(),
         name: p.name,
         manufacturer: p.manufacturer,
         category: p.category,

@@ -21,7 +21,7 @@ router.get("/sync-products", async (req, res) => {
       }
 
       const payload = {
-        part_no: String(p.id).trim(),
+        part_no: String(p.id).replace(/\.0$/, "").trim(),
         manufacturer: p.manufacturer || "Hyundai",
         name: p.name || "",
         category: p.category || "",
