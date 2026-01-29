@@ -20,22 +20,28 @@ router.get("/sync-products", async (req, res) => {
         await existing.update({
           name: p.name,
           category: p.category,
+          manufacturer: p.manufacturer || "Hyundai",
           price: p.price,
           discount: p.discount,
           final_price: p.finalPrice,
-          stock: p.stock
-        });
+          stock: p.stock,
+          image: p.image || null
+       });
+
         updated++;
       } else {
         await Product.create({
-          part_no: p.id,
-          name: p.name,
-          category: p.category,
-          price: p.price,
-          discount: p.discount,
-          final_price: p.finalPrice,
-          stock: p.stock
-        });
+            part_no: p.id,
+            name: p.name,
+            category: p.category,
+            manufacturer: p.manufacturer || "Hyundai",
+            price: p.price,
+            discount: p.discount,
+            final_price: p.finalPrice,
+            stock: p.stock,
+            image: p.image || null
+          });
+
         created++;
       }
     }

@@ -46,7 +46,8 @@ async function getProducts() {
       price: price,
       discount: discountData.discount,
       finalPrice: discountData.finalPrice,
-      stock: row[5] || "Out of Stock"
+      stock: row[5] || "Out of Stock",
+      image: row[7] || null
     };
   });
 }
