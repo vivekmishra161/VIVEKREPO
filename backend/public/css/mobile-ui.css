@@ -130,8 +130,31 @@ header,
 }
 
 .hero {
-  border-radius: 18px;
+  width: 100%;
   background: #ffffff;
+  border-radius: 18px;
+  padding: 25px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 40px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+
+  position: relative;
+  overflow: hidden;
+}
+
+.hero img {
+  width: 100%;
+  max-width: 800px;
+  max-height: 500px;
+
+  object-fit: cover;
+  transition: transform 0.35s ease;
+
+  cursor: zoom-in;
 }
 
 .meta {
