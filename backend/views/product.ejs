@@ -1731,6 +1731,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  if (!product) return;
+
+  // =====================
+  // PRODUCT DESCRIPTION
+  // =====================
+  const descBox = document.getElementById("prodDescription");
+
+  descBox.innerHTML = `
+    Genuine <b>${product.name}</b> suitable for
+    <b>${product.manufacturer}</b> vehicles.
+    High quality auto part with perfect fitting and durability.
+  `;
+
+  // =====================
+  // PRODUCT SPECIFICATIONS
+  // =====================
+  const specTable = document.getElementById("specTable");
+
+  specTable.innerHTML = `
+    <tr>
+      <td>Brand</td>
+      <td>${product.manufacturer}</td>
+    </tr>
+    <tr>
+      <td>Category</td>
+      <td>${product.category}</td>
+    </tr>
+    <tr>
+      <td>Part Number</td>
+      <td>${product.id}</td>
+    </tr>
+    <tr>
+      <td>Stock Status</td>
+      <td>${product.stock}</td>
+    </tr>
+  `;
+});
+</script>
 
 </body>
 </html>
