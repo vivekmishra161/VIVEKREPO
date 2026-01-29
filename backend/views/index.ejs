@@ -2071,7 +2071,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     </div>
-        <select class="select" id="manufacturerSelect" onchange="quickFilterManufacturer()">
+        <select class="select" id="manufacturerSelect" onchange="applyFilters()">
           <option value=""><%= t.allManufacturers %></option>
           <option value="Hyundai">Hyundai</option>
           <option value="Tata">Tata</option>
@@ -2762,24 +2762,25 @@ document.getElementById("liveSearch").addEventListener("input", () => {
 
 </script>
 <script>
-  async function applyFilters() {
-  const search = document.getElementById("liveSearch").value;
+async function applyFilters() {
   const manufacturer = document.getElementById("manufacturerSelect").value;
   const category = document.getElementById("categorySelect").value;
   const sort = document.getElementById("sortSelect").value;
+  const search = document.getElementById("liveSearch").value;
 
-  const params = new URLSearchParams({
-    search,
-    manufacturer,
-    category,
-    sort
-  });
+  const params = new URLSearchParams();
 
-  const res = await fetch(`/api/products?${params}`);
+  if (manufacturer) params.append("manufacturer", manufacturer);
+  if (category) params.append("category", category);
+  if (search) params.append("search", search);
+  if (sort) params.append("sort", sort);
+
+  const res = await fetch(`/api/products?${params.toString()}`);
   const data = await res.json();
 
   renderProducts(data);
 }
+
 
 </script>
 </body>
