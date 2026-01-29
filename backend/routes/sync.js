@@ -20,7 +20,7 @@ router.get("/sync-products", async (req, res) => {
         await existing.update({
           name: p.name,
           category: p.category,
-          manufacturer: p.manufacturer || "Hyundai",
+          manufacturer: p.manufacturer,
           price: p.price,
           discount: p.discount,
           final_price: p.finalPrice,
