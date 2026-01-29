@@ -39,14 +39,14 @@ async function getProducts() {
 
 
     return {
-      id: row[0] || "",
-      manufacturer: (row[1] || "Hyundai").toString().trim(), 
-      name: row[2] || "",
-      category: row[3] || "",
-      price: price,
-      discount: discountData.discount,
-      finalPrice: discountData.finalPrice,
+      id: row[0]?.toString().trim(),
+      manufacturer: row[1]?.trim(),
+      name: row[2]?.trim(),
+      category: row[3]?.trim(),
+      price: Number(row[4]) || 0,
       stock: row[5] || "Out of Stock",
+      discount: Number(row[6]) || 0,
+      finalPrice: Number(row[4]) - (Number(row[4]) * Number(row[6]) / 100),
       image: row[7] || null
     };
   });
