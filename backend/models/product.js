@@ -13,6 +13,9 @@ const Product = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false
     },
+    manufacturer: {          // ✅ THIS WAS MISSING
+     type: DataTypes.STRING
+  },
     category: DataTypes.STRING,
     price: DataTypes.FLOAT,
     discount: DataTypes.INTEGER,
