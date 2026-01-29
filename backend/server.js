@@ -247,7 +247,7 @@ app.get("/product", async (req, res) => {
         id: product.part_no,
         name: product.name,
         category: product.category,
-        manufacturer: product.manufacturer || "Hyundai",
+        manufacturer: product.manufacturer ,
         price: product.price,
         discount: product.discount || 0,
         finalPrice: product.final_price,

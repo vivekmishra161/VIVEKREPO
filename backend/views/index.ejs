@@ -2474,7 +2474,7 @@ function renderProducts(list) {
       <div style="display:flex; justify-content:space-between; gap:10px; align-items:center;">
         <div>
           <p class="title">${escapeHtml(p.name)}</p>
-          <div class="id">${p.id} • <span class="muted">${p.manufacturer || 'Hyundai'}</span></div>
+          <div class="id">${p.id} • <span class="muted">${p.manufacturer}</span></div>
         </div>
         <div class="price">₹${numberWithCommas(p.finalPrice || p.price)}</div>
       </div>
