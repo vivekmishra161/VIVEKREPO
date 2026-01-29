@@ -254,7 +254,7 @@ app.get("/product", async (req, res) => {
         discount: product.discount || 0,
         finalPrice: product.final_price,
         stock: product.stock || "In Stock",
-        image: `/images/products/${product.part_no}.jpg`
+        image: `/images/categories/${product.category.toLowerCase()}.jpg`
       }
     });
 
