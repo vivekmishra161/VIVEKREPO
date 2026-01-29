@@ -150,7 +150,7 @@ app.get("/api/products", async (req, res) => {
       limit: 40
     });
 
-  res.json(results.map(p => ({
+   res.json(results.map(p => ({
     id: p.part_no,
     name: p.name,
     manufacturer: "Hyundai",
@@ -161,7 +161,7 @@ app.get("/api/products", async (req, res) => {
     stock: p.stock,
     image: `/images/products/${p.part_no}.jpg`
   })));
-});
+
 
 
 app.get("/api/search", async (req, res) => {
