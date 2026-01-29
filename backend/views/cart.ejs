@@ -697,7 +697,7 @@ img {
       <tr>
         <th><%= t.product %></th>
         <th><%= t.qty %></th>
-        <th><%= Number(t.subtotal).toFixed(2) %></th>
+        <th><%= t.subtotal %></th>
         <th><%= t.action %></th>
       </tr>
     </thead>
@@ -705,7 +705,7 @@ img {
   </table>
 
   <div class="total-box">
-    <%= Number(t.grandTotal).toFixed(2) %>: ₹<span id="grandTotal">0</span>
+    <%= t.grandTotal %>: ₹<span id="grandTotal">0</span>
   </div>
 
   <div style="margin-top:25px; display:flex; gap:10px; justify-content:center;">
