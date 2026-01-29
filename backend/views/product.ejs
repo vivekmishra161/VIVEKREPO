@@ -1281,7 +1281,7 @@ if (!product) {
   prodTitle.textContent = product.name;
   manufacturer.textContent = product.manufacturer;
   prodIdEl.textContent = product.id;
-  prodPrice.textContent = '₹' + numberWithCommas(product.price);
+  prodPrice.textContent = "₹ " + formatPrice(product.finalPrice || product.price);
   prodOldPrice.textContent = ''; // you can set product.oldPrice if available
 // ---------- DESCRIPTION ----------
 document.addEventListener("DOMContentLoaded", () => {
@@ -1357,6 +1357,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 }
+function formatPrice(value) {
+  return Number(value).toFixed(2);
+}
 
 /* qty helpers */
 function increaseQty(){ const el = document.getElementById('qtyInput'); el.value = Number(el.value || 1) + 1; }
@@ -1401,58 +1404,6 @@ function showToast(message) {
   setTimeout(() => {
     toast.classList.remove("show");
   }, 2000);
-}
-const relatedBox = document.getElementById("related");
-
-// safety check
-if (relatedBox && product) {
-
-  relatedBox.innerHTML = "";
-
-  const relatedItems = products
-    .filter(p =>
-      p.category === product.category &&
-      p.id !== product.id
-    )
-    .slice(0, 8);
-
-  if (relatedItems.length === 0) {
-    relatedBox.innerHTML = `
-      <div style="color:#6b7280;font-size:14px;">
-        No related products found.
-      </div>
-    `;
-  }
-
-  relatedItems.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "rel-card";
-
-    div.innerHTML = `
-      <img src="${item.img}" alt="${item.name}">
-      <div style="font-size:14px;font-weight:700;text-align:center">
-        ${item.name}
-      </div>
-      <div style="color:#6b7280;font-size:13px">
-        ₹${item.price}
-      </div>
-      <button
-        style="
-          padding:6px 10px;
-          border-radius:8px;
-          border:1px solid #ddd;
-          background:#fff;
-          cursor:pointer;
-          font-weight:600;
-        "
-        onclick="location.href='/product?id=${item.id}'"
-      >
-        View
-      </button>
-    `;
-
-    relatedBox.appendChild(div);
-  });
 }
 
 
