@@ -224,17 +224,44 @@ app.get("/cart", (req, res) => {
   });
 });
 app.use("/admin", require("./routes/sync"));
-
 app.get("/product", async (req, res) => {
-  const id = req.query.id;
+  try {
+    const partNo = req.query.id;
 
-  const products = await getProducts();
-  const product = products.find(p => p.id === id);
+    if (!partNo) {
+      return res.redirect("/");
+    }
 
-  if (!product) return res.send("Product not found");
+    const product = await Product.findOne({
+      where: { part_no: partNo }
+    });
 
-  res.render("product", { product });
+    if (!product) {
+      return res.status(404).render("404");
+    }
+
+    res.render("product", {
+      product: {
+        id: product.part_no,
+        name: product.name,
+        manufacturer: product.manufacturer || "Hyundai",
+        category: product.category,
+        price: product.price,
+        discount: product.discount || 0,
+        finalPrice: product.final_price,
+        stock: product.stock,
+        image: `/images/products/${product.part_no}.jpg`,
+        description: product.description
+      },
+      session: req.session
+    });
+
+  } catch (err) {
+    console.error("❌ Product route error:", err);
+    res.status(500).send("Server error");
+  }
 });
+
 
 /* =====================
    AUTH (SQL)
