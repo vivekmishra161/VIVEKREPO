@@ -753,7 +753,8 @@ function renderCart() {
       </tr>
     `;
     document.getElementById("grandTotal").innerText =
-    grandTotal.toFixed(2);
+         Number(grandTotal).toFixed(2);
+
 
     return;
   }
