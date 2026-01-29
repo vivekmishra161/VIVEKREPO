@@ -40,7 +40,7 @@ async function getProducts() {
 
     return {
       id: row[0] || "",
-      manufacturer: row[1]?.trim(),  
+      manufacturer: (row[1] || "Hyundai").toString().trim(), 
       name: row[2] || "",
       category: row[3] || "",
       price: price,
