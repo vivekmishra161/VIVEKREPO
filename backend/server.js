@@ -106,37 +106,49 @@ app.get("/", async (req, res) => {
 const { Op } = require("sequelize");
 
 app.get("/api/products", async (req, res) => {
-  const {
-    category,
-    minPrice,
-    maxPrice,
-    search
-  } = req.query;
+  try {
+    const {
+      search = "",
+      manufacturer = "",
+      category = "",
+      sort = "relevance"
+    } = req.query;
 
-  const where = {};
+    let where = {};
+    let order = [];
 
-  if (category) {
-    where.category = category;
-  }
+    // 🔍 Search
+    if (search) {
+      where[Op.or] = [
+        { name: { [Op.iLike]: `%${search}%` } },
+        { part_no: { [Op.iLike]: `%${search}%` } }
+      ];
+    }
 
-  if (minPrice || maxPrice) {
-    where.final_price = {};
-    if (minPrice) where.final_price[Op.gte] = Number(minPrice);
-    if (maxPrice) where.final_price[Op.lte] = Number(maxPrice);
-  }
+    // 🏭 Manufacturer
+    if (manufacturer) {
+      where.manufacturer = manufacturer;
+    }
 
-  if (search) {
-    where[Op.or] = [
-      { part_no: { [Op.iLike]: `%${search}%` } },
-      { name: { [Op.iLike]: `%${search}%` } }
-    ];
-  }
+    // 📦 Category
+    if (category) {
+      where.category = category;
+    }
 
-  const results = await Product.findAll({
-    where,
-    limit: 40,
-    order: [["id", "DESC"]]
-  });
+    // 💰 Sorting (THIS WAS MISSING)
+    if (sort === "price-asc") {
+      order = [["final_price", "ASC"]];
+    } else if (sort === "price-desc") {
+      order = [["final_price", "DESC"]];
+    } else {
+      order = [["id", "DESC"]];
+    }
+
+    const products = await Product.findAll({
+      where,
+      order,
+      limit: 40
+    });
 
   res.json(results.map(p => ({
     id: p.part_no,
