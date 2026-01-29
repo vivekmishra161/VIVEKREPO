@@ -12,12 +12,13 @@ router.get("/sync-products", async (req, res) => {
     let updated = 0;
 
     for (const p of products) {
-      const existing = await Product.findOne({
-        where: { part_no: p.id }
-      });
 
-      if (existing) {
-        await existing.update({
+      // ❗ VERY IMPORTANT
+      if (!p.id) continue;
+
+      const [row, isCreated] = await Product.upsert(
+        {
+          part_no: p.id,
           name: p.name,
           category: p.category,
           manufacturer: p.manufacturer || "Hyundai",
@@ -25,25 +26,13 @@ router.get("/sync-products", async (req, res) => {
           discount: p.discount,
           final_price: p.finalPrice,
           stock: p.stock,
-          image: p.image || null
-       });
+          image: p.image
+        },
+        { returning: true }
+      );
 
-        updated++;
-      } else {
-        await Product.create({
-            part_no: p.id,
-            name: p.name,
-            category: p.category,
-            manufacturer: p.manufacturer || "Hyundai",
-            price: p.price,
-            discount: p.discount,
-            final_price: p.finalPrice,
-            stock: p.stock,
-            image: p.image || null
-          });
-
-        created++;
-      }
+      if (isCreated) created++;
+      else updated++;
     }
 
     res.json({
@@ -61,5 +50,6 @@ router.get("/sync-products", async (req, res) => {
     });
   }
 });
+
 
 module.exports = router;
