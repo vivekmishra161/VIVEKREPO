@@ -1050,7 +1050,7 @@ img {
       </div>
     </div>
 
-    <h1 class="title" id="prodTitle">Product Title</h1>
+    <h1 class="title" id="prodTitle"><%= product.name %></h1>
     <div class="price-row">
       <div>
         <div class="price-row">
@@ -1230,12 +1230,6 @@ function updateCartCount(){ /* if you have a global badge, update here */ }
 /* is user signed in? provided by server */
 const isLoggedIn = "<%= session && session.user ? 'true' : 'false' %>";
 
-
-/* Render product from query param */
-const productId = qs('id') || ''; // expects /product?id=HY100
-const product = products.find(
-  p => String(p.id).trim() === String(productId).trim()
-);
 console.log("URL ID:", productId);
 console.log("FOUND PRODUCT:", product);
 
@@ -1372,36 +1366,29 @@ function addToCart(productId, qty) {
 
   let cart = JSON.parse(localStorage.getItem("akc_cart_v1")) || [];
 
-  // discounted price shown on UI
-  let unitPrice = <%= product.finalPrice || product.price %>;
-
-  const finalAmount = unitPrice * qty;
+  const price = product.finalPrice || product.price;
 
   const existing = cart.find(i => i.id === productId);
 
   if (existing) {
     existing.qty += qty;
-    existing.price += finalAmount;
   } else {
     cart.push({
       id: productId,
-      name: "<%= product.name %>",
-      price: finalAmount,   // FINAL PAYABLE PRICE
+      name: product.name,
+      price: price,
       qty: qty,
-      img: "<%= product.img %>"
+      img: `/images/products/${productId}.jpg`
     });
   }
 
   localStorage.setItem("akc_cart_v1", JSON.stringify(cart));
 
-  const toast = document.getElementById("toast");
-  toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 1200);
+  document.getElementById("toast").classList.add("show");
+  setTimeout(() => {
+    document.getElementById("toast").classList.remove("show");
+  }, 1200);
 }
-
-
-
-
 
 /* toast */
 function showToast(message) {
@@ -1731,6 +1718,20 @@ if (relatedBox && product) {
   });
 }
 
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // IMAGE
+  document.getElementById("heroImg").src =
+    `/images/products/${product.id}.jpg`;
+
+  // TEXT
+  document.getElementById("prodTitle").textContent = product.name;
+  document.getElementById("manufacturer").textContent = product.manufacturer || "Hyundai";
+  document.getElementById("prodId").textContent = product.id;
+
+});
 </script>
 
 </body>
