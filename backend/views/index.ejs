@@ -2474,9 +2474,10 @@ function renderProducts(list) {
     div.className = 'card';
 
     const imageSrc =
-      p.image ||
-      p.img ||
-     `/images/categories/${p.category?.toLowerCase()}.jpg`;;
+     p.image ||
+     p.img ||
+     `/images/categories/${String(p.category).toLowerCase()}.jpg`;
+
 
     div.innerHTML = `
       <img class="product-img"

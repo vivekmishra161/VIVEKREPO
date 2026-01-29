@@ -92,7 +92,8 @@ app.get("/", async (req, res) => {
   discount: p.discount || 0,
   finalPrice: p.final_price,
   stock: p.stock,
-  image: `/images/products/${p.part_no}.jpg`
+  image: `/images/categories/${p.category.toLowerCase()}.jpg`
+
 }));
 
 
@@ -172,7 +173,8 @@ app.get("/api/products", async (req, res) => {
         finalPrice: p.final_price,
         discount: p.discount,
         stock: p.stock,
-        image: `/images/categories/${p.category}.jpg`
+        image: `/images/categories/${p.category.toLowerCase()}.jpg`
+
       }))
     );
   } catch (err) {
@@ -209,7 +211,7 @@ app.get("/api/search", async (req, res) => {
     discount: p.discount || 0,
     finalPrice: p.final_price,
     stock: p.stock,
-    image: `/images/products/${p.part_no}.jpg`
+    image: `/images/categories/${p.category.toLowerCase()}.jpg`
   }));
 
   res.json(products);
@@ -252,7 +254,8 @@ app.get("/product", async (req, res) => {
         discount: product.discount || 0,
         finalPrice: product.final_price,
         stock: product.stock || "In Stock",
-        image: `/images/products/${product.part_no}.jpg`
+        image: `/images/categories/${p.category.toLowerCase()}.jpg`
+
       }
     });
 
