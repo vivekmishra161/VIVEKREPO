@@ -1380,7 +1380,7 @@ function addToCart(productId, qty) {
     cart.push({
       id: productId,
       name: product.name,
-      price: Number(unitPrice), 
+      price: price,
       qty: qty,
       img: `/images/products/${productId}.jpg`
     });
