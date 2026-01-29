@@ -763,7 +763,7 @@ function renderCart() {
      const price = Number(item.price || 0);
      const subtotal = price * Number(item.qty || 1);
 
-    grandTotal += Number(subtotal);
+    grandTotal += Math.round(subtotal * 100) / 100;
 
 
     const tr = document.createElement("tr");
