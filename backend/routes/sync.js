@@ -10,39 +10,32 @@ router.get("/sync-products", async (req, res) => {
 
     let created = 0;
     let updated = 0;
-    let skipped = 0;
 
     for (const p of products) {
-
-      // 🔴 skip only if part number missing
-      if (!p.id) {
-        skipped++;
-        continue;
-      }
-
-      const payload = {
-        part_no: String(p.id).replace(/\.0$/, "").trim(),
-        manufacturer: p.manufacturer || "Hyundai",
-        name: p.name || "",
-        category: p.category || "",
-        price: Number(p.price) || 0,
-        discount: Number(p.discount) || 0,
-        final_price:
-          Number(p.price || 0) -
-          (Number(p.price || 0) * Number(p.discount || 0)) / 100,
-        stock: p.stock || "In Stock",
-        image: p.image || null
-      };
-
       const existing = await Product.findOne({
-        where: { part_no: payload.part_no }
+        where: { part_no: p.id }
       });
 
       if (existing) {
-        await existing.update(payload);
+        await existing.update({
+          name: p.name,
+          category: p.category,
+          price: p.price,
+          discount: p.discount,
+          final_price: p.finalPrice,
+          stock: p.stock
+        });
         updated++;
       } else {
-        await Product.create(payload);
+        await Product.create({
+          part_no: p.id,
+          name: p.name,
+          category: p.category,
+          price: p.price,
+          discount: p.discount,
+          final_price: p.finalPrice,
+          stock: p.stock
+        });
         created++;
       }
     }
@@ -51,16 +44,16 @@ router.get("/sync-products", async (req, res) => {
       success: true,
       created,
       updated,
-      skipped,
-      total_from_sheet: products.length
+      total: products.length
     });
 
   } catch (err) {
-    console.error("SYNC ERROR:", err);
+    console.error(err);
     res.status(500).json({
       success: false,
       error: err.message
     });
   }
 });
+
 module.exports = router;
