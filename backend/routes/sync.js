@@ -1,3 +1,9 @@
+const express = require("express");
+const router = express.Router();
+
+const { getProducts } = require("../models/productData");
+const Product = require("../models/product");
+
 router.get("/sync-products", async (req, res) => {
   try {
     const products = await getProducts();
@@ -57,3 +63,4 @@ router.get("/sync-products", async (req, res) => {
     });
   }
 });
+module.exports = router;
