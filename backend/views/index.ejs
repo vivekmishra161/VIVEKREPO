@@ -2476,7 +2476,7 @@ function renderProducts(list) {
           <p class="title">${escapeHtml(p.name)}</p>
           <div class="id">${p.id} • <span class="muted">${p.manufacturer}</span></div>
         </div>
-        <div class="price">₹${numberWithCommas(p.finalPrice || p.price)}</div>
+        <div class="price">₹${formatPrice(p.finalPrice ?? p.price)}</div>
       </div>
 
       <div style="display:flex; gap:8px; align-items:center; margin-top:8px;">
@@ -2499,6 +2499,13 @@ async function loadProducts(filters = {}) {
 
   renderProducts(data);
 }
+function formatPrice(value) {
+  return Number(value).toLocaleString("en-IN", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+}
+
 function filterByCategory(category) {
   loadProducts({ category });
 }
