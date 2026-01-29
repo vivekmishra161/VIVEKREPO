@@ -203,7 +203,7 @@ app.get("/api/search", async (req, res) => {
   const products = results.map(p => ({
     id: p.part_no,
     name: p.name,
-    manufacturer: "Hyundai",
+    manufacturer: p.manufacturer,
     category: p.category,
     price: p.price,
     discount: p.discount || 0,
