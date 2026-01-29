@@ -1614,8 +1614,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // IMAGE
   document.getElementById("heroImg").src =
-    `/images/products/${product.id}.jpg`;
-
+    `/images/categories/${product.category.toLowerCase()}.jpg`;
   // TEXT
   document.getElementById("prodTitle").textContent = product.name;
   document.getElementById("manufacturer").textContent = product.manufacturer || "Hyundai";
