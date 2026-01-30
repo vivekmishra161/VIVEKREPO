@@ -25,7 +25,7 @@ body{
 /* ===== MAIN ===== */
 .main{
   width:100%;
-  max-width:1250px;
+  max-width:1600px;
 }
 
 /* ===== PAGE TITLE ===== */
@@ -42,6 +42,7 @@ table{
   width:100%;
   border-collapse:separate;
   border-spacing:0 18px;
+  min-width: 1400px;
 }
 
 /* ===== HEADER ===== */
@@ -155,6 +156,12 @@ td:last-child{
   font-size:13px;
   color:#475569;
   white-space:nowrap;
+}
+td, th {
+  padding: 20px 22px;
+}
+tr {
+  border-left: 6px solid #2563eb;
 }
 
 /* ===== MOBILE ===== */
@@ -407,6 +414,7 @@ td:last-child{
   <table>
    <tr>
   <th>Customer</th>
+  <th>Phone</th>
   <th>Address</th>
   <th>Part Name</th>
   <th>Part ID</th>
@@ -424,6 +432,10 @@ td:last-child{
 
   <!-- CUSTOMER -->
   <td><%= o.customerName %></td>
+  <td>
+  <strong><%= o.phone %></strong>
+</td>
+
 
   <!-- ADDRESS -->
   <td style="max-width:220px;font-size:13px;line-height:1.4;">
