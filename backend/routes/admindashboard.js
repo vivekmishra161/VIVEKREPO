@@ -32,15 +32,47 @@ router.get("/dashboard", adminAuth, async (req, res) => {
       (sum, o) => sum + o.totalPrice,
       0
     );
+  // =============================
+    // TOP 5 SELLING PRODUCTS
+    // =============================
+    const allOrders = await Order.findAll();
 
+    const productSales = {};
+
+    allOrders.forEach(order => {
+      if (!order.items) return;
+
+      order.items.forEach(item => {
+        const name = item.name;
+        const amount = Number(item.price || 0) * Number(item.qty || 1);
+
+        if (!productSales[name]) {
+          productSales[name] = 0;
+        }
+
+        productSales[name] += amount;
+      });
+    });
+
+    const topProducts = Object.entries(productSales)
+      .map(([name, total]) => ({
+        name,
+        total
+      }))
+      .sort((a, b) => b.total - a.total)
+      .slice(0, 5);
+
+    // =============================
+    // SEND TO DASHBOARD
+    // =============================
     res.render("admin/dashboard", {
       totalOrders,
-      topProducts,
       delivered,
       cancelled,
       pending,
       packed,
-      totalRevenue
+      totalRevenue,
+      topProducts   // ✅ NOW EXISTS
     });
 
   } catch (err) {
@@ -52,7 +84,8 @@ router.get("/dashboard", adminAuth, async (req, res) => {
       cancelled: 0,
       pending: 0,
       packed: 0,
-      totalRevenue: 0
+      totalRevenue: 0,
+      topProducts: []   // ✅ SAFE FALLBACK
     });
   }
 });
