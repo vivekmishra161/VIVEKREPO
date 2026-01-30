@@ -585,40 +585,9 @@ app.post("/review", async (req, res) => {
   }
 });
 
-app.get("/admin/dashboard", async (req, res) => {
-  const orders = await Order.find();
 
-  const productSales = {};
 
-  orders.forEach(order => {
-    order.items.forEach(item => {
-      if (!productSales[item.name]) {
-        productSales[item.name] = 0;
-      }
 
-      productSales[item.name] += item.price * item.qty;
-    });
-  });
-
-  // convert to array
-  const topProducts = Object.entries(productSales)
-    .map(([name, total]) => ({
-      name,
-      total
-    }))
-    .sort((a, b) => b.total - a.total)
-    .slice(0, 5);
-
-  res.render("admin/dashboard", {
-    topProducts,
-    totalRevenue,
-    totalOrders,
-    delivered,
-    cancelled,
-    pending,
-    packed
-  });
-});
 
 /* =====================
    DATABASE + SERVER
