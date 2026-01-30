@@ -35,6 +35,7 @@ router.get("/dashboard", adminAuth, async (req, res) => {
 
     res.render("admin/dashboard", {
       totalOrders,
+      topProducts,
       delivered,
       cancelled,
       pending,

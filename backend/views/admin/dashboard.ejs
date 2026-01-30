@@ -277,6 +277,43 @@
     height:180px !important;
   }
 }
+/* ===============================
+   TOP SELLING PRODUCTS TABLE
+================================ */
+
+.top-products-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.top-products-table th {
+  text-align: left;
+  padding: 14px 12px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6b7280;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.top-products-table td {
+  padding: 14px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.top-products-table tr:last-child td {
+  border-bottom: none;
+}
+
+.top-products-table td:last-child {
+  text-align: right;
+  font-weight: 800;
+  color: #065f46;
+}
 
   </style>
 </head>
@@ -346,10 +383,28 @@
     <canvas id="orderBarChart"></canvas>
   </div>
 
-  <div class="chart-card">
-    <h3>Order Status Distribution</h3>
-    <canvas id="orderPieChart"></canvas>
-  </div>
+<div class="chart-card">
+  <h3>Top 5 Selling Products</h3>
+
+  <table class="top-products-table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Total Sale</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% topProducts.forEach(p => { %>
+        <tr>
+          <td><%= p.name %></td>
+          <td>₹ <%= Number(p.total).toFixed(2) %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
 
 </div>
 
@@ -419,34 +474,6 @@ if (barCanvas) {
 
 </script>
 
-
-<!-- PIE CHART -->
-<script>
-const pieCanvas = document.getElementById('orderPieChart');
-
-if (pieCanvas) {
-  new Chart(pieCanvas, {
-    type: 'pie',
-    data: {
-      labels: ['Delivered', 'Cancelled', 'Pending', 'Packed'],
-      datasets: [{
-        data: [
-          orderStats.delivered,
-          orderStats.cancelled,
-          orderStats.pending,
-          orderStats.packed
-        ],
-        backgroundColor: [
-          '#065f46',
-          '#991b1b',
-          '#92400e',
-          '#1d4ed8'
-        ]
-      }]
-    }
-  });
-}
-</script>
 
 <!-- Mobile Sidebar Toggle Script -->
 <script>
