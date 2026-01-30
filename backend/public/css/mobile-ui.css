@@ -26,22 +26,26 @@ header,
   box-shadow: 0 8px 25px rgba(0,0,0,.12);
 }
 
+/* ===============================
+   PROMO SLIDER — PERFECT FIX
+================================ */
+
 .promo-slider {
   width: 100%;
-  max-width: 2000px;
-  height: 420px;
-  margin: 20px auto 30px;
+  height: 220px;               /* ✅ perfect mobile height */
   position: relative;
   overflow: hidden;
-  border-radius: 18px;
-  background: transparent;
+  border-radius: 16px;
+  margin: 15px 0 25px;
+  background: #000;
 }
 
+/* slide */
 .promo-slide {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.6s ease-in-out;
 }
 
 .promo-slide.active {
@@ -49,20 +53,20 @@ header,
   z-index: 2;
 }
 
+/* image */
 .promo-slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover;           /* 🔥 fills entire area */
   object-position: center;
   display: block;
 }
 
-/* ---------------- DOTS ---------------- */
-
+/* dots */
 .promo-dots {
   position: absolute;
+  bottom: 10px;
   left: 50%;
-  bottom: 14px;
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
@@ -72,50 +76,28 @@ header,
 .promo-dot {
   width: 8px;
   height: 8px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255,255,255,0.6);
   border-radius: 50%;
-  cursor: pointer;
-  transition: 0.25s ease;
+  transition: 0.3s;
 }
 
 .promo-dot.active {
+  background: #fff;
   width: 10px;
   height: 10px;
-  background: #ffffff;
 }
 
-@media (max-width: 600px) {
+/* ===============================
+   TABLET & DESKTOP
+================================ */
 
-  /* remove container padding */
-  .wrap {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  /* full-width edge-to-edge */
+@media (min-width: 768px) {
   .promo-slider {
-    width: 100vw;
-    height: 400px;        /* 🔥 perfect mobile height */
-    margin: 0 0 18px;
-    margin-bottom: 30px;
-    border-radius: 0;
-  }
-
- .promo-slide img {
-  width: 100vw;
-  height: 400px;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  min-width: 100%;
-  min-height: 100%;
-}
-
-
-  .promo-dots {
-    bottom: 10px;
+    height: 360px;
+    border-radius: 18px;
   }
 }
+
 
 .card img.product-img {
   width: 100%;
