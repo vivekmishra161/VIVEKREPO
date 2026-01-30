@@ -1700,15 +1700,28 @@ select.sort:focus{
    PROMO SLIDER — FINAL CLEAN VERSION (NO CONFLICT)
 =================================================== */
 
-/* wrapper */
-.promo-slider {
+
+.promo-full {
   width: 100%;
-  max-width: 1500px;
-  margin: 16px auto 24px;
   position: relative;
   overflow: hidden;
-  border-radius: 18px;
-  background: #000;
+  background: #f5f7fa;
+}
+
+/* slider */
+.promo-slider {
+  width: 100%;
+  height: 420px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* image */
+.promo-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* slide */
@@ -1722,15 +1735,6 @@ select.sort:focus{
 .promo-slide.active {
   opacity: 1;
   z-index: 2;
-}
-
-/* image */
-.promo-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
 }
 
 /* dots */
