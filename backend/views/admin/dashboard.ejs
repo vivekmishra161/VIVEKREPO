@@ -347,27 +347,9 @@
   </div>
 
   <div class="chart-card">
-  <h3>Top 5 Selling Products</h3>
-
-  <table class="top-products-table">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>Total Sale</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% topProducts.forEach(p => { %>
-        <tr>
-          <td><%= p.name %></td>
-          <td>₹ <%= Number(p.total).toFixed(2) %></td>
-        </tr>
-      <% }) %>
-    </tbody>
-  </table>
-</div>
-
+    <h3>Order Status Distribution</h3>
+    <canvas id="orderPieChart"></canvas>
+  </div>
 
 </div>
 
