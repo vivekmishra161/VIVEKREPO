@@ -26,17 +26,17 @@ header,
   box-shadow: 0 8px 25px rgba(0,0,0,.12);
 }
 
-/* ==============================
-   PROMO SLIDER — FINAL FIX
-============================== */
+/* ===============================
+   PROMO SLIDER — FINAL PERFECT FIX
+=============================== */
 
 .promo-slider {
   width: 100%;
-  height: 200px;
-  margin: 16px 0 24px;
+  aspect-ratio: 16 / 6;     /* 🔥 KEY FIX */
   position: relative;
   overflow: hidden;
   border-radius: 18px;
+  margin: 16px 0 26px;
   background: #000;
 }
 
@@ -53,12 +53,12 @@ header,
   z-index: 2;
 }
 
-/* IMAGE FIX */
+/* image */
 .promo-slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover;       /* 🔥 MUST */
-  object-position: center center;
+  object-fit: cover;        /* fills perfectly */
+  object-position: center;
   display: block;
 }
 
@@ -70,13 +70,13 @@ header,
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
-  z-index: 5;
+  z-index: 10;
 }
 
 .promo-dot {
   width: 8px;
   height: 8px;
-  background: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.6);
   border-radius: 50%;
 }
 
@@ -86,10 +86,11 @@ header,
   height: 10px;
 }
 
-/* tablet+ */
-@media (min-width: 768px) {
+/* mobile fine tuning */
+@media (max-width: 600px) {
   .promo-slider {
-    height: 340px;
+    aspect-ratio: 16 / 7;   /* ✅ best for mobile */
+    border-radius: 16px;
   }
 }
 
