@@ -32,7 +32,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use("/admin", adminInvoice);
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cookieParser());
