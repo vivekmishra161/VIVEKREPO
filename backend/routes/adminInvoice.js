@@ -91,7 +91,7 @@ router.get("/invoice/:id", adminAuth, async (req, res) => {
     const rx = 360;
 
     doc.fontSize(10).fillColor("#111827");
-    doc.text(`Invoice #: AKC-${order.id}`, rx, y);
+    doc.text(`Invoice: AKC-${order.id}`, rx, y);
     doc.text(
       `Invoice Date: ${new Date(order.createdAt).toDateString()}`,
       rx,
