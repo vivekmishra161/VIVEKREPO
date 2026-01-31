@@ -7,8 +7,7 @@ const adminAuth = require("../middleware/adminAuth");
 router.get("/invoice/:id", adminAuth, async (req, res) => {
   try {
     const order = await Order.findByPk(req.params.id);
-
-    if (!order) return res.status(404).send("Order not found");
+    if (!order) return res.send("Order not found");
 
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
@@ -19,153 +18,130 @@ router.get("/invoice/:id", adminAuth, async (req, res) => {
     const doc = new PDFDocument({ size: "A4", margin: 50 });
     doc.pipe(res);
 
-    /* =========================
-       HEADER
-    ========================== */
+    let y = 50; // master Y pointer
 
-    doc
-      .fontSize(22)
-      .fillColor("#111827")
-      .text("AKC AUTO PARTS", { align: "left" });
+    /* ================= HEADER ================= */
 
-    doc
-      .fontSize(10)
-      .fillColor("#374151")
-      .text("GST INVOICE", { align: "left" });
+    doc.fontSize(22).text("AKC AUTO PARTS", 50, y);
+    y += 28;
 
-    doc.moveDown(0.5);
+    doc.fontSize(11).text("GST INVOICE", 50, y);
+    y += 25;
 
-    doc
-      .moveTo(50, 100)
-      .lineTo(550, 100)
-      .strokeColor("#e5e7eb")
-      .stroke();
+    doc.moveTo(50, y).lineTo(550, y).stroke();
+    y += 15;
 
-    /* =========================
-       INVOICE META
-    ========================== */
-
-    doc.moveDown(1);
-
-    doc.fontSize(11).fillColor("#111827");
-    doc.text(`Invoice No: AKC-${order.id}`);
-    doc.text(`Date: ${new Date(order.createdAt).toDateString()}`);
-
-    doc.moveDown();
-
-    /* =========================
-       CUSTOMER BOX
-    ========================== */
-
-    doc
-      .rect(50, doc.y, 500, 90)
-      .fillOpacity(0.03)
-      .fill("#2563eb")
-      .fillOpacity(1);
-
-    doc
-      .fillColor("#111827")
-      .fontSize(12)
-      .text("BILL TO", 60, doc.y - 75);
+    /* ================= LEFT INFO ================= */
 
     doc.fontSize(11);
-    doc.text(`Name: ${order.customerName}`, 60);
-    doc.text(`Phone: ${order.phone || "N/A"}`, 60);
+    doc.text(`Name: ${order.customerName}`, 50, y);
+    y += 18;
+
+    doc.text(`Phone: ${order.phone || "-"}`, 50, y);
+    y += 18;
+
     doc.text(
       `Address: ${order.address}, ${order.city}, ${order.state} - ${order.pin}`,
-      60,
-      undefined,
-      { width: 460 }
+      50,
+      y,
+      { width: 300 }
     );
 
-    doc.moveDown(2);
+    /* ================= RIGHT INFO ================= */
 
-    /* =========================
-       TABLE HEADER
-    ========================== */
+    const rightX = 360;
+    let ry = 110;
 
-    const tableTop = doc.y;
+    doc.text(`Invoice No: AKC-${order.id}`, rightX, ry);
+    ry += 18;
+
+    doc.text(
+      `Date: ${new Date(order.createdAt).toDateString()}`,
+      rightX,
+      ry
+    );
+
+    y = Math.max(y + 45, ry + 30);
+
+    /* ================= TABLE HEADER ================= */
 
     doc
-      .rect(50, tableTop, 500, 25)
+      .rect(50, y, 500, 30)
       .fill("#1f2937");
 
     doc
       .fillColor("#ffffff")
       .fontSize(11)
-      .text("No", 60, tableTop + 7)
-      .text("Product", 100, tableTop + 7)
-      .text("Qty", 360, tableTop + 7)
-      .text("Price", 420, tableTop + 7)
-      .text("Total", 490, tableTop + 7, { align: "right" });
+      .text("No", 60, y + 8)
+      .text("Product", 100, y + 8)
+      .text("Qty", 380, y + 8)
+      .text("Price", 430, y + 8)
+      .text("Total", 500, y + 8, { align: "right" });
 
-    let y = tableTop + 30;
+    doc.fillColor("#000");
+    y += 40;
+
+    /* ================= ITEMS ================= */
+
     let grandTotal = 0;
 
-    doc.fillColor("#111827");
-
     order.items.forEach((item, index) => {
-      const lineTotal = item.price * item.qty;
-      grandTotal += lineTotal;
+      const total = item.price * item.qty;
+      grandTotal += total;
 
       doc
         .fontSize(10)
         .text(index + 1, 60, y)
-        .text(`${item.name} (${item.id})`, 100, y, { width: 250 })
-        .text(item.qty, 360, y)
-        .text(`₹${item.price}`, 420, y)
-        .text(`₹${lineTotal.toFixed(2)}`, 490, y, { align: "right" });
+        .text(`${item.name} (${item.id})`, 100, y, { width: 260 })
+        .text(item.qty, 380, y)
+        .text(`₹${item.price}`, 430, y)
+        .text(`₹${total.toFixed(2)}`, 500, y, { align: "right" });
 
       y += 22;
     });
 
-    /* =========================
-       TOTAL BOX
-    ========================== */
+    y += 10;
 
-    doc
-      .moveTo(350, y + 10)
-      .lineTo(550, y + 10)
-      .strokeColor("#e5e7eb")
-      .stroke();
+    /* ================= GRAND TOTAL ================= */
+
+    doc.moveTo(350, y).lineTo(550, y).stroke();
+    y += 12;
 
     doc
       .fontSize(13)
-      .fillColor("#111827")
-      .text(
-        `Grand Total: ₹ ${Number(order.totalPrice).toFixed(2)}`,
-        350,
-        y + 20,
-        { align: "right" }
-      );
+      .text(`Grand Total: ₹ ${grandTotal.toFixed(2)}`, 350, y, {
+        align: "right"
+      });
 
-    /* =========================
-       FOOTER
-    ========================== */
+    y += 50;
 
-    doc.moveDown(4);
+    /* ================= FOOTER ================= */
 
     doc
       .fontSize(10)
-      .fillColor("#6b7280")
+      .fillColor("gray")
       .text(
         "This is a computer generated invoice. No signature required.",
-        { align: "center" }
+        50,
+        y,
+        { align: "center", width: 500 }
       );
 
+    y += 20;
+
     doc
-      .moveDown(0.5)
       .fontSize(11)
-      .fillColor("#111827")
-      .text("Thank you for shopping with AKC Auto Parts.", {
-        align: "center"
+      .fillColor("#000")
+      .text("Thank you for shopping with AKC Auto Parts.", 50, y, {
+        align: "center",
+        width: 500
       });
 
     doc.end();
 
   } catch (err) {
     console.error("Invoice error:", err);
-    res.status(500).send("Invoice generation failed");
+    res.status(500).send("Invoice error");
   }
 });
 
