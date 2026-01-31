@@ -424,6 +424,7 @@ tr {
   <th>UTR</th>
   <th>Status</th>
   <th>Date</th>
+  <th>Invoice</th>
 </tr>
 
 
@@ -505,6 +506,22 @@ tr {
 
   <!-- DATE -->
   <td><%= new Date(o.createdAt).toDateString() %></td>
+<td>
+  <a
+    href="/admin/invoice/<%= o.id %>"
+    target="_blank"
+    style="
+      background:#2563eb;
+      color:#fff;
+      padding:8px 14px;
+      border-radius:8px;
+      text-decoration:none;
+      font-size:13px;
+      font-weight:700;
+    ">
+    Download Invoice
+  </a>
+</td>
 
 </tr>
 <% }) %>

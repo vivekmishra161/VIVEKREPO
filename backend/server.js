@@ -8,7 +8,8 @@ const cookieParser = require("cookie-parser");
 const Order = require("./models/order");
 const Review = require("./models/review");
 const Product = require("./models/product");
-
+const adminInvoice = require("./routes/adminInvoice");
+app.use("/admin", adminInvoice);
 const sequelize = require("./config/database");
 const User = require("./models/user");
 
