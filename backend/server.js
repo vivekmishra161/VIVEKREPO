@@ -76,6 +76,7 @@ app.use("/admin", require("./routes/admindashboard"));
 app.use("/admin", require("./routes/adminorders"));
 app.use("/admin", require("./routes/adminusers"));
 app.use('/admin', require('./routes/adminproduct'));
+app.use("/admin", adminInvoice);
 app.get("/", async (req, res) => {
   try {
     const dbProducts = await Product.findAll({
