@@ -12,7 +12,6 @@ const adminInvoice = require("./routes/adminInvoice");
 const sequelize = require("./config/database");
 const User = require("./models/user");
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
 const { getProducts } = require("./models/productData");
 
 const app = express();
@@ -624,60 +623,75 @@ app.get("/admin/dashboard", async (req, res) => {
   });
 });
 
+const { Resend } = require("resend");
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 app.post("/forgot-password", async (req, res) => {
   try {
     const { email } = req.body;
 
+    // 1️⃣ Check user
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
-      return res.send("Email not registered");
+      return res.json({ success: false, message: "Email not registered" });
     }
 
-    const crypto = require("crypto");
+    // 2️⃣ Generate token
     const token = crypto.randomBytes(32).toString("hex");
-
     const expiry = new Date(Date.now() + 15 * 60 * 1000);
 
     await User.update(
-      { resetToken: token, resetTokenExpiry: expiry },
+      {
+        resetToken: token,
+        resetTokenExpiry: expiry
+      },
       { where: { id: user.id } }
     );
-console.log("EMAIL USER:", process.env.EMAIL_USER);
-console.log("EMAIL PASS:", process.env.EMAIL_PASS);
 
-    const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
-
-
+    // 3️⃣ Reset link
     const resetLink = `https://akcautoparts.onrender.com/reset-password/${token}`;
 
-    await transporter.sendMail({
-      from: `"AKC Auto Parts" <${process.env.EMAIL_USER}>`,
+    // 4️⃣ Send email via RESEND (works on Render)
+    await resend.emails.send({
+      from: "AKC Auto Parts <onboarding@resend.dev>",
       to: email,
       subject: "Reset your password",
       html: `
-        <p>You requested password reset.</p>
-        <p>Click below to reset:</p>
-        <a href="${resetLink}">${resetLink}</a>
-        <p>This link expires in 15 minutes.</p>
+        <div style="font-family:Arial;padding:20px">
+          <h2>Reset your password</h2>
+          <p>You requested a password reset.</p>
+          <a href="${resetLink}"
+            style="
+              display:inline-block;
+              padding:12px 20px;
+              background:#2563eb;
+              color:#fff;
+              text-decoration:none;
+              border-radius:6px;
+              margin-top:10px;
+            ">
+            Reset Password
+          </a>
+          <p style="margin-top:15px;font-size:13px">
+            This link will expire in 15 minutes.
+          </p>
+        </div>
       `
     });
 
-    res.send("Reset password link sent to your email.");
+    res.json({
+      success: true,
+      message: "Reset link sent to your email"
+    });
 
   } catch (err) {
-    console.log(err);
-    res.send("Error sending reset email");
+    console.error("FORGOT PASSWORD ERROR:", err);
+    res.json({ success: false, message: "Email sending failed" });
   }
 });
+
 app.post("/reset-password", async (req, res) => {
   try {
     const { token, password, confirmPassword } = req.body;
