@@ -619,45 +619,45 @@ app.get("/admin/dashboard", async (req, res) => {
     packed
   });
 });
-
 app.post("/forgot-password", async (req, res) => {
   try {
+    console.log("BODY RECEIVED:", req.body);
+
     const { email } = req.body;
 
-    // 1️⃣ Check email
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({
+      where: { email }
+    });
+
+    console.log("USER FOUND:", user ? user.email : "NO USER");
 
     if (!user) {
-      return res.json({ success: false, message: "Email not found" });
+      return res.json({
+        success: false,
+        message: "Email not found"
+      });
     }
 
-    // 2️⃣ Generate secure token
+    const crypto = require("crypto");
     const resetToken = crypto.randomBytes(32).toString("hex");
 
-    // 3️⃣ Expiry (15 minutes)
     const resetTokenExpiry = new Date(Date.now() + 15 * 60 * 1000);
 
-    // 4️⃣ Save in database
     await User.update(
-      {
-        resetToken,
-        resetTokenExpiry
-      },
+      { resetToken, resetTokenExpiry },
       { where: { id: user.id } }
     );
 
-    console.log("RESET TOKEN:", resetToken);
+    console.log("TOKEN GENERATED:", resetToken);
 
-    res.json({
-      success: true,
-      message: "Reset token generated"
-    });
+    res.json({ success: true });
 
   } catch (err) {
-    console.log("Forgot password error:", err);
+    console.error("FORGOT ERROR:", err);
     res.json({ success: false });
   }
 });
+
 
 /* =====================
    DATABASE + SERVER
