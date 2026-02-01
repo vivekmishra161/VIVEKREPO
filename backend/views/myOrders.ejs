@@ -781,9 +781,10 @@ img {
 
         <!-- PACKED -->
         <div class="timeline-step">
-          <div class="circle <%= order.status == 'Packed' || order.status === 'Delivered') ? 'active' : '' %>"></div>
-          <span>Packed</span>
+           <div class="circle <%= (order.status === 'Packed' || order.status === 'Delivered') ? 'active' : '' %>"></div>
+            <span>Packed</span>
         </div>
+
 
         <!-- DELIVERED -->
         <div class="timeline-step">
