@@ -82,6 +82,9 @@
   "goHome": "Go Home",
   "pleaseSignIn": "Please Sign In",
   "mustSignInCheckout": "You must sign in to proceed with checkout.",
-  "ok": "OK"
+  "ok": "OK",
+  "Sort": "Sort",
+  "Relevance": "Relevance"
+
 }
 
