@@ -781,7 +781,7 @@ img {
 
         <!-- PACKED -->
         <div class="timeline-step">
-          <div class="circle <%= (diffDays >= 2 || order.status === 'Delivered') && order.status !== 'Cancelled' ? 'active' : '' %>"></div>
+          <div class="circle <%= order.status == 'Packed' || order.status === 'Delivered') ? 'active' : '' %>"></div>
           <span>Packed</span>
         </div>
 
