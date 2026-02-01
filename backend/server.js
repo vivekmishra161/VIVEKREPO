@@ -11,6 +11,7 @@ const Product = require("./models/product");
 const adminInvoice = require("./routes/adminInvoice");
 const sequelize = require("./config/database");
 const User = require("./models/user");
+const crypto = require("crypto");
 
 const { getProducts } = require("./models/productData");
 
@@ -619,9 +620,44 @@ app.get("/admin/dashboard", async (req, res) => {
   });
 });
 
+app.post("/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
 
+    // 1️⃣ Check email
+    const user = await User.findOne({ where: { email } });
 
+    if (!user) {
+      return res.json({ success: false, message: "Email not found" });
+    }
 
+    // 2️⃣ Generate secure token
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    // 3️⃣ Expiry (15 minutes)
+    const resetTokenExpiry = new Date(Date.now() + 15 * 60 * 1000);
+
+    // 4️⃣ Save in database
+    await User.update(
+      {
+        resetToken,
+        resetTokenExpiry
+      },
+      { where: { id: user.id } }
+    );
+
+    console.log("RESET TOKEN:", resetToken);
+
+    res.json({
+      success: true,
+      message: "Reset token generated"
+    });
+
+  } catch (err) {
+    console.log("Forgot password error:", err);
+    res.json({ success: false });
+  }
+});
 
 /* =====================
    DATABASE + SERVER
@@ -641,7 +677,7 @@ sequelize.authenticate()
   .then(async () => {
     console.log("✅ PostgreSQL connected");
 
-    await sequelize.sync();
+    await sequelize.sync({ alter: true });
     console.log("✅ Tables synced");
 
     const PORT = process.env.PORT || 3000;
