@@ -698,6 +698,12 @@ img {
     font-size: 16px;
   }
 }
+.packed-text {
+  margin-top: 18px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1d4ed8;
+}
 
 </style>
 </head>
@@ -818,15 +824,27 @@ img {
         <% }) %>
       <% } %>
 
-        <button class="cancel-btn" onclick="cancelOrder('<%= order.id %>')"
->
-          Cancel Order
-        </button>
-      <% } else if (order.status === "Delivered") { %>
-        <p class="delivered-text">Order Delivered ✔</p>
-      <% } else { %>
-        <p class="cancelled-text">Order Cancelled ✖</p>
-      <% } %>
+      <!-- ACTION -->
+<% if (order.status === "Pending") { %>
+
+  <button class="cancel-btn" onclick="cancelOrder('<%= order.id %>')">
+    Cancel Order
+  </button>
+
+<% } else if (order.status === "Packed") { %>
+
+  <p class="packed-text">Order Packed 📦</p>
+
+<% } else if (order.status === "Delivered") { %>
+
+  <p class="delivered-text">Order Delivered ✔</p>
+
+<% } else if (order.status === "Cancelled") { %>
+
+  <p class="cancelled-text">Order Cancelled ✖</p>
+
+<% } %>
+
 
     </div>
     <!-- END ORDER CARD -->
