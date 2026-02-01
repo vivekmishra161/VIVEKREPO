@@ -617,6 +617,88 @@ img {
   }
 }
 
+/* ============================
+   PRODUCT ITEM LAYOUT
+============================ */
+
+.item-box {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  background: #f9fafb;
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid #e5e7eb;
+  transition: 0.25s ease;
+}
+
+.item-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* PRODUCT IMAGE */
+.item-image {
+  width: 110px;
+  height: 110px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* PRODUCT DETAILS */
+.item-details {
+  flex: 1;
+}
+
+.item-details p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #374151;
+}
+
+.item-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+/* ============================
+   MOBILE VIEW
+============================ */
+
+@media (max-width: 600px) {
+  .item-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .item-image {
+    width: 100%;
+    height: 180px;
+  }
+
+  .item-image img {
+    object-fit: contain;
+  }
+
+  .item-name {
+    font-size: 16px;
+  }
+}
+
 </style>
 </head>
 
@@ -724,6 +806,9 @@ img {
   <% items.forEach(function(item){ %>
 
           <div class="item-box">
+            <div class="item-image">
+               <img src="<%= item.image %>" alt="product">
+            </div>
             <p>Name: <%= item.name %></p>
             <p>Product ID: <%= item.id %></p>
             <p>Price: ₹<%= item.price %></p>
