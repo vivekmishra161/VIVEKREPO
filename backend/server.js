@@ -12,7 +12,7 @@ const adminInvoice = require("./routes/adminInvoice");
 const sequelize = require("./config/database");
 const User = require("./models/user");
 const crypto = require("crypto");
-
+const nodemailer = require("nodemailer");
 const { getProducts } = require("./models/productData");
 
 const app = express();
@@ -329,6 +329,10 @@ app.get("/signout", (req, res) => {
     res.redirect("/");
   });
 });
+app.get("/forgot-password", (req, res) => {
+  res.render("forgotPassword");
+});
+
 
 app.get("/my-orders", async (req, res) => {
   try {
@@ -619,66 +623,54 @@ app.get("/admin/dashboard", async (req, res) => {
     packed
   });
 });
+
 app.post("/forgot-password", async (req, res) => {
   try {
-    console.log("BODY RECEIVED:", req.body);
-
     const { email } = req.body;
 
-    const user = await User.findOne({
-      where: { email }
-    });
-
-    console.log("USER FOUND:", user ? user.email : "NO USER");
+    const user = await User.findOne({ where: { email } });
 
     if (!user) {
-      return res.json({
-        success: false,
-        message: "Email not found"
-      });
+      return res.send("Email not registered");
     }
 
     const crypto = require("crypto");
-    const resetToken = crypto.randomBytes(32).toString("hex");
+    const token = crypto.randomBytes(32).toString("hex");
 
-    const resetTokenExpiry = new Date(Date.now() + 15 * 60 * 1000);
+    const expiry = new Date(Date.now() + 15 * 60 * 1000);
 
     await User.update(
-      { resetToken, resetTokenExpiry },
+      { resetToken: token, resetTokenExpiry: expiry },
       { where: { id: user.id } }
     );
 
-    console.log("TOKEN GENERATED:", resetToken);
-
-    res.json({ success: true });
-
-  } catch (err) {
-    console.error("FORGOT ERROR:", err);
-    res.json({ success: false });
-  }
-});
-app.get("/reset-password/:token", async (req, res) => {
-  try {
-    const { token } = req.params;
-
-    const user = await User.findOne({
-      where: {
-        resetToken: token,
-        resetTokenExpiry: {
-          [Op.gt]: new Date()
-        }
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }
     });
 
-    if (!user) {
-      return res.send("Reset link is invalid or expired");
-    }
+    const resetLink = `https://akcautoparts.onrender.com/reset-password/${token}`;
 
-    res.render("resetPassword", { token });
+    await transporter.sendMail({
+      from: `"AKC Auto Parts" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: "Reset your password",
+      html: `
+        <p>You requested password reset.</p>
+        <p>Click below to reset:</p>
+        <a href="${resetLink}">${resetLink}</a>
+        <p>This link expires in 15 minutes.</p>
+      `
+    });
+
+    res.send("Reset password link sent to your email.");
 
   } catch (err) {
-    console.log("Reset password page error:", err);
-    res.send("Something went wrong");
+    console.log(err);
+    res.send("Error sending reset email");
   }
 });
 app.post("/reset-password", async (req, res) => {
