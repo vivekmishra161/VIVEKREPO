@@ -681,6 +681,50 @@ app.get("/reset-password/:token", async (req, res) => {
     res.send("Something went wrong");
   }
 });
+app.post("/reset-password", async (req, res) => {
+  try {
+    const { token, password, confirmPassword } = req.body;
+
+    // 1️⃣ password match check
+    if (password !== confirmPassword) {
+      return res.send("Passwords do not match");
+    }
+
+    // 2️⃣ find valid token
+    const user = await User.findOne({
+      where: {
+        resetToken: token,
+        resetTokenExpiry: {
+          [Op.gt]: new Date()
+        }
+      }
+    });
+
+    if (!user) {
+      return res.send("Reset link invalid or expired");
+    }
+
+    // 3️⃣ update password
+    await User.update(
+      {
+        password: password,
+        resetToken: null,
+        resetTokenExpiry: null
+      },
+      { where: { id: user.id } }
+    );
+
+    // 4️⃣ success
+    res.send(`
+      <h2>Password changed successfully</h2>
+      <a href="/signin">Go to Login</a>
+    `);
+
+  } catch (err) {
+    console.log("RESET PASSWORD ERROR:", err);
+    res.send("Something went wrong");
+  }
+});
 
 
 /* =====================
