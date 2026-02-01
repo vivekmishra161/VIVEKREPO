@@ -652,7 +652,7 @@ app.post("/forgot-password", async (req, res) => {
 
     // 3️⃣ Reset link
     const resetLink = `https://akcautoparts.onrender.com/reset-password/${token}`;
-
+    console.log("RESET LINK:", resetLink);
     // 4️⃣ Send email via RESEND (works on Render)
     await resend.emails.send({
       from: "AKC Auto Parts <onboarding@resend.dev>",
