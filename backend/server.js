@@ -657,6 +657,30 @@ app.post("/forgot-password", async (req, res) => {
     res.json({ success: false });
   }
 });
+app.get("/reset-password/:token", async (req, res) => {
+  try {
+    const { token } = req.params;
+
+    const user = await User.findOne({
+      where: {
+        resetToken: token,
+        resetTokenExpiry: {
+          [Op.gt]: new Date()
+        }
+      }
+    });
+
+    if (!user) {
+      return res.send("Reset link is invalid or expired");
+    }
+
+    res.render("resetPassword", { token });
+
+  } catch (err) {
+    console.log("Reset password page error:", err);
+    res.send("Something went wrong");
+  }
+});
 
 
 /* =====================
