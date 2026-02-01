@@ -623,67 +623,60 @@ app.get("/admin/dashboard", async (req, res) => {
   });
 });
 
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
+const resend = new Resend(process.env.RESEND_API_KEY);
 app.post("/forgot-password", async (req, res) => {
   try {
+    console.log("➡️ FORGOT PASSWORD CALLED");
+
     const { email } = req.body;
+    console.log("📩 Email received:", email);
 
     const user = await User.findOne({ where: { email } });
+
     if (!user) {
-      return res.json({ success: false, message: "Email not registered" });
+      console.log("❌ USER NOT FOUND");
+      return res.json({ success: false, message: "User not found" });
     }
 
-    const token = crypto.randomBytes(32).toString("hex");
+    console.log("✅ USER FOUND");
 
-    const expiry = new Date(Date.now() + 15 * 60 * 1000);
+    const token = require("crypto").randomBytes(32).toString("hex");
 
     await User.update(
       {
         resetToken: token,
-        resetTokenExpiry: expiry
+        resetTokenExpiry: new Date(Date.now() + 15 * 60 * 1000)
       },
       { where: { id: user.id } }
     );
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+    console.log("🔐 TOKEN SAVED:", token);
+
+    const { Resend } = require("resend");
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    console.log("🔑 API KEY:", process.env.RESEND_API_KEY);
 
     const resetLink = `https://akcautoparts.onrender.com/reset-password/${token}`;
 
-    await transporter.sendMail({
-      from: `"AKC Auto Parts" <${process.env.EMAIL_USER}>`,
+    const result = await resend.emails.send({
+      from: "AKC Auto Parts <onboarding@resend.dev>",
       to: email,
-      subject: "Reset your password",
-      html: `
-        <h2>Password Reset</h2>
-        <p>Click the link below to reset your password:</p>
-        <a href="${resetLink}">${resetLink}</a>
-        <p>This link expires in 15 minutes.</p>
-      `
+      subject: "Reset Password",
+      html: `<p>Reset link:</p><a href="${resetLink}">${resetLink}</a>`
     });
 
-    res.json({
-      success: true,
-      message: "Reset link sent to your email"
-    });
+    console.log("📨 RESEND RESPONSE:", result);
+
+    res.json({ success: true, message: "Email sent" });
 
   } catch (err) {
-    console.error("MAIL ERROR:", err);
-    res.json({
-      success: false,
-      message: "Email sending failed"
-    });
+    console.error("🔥 EMAIL ERROR FULL:", err);
+    res.json({ success: false, error: err.message });
   }
 });
-
 
 app.post("/reset-password", async (req, res) => {
   try {
