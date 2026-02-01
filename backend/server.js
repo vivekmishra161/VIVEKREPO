@@ -623,23 +623,19 @@ app.get("/admin/dashboard", async (req, res) => {
   });
 });
 
-const { Resend } = require("resend");
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const nodemailer = require("nodemailer");
 
 app.post("/forgot-password", async (req, res) => {
   try {
     const { email } = req.body;
 
-    // 1️⃣ Check user
     const user = await User.findOne({ where: { email } });
-
     if (!user) {
       return res.json({ success: false, message: "Email not registered" });
     }
 
-    // 2️⃣ Generate token
     const token = crypto.randomBytes(32).toString("hex");
+
     const expiry = new Date(Date.now() + 15 * 60 * 1000);
 
     await User.update(
@@ -650,34 +646,27 @@ app.post("/forgot-password", async (req, res) => {
       { where: { id: user.id } }
     );
 
-    // 3️⃣ Reset link
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
     const resetLink = `https://akcautoparts.onrender.com/reset-password/${token}`;
-    console.log("RESET LINK:", resetLink);
-    // 4️⃣ Send email via RESEND (works on Render)
-    await resend.emails.send({
-      from: "AKC Auto Parts <onboarding@resend.dev>",
+
+    await transporter.sendMail({
+      from: `"AKC Auto Parts" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Reset your password",
       html: `
-        <div style="font-family:Arial;padding:20px">
-          <h2>Reset your password</h2>
-          <p>You requested a password reset.</p>
-          <a href="${resetLink}"
-            style="
-              display:inline-block;
-              padding:12px 20px;
-              background:#2563eb;
-              color:#fff;
-              text-decoration:none;
-              border-radius:6px;
-              margin-top:10px;
-            ">
-            Reset Password
-          </a>
-          <p style="margin-top:15px;font-size:13px">
-            This link will expire in 15 minutes.
-          </p>
-        </div>
+        <h2>Password Reset</h2>
+        <p>Click the link below to reset your password:</p>
+        <a href="${resetLink}">${resetLink}</a>
+        <p>This link expires in 15 minutes.</p>
       `
     });
 
@@ -687,10 +676,14 @@ app.post("/forgot-password", async (req, res) => {
     });
 
   } catch (err) {
-    console.error("FORGOT PASSWORD ERROR:", err);
-    res.json({ success: false, message: "Email sending failed" });
+    console.error("MAIL ERROR:", err);
+    res.json({
+      success: false,
+      message: "Email sending failed"
+    });
   }
 });
+
 
 app.post("/reset-password", async (req, res) => {
   try {
