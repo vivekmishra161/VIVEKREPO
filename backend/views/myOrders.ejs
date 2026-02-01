@@ -756,14 +756,25 @@ img {
     <!-- ORDER CARD -->
     <div class="order-card">
 
-      <!-- STATUS BADGE -->
-      <% if (order.status === "Pending") { %>
-        <span class="status placed-status"><%= t.orderPending %></span>
-      <% } else if (order.status === "Delivered") { %>
-        <span class="status delivered-status"><%= t.orderDelivered %></span>
-      <% } else { %>
-        <span class="status cancelled-status"><%= t.orderCancelled %></span>
-      <% } %>
+    <!-- STATUS BADGE -->
+<% if (order.status === "Pending") { %>
+
+  <span class="status placed-status">Pending</span>
+
+<% } else if (order.status === "Packed") { %>
+
+  <span class="status placed-status">Packed</span>
+
+<% } else if (order.status === "Delivered") { %>
+
+  <span class="status delivered-status">Delivered</span>
+
+<% } else if (order.status === "Cancelled") { %>
+
+  <span class="status cancelled-status">Cancelled</span>
+
+<% } %>
+
 
       <!-- HEADER -->
       <div class="order-header">
