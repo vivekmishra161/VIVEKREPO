@@ -1928,19 +1928,19 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
         <select class="select" id="manufacturerSelect" onchange="applyFilters()">
           <option value=""><%= t.allManufacturers %></option>
-          <option value="Hyundai">Hyundai</option>
-          <option value="Tata">Tata</option>
-          <option value="Bajaj">Bajaj</option>
+          <option value="Hyundai"><%= t.hyundai %></option>
+          <option value="Tata"><%= t.tata %></option>
+          <option value="Bajaj"><%= t.bajaj %></option>
         </select>
         <select class="select" id="categorySelect" onchange="applyFilters()">
-  <option value="">All Categories</option>
-  <option value="Body">Body</option>
-  <option value="Engine">Engine</option>
-  <option value="Glass">Glass</option>
-  <option value="Brake">Brake</option>
-  <option value="Cooling">Cooling</option>
-  <option value="Interior">Interior</option>
-  <option value="Exhaust">Exhaust</option>
+  <option value=""><%= t.allCategories %></option>
+  <option value="Body"><%= t.body %></option>
+  <option value="Engine"><%= t.engine %></option>
+  <option value="Glass"><%= t.glass %></option>
+  <option value="Brake"><%= t.brake %></option>
+  <option value="Cooling"><%= t.cooling %></option>
+  <option value="Interior"><%= t.interior %></option>
+  <option value="Exhaust"><%= t.exhaust %></option>
   <option value="Suspension">Suspension</option>
   <option value="Wiper">Wiper</option>
   <option value="Fuel">Fuel</option>
@@ -1951,9 +1951,9 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
 
       <div style="display:flex; gap:8px; align-items:center;">
-        <label class="muted">Sort</label>
+        <label class="muted"><%= t.sort %></label>
         <select class="sort" id="sortSelect" onchange="applyFilters()">
-          <option value="relevance">Relevance</option>
+          <option value="relevance"><%= t.relevance %></option>
           <option value="price-asc">Price: Low → High</option>
           <option value="price-desc">Price: High → Low</option>
           <option value="name-asc">Name A → Z</option>
