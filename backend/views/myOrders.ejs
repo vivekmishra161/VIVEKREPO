@@ -49,27 +49,195 @@ body{
 }
 
 /* ===== ORDERS WRAPPER ===== */
-.orders-wrapper{
-  max-width:1100px;
-  margin:0 auto;
-  display:flex;
-  flex-direction:column;
-  gap:40px;
+/* ===============================
+   MY ORDERS – PROFESSIONAL LAYOUT
+================================ */
+
+.orders-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 60px; /* separation between orders */
 }
 
-/* ===== ORDER CARD ===== */
-.order-card{
-  background:#ffffff;
-  border-radius:22px;
-  padding:28px;
-  box-shadow:0 18px 40px rgba(0,0,0,.18);
-  position:relative;
-  transition:.3s ease;
+/* ---------- ORDER BLOCK (NOT A CARD) ---------- */
+.order-card {
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
 }
 
-.order-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 26px 55px rgba(0,0,0,.25);
+/* ---------- TOP SECTION ---------- */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 22px;
+}
+
+.order-header p {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #374151;
+}
+
+.order-header strong {
+  font-weight: 700;
+  color: #111827;
+}
+
+/* ---------- STATUS BADGE ---------- */
+.status {
+  position: static;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.placed-status {
+  background: #e6f9f0;
+  color: #047857;
+}
+
+.delivered-status {
+  background: #dcfce7;
+  color: #065f46;
+}
+
+.cancelled-status {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ---------- ITEM ROW ---------- */
+.item-box {
+  display: grid;
+  grid-template-columns: 1fr 260px; /* details | image */
+  gap: 30px;
+  align-items: center;
+  padding: 26px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.item-box:last-child {
+  border-bottom: none;
+}
+
+/* ---------- ITEM DETAILS (LEFT) ---------- */
+.item-box p {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #374151;
+}
+
+.item-box p:first-child {
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* ---------- PRODUCT IMAGE (RIGHT) ---------- */
+.item-image {
+  width: 100%;
+  height: 200px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ---------- ACTION BUTTON ---------- */
+.cancel-btn {
+  margin-top: 22px;
+  padding: 12px 30px;
+  border-radius: 12px;
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background: #dc2626;
+}
+
+/* ---------- TIMELINE (NO CARD LOOK) ---------- */
+.timeline {
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 16px;
+  left: 5%;
+  right: 5%;
+  height: 3px;
+  background: #e5e7eb;
+  border-radius: 999px;
+}
+
+.timeline-step {
+  text-align: center;
+  z-index: 1;
+  width: 33%;
+}
+
+.circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #d1d5db;
+  margin: 0 auto;
+}
+
+.circle.active {
+  background: #10b981;
+  box-shadow: 0 0 0 6px rgba(16,185,129,0.2);
+}
+
+.timeline-step span {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .item-box {
+    grid-template-columns: 1fr;
+  }
+
+  .item-image {
+    height: 220px;
+  }
+
+  .order-header {
+    flex-direction: column;
+    gap: 14px;
+  }
 }
 
 /* ===== STATUS BADGE ===== */
@@ -787,30 +955,6 @@ img {
         </div>
       </div>
 
-      <!-- TIMELINE -->
-      <div class="timeline">
-
-        <!-- PLACED -->
-        <div class="timeline-step">
-          <div class="circle active"></div>
-          <span>Placed</span>
-        </div>
-
-        <!-- PACKED -->
-        <div class="timeline-step">
-           <div class="circle <%= (order.status === 'Packed' || order.status === 'Delivered') ? 'active' : '' %>"></div>
-            <span>Packed</span>
-        </div>
-
-
-        <!-- DELIVERED -->
-        <div class="timeline-step">
-          <div class="circle <%= order.status === 'Delivered' ? 'active' : '' %>"></div>
-          <span>Delivered</span>
-        </div>
-
-      </div>
-
       <!-- ITEMS -->
       <%
   let items = order.items;
@@ -834,7 +978,29 @@ img {
           </div>
         <% }) %>
       <% } %>
+      <!-- TIMELINE -->
+      <div class="timeline">
 
+        <!-- PLACED -->
+        <div class="timeline-step">
+          <div class="circle active"></div>
+          <span>Placed</span>
+        </div>
+
+        <!-- PACKED -->
+        <div class="timeline-step">
+           <div class="circle <%= (order.status === 'Packed' || order.status === 'Delivered') ? 'active' : '' %>"></div>
+            <span>Packed</span>
+        </div>
+
+
+        <!-- DELIVERED -->
+        <div class="timeline-step">
+          <div class="circle <%= order.status === 'Delivered' ? 'active' : '' %>"></div>
+          <span>Delivered</span>
+        </div>
+
+      </div>
       <!-- ACTION -->
 <% if (order.status === "Pending") { %>
 
