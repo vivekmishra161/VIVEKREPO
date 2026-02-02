@@ -60,27 +60,42 @@ body{
 /* ===== ORDER CARD ===== */
 .order-card{
   background:#ffffff;
-  border-radius:22px;
   padding:28px;
-  box-shadow:0 18px 40px rgba(0,0,0,.18);
   position:relative;
-  transition:.3s ease;
-}
-
-.order-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 26px 55px rgba(0,0,0,.25);
+  display: flex;
+  gap: 20px;
+  border-bottom: 2px solid #e5e7eb;
+  margin-bottom: 40px;
 }
 
 /* ===== STATUS BADGE ===== */
 .status{
-  position:absolute;
-  top:22px;
-  right:22px;
   padding:10px 22px;
   border-radius:999px;
   font-weight:700;
   font-size:14px;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+/* ===== LARGE PRODUCT IMAGE ===== */
+.large-product-image {
+  width: 250px;
+  height: 250px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid #e5e7eb;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.large-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .placed-status{background:#dcfce7;color:#065f46}
@@ -220,8 +235,14 @@ body{
   }
   
   .order-card{
+    flex-direction: column;
     padding:20px;
     border-radius:18px;
+  }
+
+  .large-product-image {
+    width: 100%;
+    height: 200px;
   }
   
   .status{
@@ -756,7 +777,10 @@ img {
     <!-- ORDER CARD -->
     <div class="order-card">
 
-    <!-- STATUS BADGE -->
+      <!-- LEFT SECTION: DETAILS -->
+      <div class="order-details">
+
+        <!-- STATUS BADGE -->
 <% if (order.status === "Pending") { %>
 
   <span class="status placed-status">Pending</span>
@@ -775,67 +799,59 @@ img {
 
 <% } %>
 
-
-      <!-- HEADER -->
-      <div class="order-header">
-        <div>
-          <p><strong><%= t.orderDate %>:</strong> <%= orderDate.toDateString() %></p>
-          <p><strong><%= t.totalPrice %>:</strong> ₹<%= order.totalPrice %></p>
-          <p><strong><%= t.deliveryDate %>:</strong>
-            <%= deliveryDate.toDateString() %>
-          </p>
-        </div>
-      </div>
-
-      <!-- TIMELINE -->
-      <div class="timeline">
-
-        <!-- PLACED -->
-        <div class="timeline-step">
-          <div class="circle active"></div>
-          <span>Placed</span>
+        <!-- HEADER -->
+        <div class="order-header">
+          <div>
+            <p><strong><%= t.orderDate %>:</strong> <%= orderDate.toDateString() %></p>
+            <p><strong><%= t.totalPrice %>:</strong> ₹<%= order.totalPrice %></p>
+            <p><strong><%= t.deliveryDate %>:</strong>
+              <%= deliveryDate.toDateString() %>
+            </p>
+          </div>
         </div>
 
-        <!-- PACKED -->
-        <div class="timeline-step">
-           <div class="circle <%= (order.status === 'Packed' || order.status === 'Delivered') ? 'active' : '' %>"></div>
-            <span>Packed</span>
+        <!-- TIMELINE -->
+        <div class="timeline">
+
+          <!-- PLACED -->
+          <div class="timeline-step">
+            <div class="circle active"></div>
+            <span>Placed</span>
+          </div>
+
+          <!-- PACKED -->
+          <div class="timeline-step">
+             <div class="circle <%= (order.status === 'Packed' || order.status === 'Delivered') ? 'active' : '' %>"></div>
+              <span>Packed</span>
+          </div>
+
+          <!-- DELIVERED -->
+          <div class="timeline-step">
+            <div class="circle <%= order.status === 'Delivered' ? 'active' : '' %>"></div>
+            <span>Delivered</span>
+          </div>
+
         </div>
 
-
-        <!-- DELIVERED -->
-        <div class="timeline-step">
-          <div class="circle <%= order.status === 'Delivered' ? 'active' : '' %>"></div>
-          <span>Delivered</span>
-        </div>
-
-      </div>
-
-      <!-- ITEMS -->
-      <%
+        <!-- ITEMS (WITHOUT IMAGES) -->
+<%
   let items = order.items;
-
   if (typeof items === "string") {
     items = JSON.parse(items);
   }
 %>
-
 <% if (items && items.length > 0) { %>
   <% items.forEach(function(item){ %>
+        <div class="item-box">
+          <p><strong>Name:</strong> <%= item.name %></p>
+          <p><strong>Product ID:</strong> <%= item.id %></p>
+          <p><strong>Price:</strong> ₹<%= item.price %></p>
+          <p><strong>Quantity:</strong> <%= item.qty %></p>
+        </div>
+      <% }) %>
+<% } %>
 
-          <div class="item-box">
-            <div class="item-image">
-               <img src="<%= item.img %>" alt="<%= item.name %>">
-            </div>
-            <p>Name: <%= item.name %></p>
-            <p>Product ID: <%= item.id %></p>
-            <p>Price: ₹<%= item.price %></p>
-            <p>Quantity: <%= item.qty %></p>
-          </div>
-        <% }) %>
-      <% } %>
-
-      <!-- ACTION -->
+        <!-- ACTION -->
 <% if (order.status === "Pending") { %>
 
   <button class="cancel-btn" onclick="cancelOrder('<%= order.id %>')">
@@ -856,6 +872,17 @@ img {
 
 <% } %>
 
+      </div>
+
+      <!-- RIGHT SECTION: LARGE IMAGE -->
+      <%
+  let firstItem = items && items.length > 0 ? items[0] : null;
+%>
+<% if (firstItem) { %>
+      <div class="large-product-image">
+        <img src="<%= firstItem.img %>" alt="<%= firstItem.name %>">
+      </div>
+<% } %>
 
     </div>
     <!-- END ORDER CARD -->
