@@ -47,7 +47,7 @@ app.use(
     }
   })
 );
-
+app.use(express.static(path.join(__dirname, "public")));
 // Middleware to make session available to all EJS templates
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
@@ -374,7 +374,14 @@ app.get("/my-orders", async (req, res) => {
             id: item.id,
             name: item.name || (product ? product.name : "Unknown"),
             price: item.price || (product ? product.price : 0),
-            qty: item.qty
+            qty: item.qty,
+            // 🔥 KEEP THESE
+            category: item.category || (product ? product.category : null),
+            img:
+              item.img ||
+                (product
+                 ? `/images/categories/${product.category.toLowerCase()}.jpg`
+                 : "/images/categories/default.jpg")
           };
         });
       }
