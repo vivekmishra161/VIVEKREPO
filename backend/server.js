@@ -420,7 +420,8 @@ app.post("/order", async (req, res) => {
       name: item.name,
       price: Number(item.price),
       discount: Number(item.discount || 0),
-      qty: Number(item.qty || 1)
+      qty: Number(item.qty || 1),
+      img: item.img   
     }));
 
     let calculatedTotal = 0;
