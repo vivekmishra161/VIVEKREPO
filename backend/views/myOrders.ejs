@@ -824,21 +824,9 @@ img {
   <% items.forEach(function(item){ %>
 
           <div class="item-box">
-            <%
-  let imageSrc = "/images/no-image.png";
-
-  if (item.img) {
-    imageSrc = item.img;
-  } else if (item.category) {
-    imageSrc = `/images/categories/${item.category.toLowerCase()}.jpg`;
-  }
-%>
-
-<img 
-  src="<%= imageSrc %>" 
-  alt="<%= item.name %>"
->
-
+            <div class="item-image">
+               <img src="<%= item.img %>" alt="<%= item.name %>">
+            </div>
             <p>Name: <%= item.name %></p>
             <p>Product ID: <%= item.id %></p>
             <p>Price: ₹<%= item.price %></p>
