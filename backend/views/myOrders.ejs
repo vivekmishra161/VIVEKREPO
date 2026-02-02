@@ -801,6 +801,19 @@ img {
 
 <% } %>
 
+      <!-- LARGE PRODUCT IMAGE -->
+      <%
+  let items = order.items;
+  if (typeof items === "string") {
+    items = JSON.parse(items);
+  }
+  let firstItem = items && items.length > 0 ? items[0] : null;
+%>
+<% if (firstItem) { %>
+      <div class="large-product-image">
+        <img src="<%= firstItem.img %>" alt="<%= firstItem.name %>">
+      </div>
+<% } %>
 
       <!-- HEADER -->
       <div class="order-header">
@@ -832,12 +845,25 @@ img {
               <p>Price: ₹<%= item.price %></p>
               <p>Quantity: <%= item.qty %></p>
             </div>
-            <div class="item-image">
-               <img src="<%= item.img %>" alt="<%= item.name %>">
-            </div>
           </div>
         <% }) %>
       <% } %>
+
+      <!-- TIMELINE -->
+      <div class="timeline">
+        <div class="timeline-step">
+          <div class="circle active"></div>
+          <span>Ordered</span>
+        </div>
+        <div class="timeline-step">
+          <div class="circle<% if (order.status === "Packed" || order.status === "Delivered") { %> active<% } %>"></div>
+          <span>Packed</span>
+        </div>
+        <div class="timeline-step">
+          <div class="circle<% if (order.status === "Delivered") { %> active<% } %>"></div>
+          <span>Delivered</span>
+        </div>
+      </div>
 
       <!-- ACTION -->
 <% if (order.status === "Pending") { %>
@@ -859,22 +885,6 @@ img {
   <p class="cancelled-text">Order Cancelled ✖</p>
 
 <% } %>
-
-      <!-- TIMELINE -->
-      <div class="timeline">
-        <div class="timeline-step">
-          <div class="circle active"></div>
-          <span>Ordered</span>
-        </div>
-        <div class="timeline-step">
-          <div class="circle<% if (order.status === "Packed" || order.status === "Delivered") { %> active<% } %>"></div>
-          <span>Packed</span>
-        </div>
-        <div class="timeline-step">
-          <div class="circle<% if (order.status === "Delivered") { %> active<% } %>"></div>
-          <span>Delivered</span>
-        </div>
-      </div>
 
     </div>
     <!-- END ORDER CARD -->
