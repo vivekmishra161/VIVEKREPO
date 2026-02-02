@@ -421,6 +421,7 @@ app.post("/order", async (req, res) => {
       price: Number(item.price),
       discount: Number(item.discount || 0),
       qty: Number(item.qty || 1),
+      category: item.category,  
       img: item.img   
     }));
 

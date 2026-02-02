@@ -1411,6 +1411,7 @@ function addToCart(productId, qty) {
       name: product.name,
       price: price,
       qty: qty,
+      category: product.category,
       img: `/images/categories/${product.category.toLowerCase()}.jpg`
     });
   }
