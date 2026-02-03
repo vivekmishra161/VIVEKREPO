@@ -84,7 +84,20 @@
   "mustSignInCheckout": "You must sign in to proceed with checkout.",
   "ok": "OK",
   "sort": "Sort",
-  "relevance": "Relevance"
-
+  "relevance": "Relevance",
+  "priceLowToHigh": "Price: Low to High",
+  "priceHighToLow": "Price: High to Low",
+  "newestFirst": "Newest First",
+  "suspension": "Suspension",
+  "wiper": "Wiper",
+  "interior": "Interior",
+  "fuel": "Fuel",
+  "cooling": "Cooling",
+  "exhaust": "Exhaust",
+  "glass": "Glass",
+  "body": "Body",
+  "electrical": "Electrical",
+  "brake": "Brake",
+  "engine": "Engine"
 }
 

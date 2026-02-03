@@ -83,6 +83,20 @@
   "language": "भाषा",
   "ok": "ठीक है",
   "sort": "क्रम से लगाना",
-  "relevance": "प्रासंगिकता"
+  "relevance": "प्रासंगिकता",
+  "priceLowHigh": "कीमत: कम से अधिक",
+  "priceHighLow": "कीमत: अधिक से कम",
+  "newestFirst": "नवीनतम पहले",
+  "suspension": "सस्पेंशन",
+  "wiper": "वाइपर",
+  "interior": "आंतरिक",
+  "fuel": "ईंधन",
+  "cooling": "कूलिंग",
+  "exhaust": "एक्सहॉस्ट",
+  "glass": "कांच",
+  "body": "बॉडी",
+  "electrical": "विद्युत",
+  "brake": "ब्रेक",
+  "engine": "इंजन"
 }
 
