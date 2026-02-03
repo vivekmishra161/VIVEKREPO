@@ -70,11 +70,14 @@ img {
 /* ==================
    PAGE WRAPPER
    ================== */
+/* ===== GLOBAL PAGE CONTAINER ===== */
 .page-wrapper {
-  max-width: 1150px;
-  margin: 0 auto;
   width: 100%;
+  max-width: 1200px;   /* same visual width as header */
+  margin: 0 auto;
+  padding: 0 20px;     /* mobile side spacing */
 }
+
 
 /* ==================
    GLASS HEADER
@@ -114,6 +117,14 @@ img {
   color: inherit;
   transition: var(--transition);
 }
+.header-bar {
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  border-radius: 18px;
+  margin-bottom: 40px;
+}
+
 
 .header-left a:hover {
   opacity: 0.8;
