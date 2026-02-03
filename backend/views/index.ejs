@@ -660,6 +660,35 @@ label.muted {
   width: 280px;
 }
 
+/* ─── inner rows inside .controls (the two anonymous divs) ───
+   These hold: [chip + search + manufacturer + category]
+   and:        [Sort label + sort select]
+   They MUST wrap and fill width on mobile or content flies off-screen. */
+.controls > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;   /* allow children to drop to next line */
+  width: 100%;       /* always fill the parent row */
+  min-width: 0;      /* flex child shrink baseline */
+}
+
+.controls > div > .chip,
+.controls > div > #resultsCount {
+  flex-shrink: 0;
+}
+
+.controls > div > .search {
+  flex: 1;
+  min-width: 0;      /* let it shrink below content size */
+}
+
+.controls > div > select {
+  flex: 1;
+  min-width: 120px;  /* never shrink a select below readable width */
+  max-width: 100%;
+}
+
 /* ─────────────────────────────────────
    8. PRODUCT GRID & CARDS
       .grid  #productGrid
@@ -1413,18 +1442,35 @@ label.muted {
   }
 
   .controls {
+    flex-direction: column;       /* stack the two inner rows vertically */
     padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .controls > div {
+    width: 100%;
     gap: 8px;
   }
 
   .controls .search {
     min-width: 100%;
     max-width: 100%;
+    flex: 1 1 100%;               /* force full-width on its own line */
+  }
+
+  .controls .search input,
+  #liveSearch {
+    width: 100%;
   }
 
   select.select,
-  select.sort {
+  select.sort,
+  #manufacturerSelect,
+  #categorySelect,
+  #sortSelect {
     width: 100%;
+    flex: 1 1 100%;               /* each select on its own line */
+    min-width: 0;
   }
 
   .grid, #productGrid {
@@ -1525,8 +1571,28 @@ label.muted {
 
   /* controls */
   .controls {
+    flex-direction: column;
     padding: 10px;
     gap: 8px;
+  }
+
+  .controls > div {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .controls .search {
+    flex: 1 1 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .controls .search input,
+  #liveSearch {
+    width: 100%;
+    height: 36px;
+    font-size: 13px;
   }
 
   .chip, #resultsCount {
@@ -1535,14 +1601,14 @@ label.muted {
     height: 34px;
   }
 
-  .controls .search input,
-  #liveSearch {
-    height: 36px;
-    font-size: 13px;
-  }
-
   select.select,
-  select.sort {
+  select.sort,
+  #manufacturerSelect,
+  #categorySelect,
+  #sortSelect {
+    width: 100%;
+    flex: 1 1 100%;
+    min-width: 0;
     height: 36px;
     font-size: 13px;
   }
@@ -1712,6 +1778,7 @@ label.muted {
     width: 78vw;
   }
 }
+
 </style>
 </head>
 <body>
