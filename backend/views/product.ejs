@@ -58,7 +58,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
-  padding: 20px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
 }
 
 img {
@@ -74,6 +78,7 @@ img {
   max-width: 1150px;
   margin: 0 auto;
   width: 100%;
+  padding: 20px;
 }
 
 /* ==================
@@ -81,8 +86,8 @@ img {
    ================== */
 .glass-header {
   width: 100%;
-  max-width: 1150px;
-  margin: 0 auto 22px;
+  max-width: 100%;
+  margin: 0 0 22px 0;
   padding: 14px 24px;
   border-radius: 16px;
   display: flex;
@@ -149,8 +154,8 @@ img {
    ================== */
 .container {
   width: 100%;
-  max-width: 1150px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
   display: grid;
   grid-template-columns: 1fr 420px;
   gap: 32px;
@@ -590,6 +595,8 @@ img {
   box-shadow: var(--card-shadow);
   border: 1px solid var(--border);
   animation: fadeInUp 0.8s ease;
+  width: 100%;
+  max-width: 100%;
 }
 
 .details h4 {
@@ -1107,6 +1114,11 @@ img {
 /* Mobile Devices (600px - 768px) */
 @media (max-width: 768px) {
   body {
+    padding: 0;
+    display: block;
+  }
+
+  .page-wrapper {
     padding: 15px 10px;
   }
 
@@ -1310,6 +1322,10 @@ img {
 /* Small Mobile Devices (480px - 600px) */
 @media (max-width: 600px) {
   body {
+    padding: 0;
+  }
+
+  .page-wrapper {
     padding: 10px 8px;
   }
 
@@ -1601,6 +1617,10 @@ img {
 /* Ultra Small Screens (<400px) */
 @media (max-width: 400px) {
   body {
+    padding: 0;
+  }
+
+  .page-wrapper {
     padding: 8px;
   }
 
@@ -1673,6 +1693,7 @@ select:focus-visible {
     border: 1px solid #000;
   }
 }
+
   </style>
 </head>
 <body>
