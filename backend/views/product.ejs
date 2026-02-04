@@ -1487,6 +1487,24 @@ img {
     font-size: 14px;
   }
 
+  .review-form-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .review-form-actions > div {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .review-form-actions .review-submit-btn {
+    width: 100%;
+    padding: 14px !important;
+    font-size: 15px !important;
+    font-weight: 700;
+  }
+
   #reviewRating {
     padding: 7px 10px;
     font-size: 13px;
@@ -1859,19 +1877,21 @@ select:focus-visible {
   <!-- Review Form -->
   <% if (session && session.user) { %>
     <div style="margin-bottom:15px;">
-      <textarea id="reviewMessage" placeholder="Write your review..." style="width:100%;height:70px;padding:10px;border-radius:8px;border:1px solid #ccc;"></textarea>
+      <textarea id="reviewMessage" placeholder="Write your review..." style="width:100%;height:70px;padding:10px;border-radius:8px;border:1px solid #ccc;box-sizing:border-box;"></textarea>
       
-      <div style="margin-top:8px;">
-        Rating:
-        <select id="reviewRating">
-          <option value="5">⭐⭐⭐⭐⭐</option>
-          <option value="4">⭐⭐⭐⭐</option>
-          <option value="3">⭐⭐⭐</option>
-          <option value="2">⭐⭐</option>
-          <option value="1">⭐</option>
-        </select>
+      <div class="review-form-actions" style="margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <label for="reviewRating" style="font-weight:600;font-size:14px;">Rating:</label>
+          <select id="reviewRating" style="padding:8px 12px;border-radius:8px;border:1px solid #ccc;font-size:14px;">
+            <option value="5">⭐⭐⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="1">⭐</option>
+          </select>
+        </div>
 
-        <button class="btn buy" onclick="submitReview()" style="margin-left:10px;">Submit</button>
+        <button class="btn buy review-submit-btn" onclick="submitReview()">Submit Review</button>
       </div>
     </div>
   <% } else { %>
