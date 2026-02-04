@@ -201,66 +201,6 @@ a {
   letter-spacing: 0.2px;
 }
 
-/* NEW: Header Cart Button */
-.header-cart-btn {
-  position: relative;
-  background: var(--blue-600);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 18px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-  box-shadow: var(--shadow-sm);
-  margin-left: auto;
-}
-
-.header-cart-btn:hover {
-  background: var(--blue-700);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-.header-cart-btn:active {
-  transform: translateY(0);
-}
-
-.cart-icon {
-  font-size: 20px;
-}
-
-.cart-badge {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: var(--red-600);
-  color: white;
-  border-radius: 50%;
-  min-width: 22px;
-  height: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-  border: 2px solid white;
-  padding: 0 4px;
-}
-
-@media (max-width: 600px) {
-  .header-cart-btn .cart-text {
-    display: none;
-  }
-  .header-cart-btn {
-    padding: 10px 14px;
-  }
-}
-
 /* legacy .logo / .brand (fallback) */
 .logo {
   display: flex;
@@ -1412,55 +1352,6 @@ label.muted {
   color: var(--blue-300);
 }
 
-/* NEW: Footer Phone Numbers with Icons */
-.footer-phones {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 10px;
-}
-
-.phone-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.phone-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--blue-600);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
-}
-
-.phone-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.phone-label {
-  font-size: 12px;
-  color: var(--gray-500);
-  margin-bottom: 2px;
-}
-
-.phone-number {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--blue-400);
-  text-decoration: none;
-  transition: color 0.18s;
-}
-
-.phone-number:hover {
-  color: var(--blue-300);
-}
-
 .footer-bottom {
   text-align: center;
   margin-top: 36px;
@@ -1913,16 +1804,14 @@ label.muted {
 
     <div class="header-text">
       <div class="header-title">AKC AUTO PARTS</div>
+        <a href="/cart" class="header-cart-btn">
+         <span class="cart-icon">🛒</span>
+         <span class="cart-text">Cart</span>
+         <span class="cart-badge" id="headerCartBadge">0</span>
+        </a>
       <div class="header-sub">Parts for Hyundai • Tata • Bajaj</div>
     </div>
   </div>
-
-  <!-- CART BUTTON -->
-  <a href="/cart" class="header-cart-btn">
-    <span class="cart-icon">🛒</span>
-    <span class="cart-text">Cart</span>
-    <span class="cart-badge" id="headerCartBadge">0</span>
-  </a>
 </header>
 
 
@@ -2388,24 +2277,9 @@ function saveCart(c){ localStorage.setItem(LS_CART_KEY, JSON.stringify(c)); upda
 function updateCartBadge(){
   const cart = loadCart();
   const count = cart.reduce((s,i)=>s + (i.qty||0), 0);
-  
-  // Update sidebar badge
   const el = document.getElementById('cartCount');
-  if(el) {
-    if(count>0){ el.style.display='block'; el.textContent = count; }
-    else { el.style.display='none'; }
-  }
-  
-  // Update header cart badge
-  const headerBadge = document.getElementById('headerCartBadge');
-  if(headerBadge) {
-    headerBadge.textContent = count;
-    if(count === 0) {
-      headerBadge.style.display = 'none';
-    } else {
-      headerBadge.style.display = 'flex';
-    }
-  }
+  if(count>0){ el.style.display='block'; el.textContent = count; }
+  else { el.style.display='none'; }
 }
 
 /* ------------ Messages ------------ */
@@ -2621,21 +2495,16 @@ function confirmSignout() {
 
     <!-- Contact Info -->
     <div class="footer-box">
-      <h3>Contact Us</h3>
+      <!-- Contact Info -->
+<div class="footer-box">
+  <h3>Contact Us</h3>
 
-      <p>
-        <strong>Email:</strong>
-        <a href="mailto:akcautopart@gmail.com">akcautopart@gmail.com</a>
-      </p>
+  <p>
+    <strong>Email:</strong>
+    <a href="mailto:vivekmishra261105@gmail.com">vivekmishra261105@gmail.com</a>
+  </p>
 
-      <p style="margin-bottom: 16px;">
-        <strong>Address:</strong>
-        <a href="https://www.google.com/maps/place/AKC+Hyundai-+Parsakhera+Ind.+Area/@28.4255407,79.3528077,17z/data=!3m1!4b1!4m6!3m5!1s0x390aa86cf1ff5d31:0x466accda9ebc0370!8m2!3d28.425536!4d79.3553826!16s%2Fg%2F1ptxtv4n0?entry=ttu&g_ep=EgoyMDI2MDExMS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
-          AKC Hyundai, Parsakhera
-        </a>
-      </p>
-
-      <div class="footer-phones">
+       <div class="footer-phones">
         <div class="phone-item">
           <div class="phone-icon">📞</div>
           <div class="phone-details">
@@ -2662,6 +2531,14 @@ function confirmSignout() {
       </div>
     </div>
 
+  <p>
+    <strong>Address:</strong>
+    <a href="https://www.google.com/maps/place/AKC+Hyundai-+Parsakhera+Ind.+Area/@28.4255407,79.3528077,17z/data=!3m1!4b1!4m6!3m5!1s0x390aa86cf1ff5d31:0x466accda9ebc0370!8m2!3d28.425536!4d79.3553826!16s%2Fg%2F1ptxtv4n0?entry=ttu&g_ep=EgoyMDI2MDExMS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+      AKC Hyundai, Parsakhera
+    </a>
+  </p>
+</div>
+
 
     <!-- Social Media -->
     <div class="footer-box">
@@ -2682,7 +2559,7 @@ function confirmSignout() {
 
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 <!-- MAIN SIDEBAR -->
@@ -2787,3 +2664,17 @@ async function applyFilters() {
 
   if (manufacturer) params.append("manufacturer", manufacturer);
   if (category) params.append("category", category);
+  if (search) params.append("search", search);
+  if (sort) params.append("sort", sort);
+
+  const res = await fetch(`/api/products?${params.toString()}`);
+  const data = await res.json();
+
+  renderProducts(data);
+}
+
+
+</script>
+
+</body>
+</html>
