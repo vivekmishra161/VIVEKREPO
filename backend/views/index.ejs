@@ -1862,13 +1862,14 @@ label.muted {
 
     <div class="header-text">
       <div class="header-title">AKC AUTO PARTS</div>
-        <a href="/cart" class="header-cart-btn">
+      <div class="header-sub">Parts for Hyundai • Tata • Bajaj</div>
+    </div>
+
+    <a href="/cart" class="header-cart-btn">
          <span class="cart-icon">🛒</span>
          <span class="cart-text">Cart</span>
          <span class="cart-badge" id="headerCartBadge">0</span>
         </a>
-      <div class="header-sub">Parts for Hyundai • Tata • Bajaj</div>
-    </div>
   </div>
 </header>
 
@@ -2387,12 +2388,13 @@ function renderProducts(list) {
      `/images/categories/${String(p.category).toLowerCase()}.jpg`;
 
 
-    div.innerHTML = `
-      <img class="product-img"
-         src="${imageSrc}"
-         alt="${escapeHtml(p.name)}"
-         loading="lazy">
-       <div style="display:flex; justify-content:space-between; gap:10px; align-items:center;">
+div.innerHTML = `
+    <img class="product-img"
+       src="${imageSrc}"
+       alt="${escapeHtml(p.name)}"
+       loading="lazy"
+       onclick="viewPart('${p.id}')"
+       style="cursor: pointer;">
         <div>
           <p class="title">${escapeHtml(p.name)}</p>
           <div class="id">${p.id} • <span class="muted">${p.manufacturer}</span></div>
