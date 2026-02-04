@@ -1710,7 +1710,9 @@ select:focus-visible {
   <!-- LEFT: media + details -->
   <section class="media">
   <div class="hero">
-    <img id="heroImg" alt="Product image">
+    <a id="heroLink" href="#" target="_blank" style="display:block;width:100%;height:100%;display:flex;justify-content:center;align-items:center;">
+      <img id="heroImg" alt="Product image" style="cursor:pointer;">
+    </a>
   </div>
 
 
@@ -2289,8 +2291,13 @@ document.addEventListener("DOMContentLoaded", function () {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const heroImg = document.getElementById("heroImg");
-  heroImg.src = `/images/categories/${product.category.toLowerCase()}.jpg`;
+  const heroLink = document.getElementById("heroLink");
+  const imageUrl = `/images/categories/${product.category.toLowerCase()}.jpg`;
+  
+  heroImg.src = imageUrl;
   heroImg.alt = product.name;
+  heroLink.href = imageUrl;
+  
   document.getElementById("prodTitle").textContent = product.name;
   document.getElementById("manufacturer").textContent = product.manufacturer || "Hyundai";
   document.getElementById("prodId").textContent = product.id;
