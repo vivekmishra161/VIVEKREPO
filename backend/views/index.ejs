@@ -2650,7 +2650,6 @@ function confirmSignout() {
     <!-- MENU BUTTONS -->
     <nav class="sidebar-menu">
       <a href="/my-orders">📦 <%= t.myOrders %></a>
-      <a href="/cart">🛒 <%= t.cart %></a>
 
       <% if (session && session.user) { %>
         <a href="#" class="danger" onclick="openSignoutPopup()">🚪 <%= t.signOut %></a>
