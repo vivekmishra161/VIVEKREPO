@@ -2333,13 +2333,25 @@ const LS_CART_KEY = 'akc_cart_v1';
 function loadCart(){ try{ return JSON.parse(localStorage.getItem(LS_CART_KEY)) || []; }catch(e){return []} }
 function saveCart(c){ localStorage.setItem(LS_CART_KEY, JSON.stringify(c)); updateCartBadge(); }
 
-function updateCartBadge(){
-  const cart = loadCart();
-  const count = cart.reduce((s,i)=>s + (i.qty||0), 0);
+function updateCartBadge() {
   const el = document.getElementById('cartCount');
-  if(count>0){ el.style.display='block'; el.textContent = count; }
-  else { el.style.display='none'; }
+  if (!el) return; // safety check
+
+  const cart = loadCart() || [];
+
+  const count = cart.reduce((sum, item) => {
+    return sum + Number(item.qty || 0);
+  }, 0);
+
+  if (count > 0) {
+    el.style.display = 'inline-flex'; // better for badges
+    el.textContent = count;
+  } else {
+    el.style.display = 'none';
+    el.textContent = '';
+  }
 }
+
 
 /* ------------ Messages ------------ */
 function showMessage(message, type = 'success'){
