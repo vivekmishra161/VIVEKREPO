@@ -58,7 +58,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
-  padding: 20px;
 }
 
 img {
@@ -73,9 +72,10 @@ img {
 /* ===== GLOBAL PAGE CONTAINER ===== */
 .page-wrapper {
   width: 100%;
-  max-width: 1200px;   /* same visual width as header */
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 20px;     /* mobile side spacing */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 
@@ -83,8 +83,7 @@ img {
    GLASS HEADER
    ================== */
 .glass-header {
-  width: 100%;
-  margin: 0 auto 22px;
+  margin: 0 0 22px 0;
   padding: 14px 24px;
   border-radius: 16px;
   display: flex;
@@ -158,9 +157,7 @@ img {
    CONTAINER & LAYOUT
    ================== */
 .container {
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 24px;
+  margin: 0;
   display: grid;
   grid-template-columns: 1fr 420px;
   gap: 32px;
