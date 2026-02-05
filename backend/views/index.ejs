@@ -2036,29 +2036,25 @@ const LS_CART_KEY = 'akc_cart_v1';
 function loadCart(){ try{ return JSON.parse(localStorage.getItem(LS_CART_KEY)) || []; }catch(e){return []} }
 function saveCart(c){ localStorage.setItem(LS_CART_KEY, JSON.stringify(c)); updateCartBadge(); }
 
-function updateCartBadge() {
-  const badge = document.getElementById('cartBadge');
-  if (!badge) {
-    console.warn('Cart badge element not found');
-    return;
-  }
-
-  const itemCount = getCartItemCount();
+function updateCartBadge(){
+  const cart = loadCart();
+  const count = cart.reduce((s,i)=>s + (i.qty||0), 0);
   
-  // Update badge text
-  badge.textContent = itemCount;
-  
-  // Show/hide badge based on count
-  if (itemCount > 0) {
-    badge.style.display = 'flex';
-    
-    // Optional: Add animation when count changes
-    badge.classList.add('badge-bounce');
-    setTimeout(() => {
-      badge.classList.remove('badge-bounce');
-    }, 300);
-  } else {
-    badge.style.display = 'none';
+  // Update the header cart badge (id="headerCartBadge")
+  const el = document.getElementById('headerCartBadge');
+  if(el) {
+    if(count > 0) { 
+      el.style.display = 'flex'; 
+      el.textContent = count;
+      
+      // Optional: Add bounce animation
+      el.classList.add('badge-bounce');
+      setTimeout(() => {
+        el.classList.remove('badge-bounce');
+      }, 300);
+    } else { 
+      el.style.display = 'none'; 
+    }
   }
 }
 
