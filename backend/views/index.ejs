@@ -2030,315 +2030,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 const products = <%- JSON.stringify(products || []) %>;
- const defaultProducts = [
-  {
-    id: "737000B010",
-    name: "PANEL ASSY-TAIL GATE",
-    category: "Body",
-    price: 12935.28,
-    finalPrice: 11641.75,
-    discount: 10,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "8611025100",
-    name: "GLASS-WINDSHIELD",
-    category: "Glass",
-    price: 7203.5,
-    finalPrice: 5762.8,
-    discount: 20,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "2461022600",
-    name: "ADJUSTER ASSY-ROCKER ARM LASH",
-    category: "Engine",
-    price: 5287.8,
-    finalPrice: 5287.8,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "715221A000",
-    name: "PANEL-REAR SIDE OUTER RH",
-    category: "Body",
-    price: 4959.24,
-    finalPrice: 4959.24,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "287001A200",
-    name: "PIPE-TAIL W/MUFFLER",
-    category: "Exhaust",
-    price: 4843.02,
-    finalPrice: 4843.02,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "8661025000",
-    name: "COVER ASSY-RR BUMPER",
-    category: "Body",
-    price: 4068.42,
-    finalPrice: 4068.42,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "253101A000",
-    name: "RADIATOR ASSY",
-    category: "Cooling",
-    price: 3452.52,
-    finalPrice: 3452.52,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "8661105000",
-    name: "COVER-RR BUMPER",
-    category: "Body",
-    price: 3285.0,
-    finalPrice: 3285.0,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "6640025000",
-    name: "PANEL ASSY-HOOD",
-    category: "Body",
-    price: 3204.67,
-    finalPrice: 2243.27,
-    discount: 30,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "865101A000",
-    name: "COVER ASSY-FR BUMPER",
-    category: "Body",
-    price: 3051.6,
-    finalPrice: 3051.6,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-
-  {
-    id: "866110B000",
-    name: "COVER-RR BUMPER",
-    category: "Body",
-    price: 2601.24,
-    finalPrice: 2341.12,
-    discount: 10,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "583051AA00",
-    name: "SHOE & LINING KIT-RR BRAKE",
-    category: "Brake",
-    price: 2312,
-    finalPrice: 2312,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "2191025010",
-    name: "BRACKET ASSY-ROLL STOPPER FR",
-    category: "Suspension",
-    price: 2293.93,
-    finalPrice: 1835.14,
-    discount: 20,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "663111A000",
-    name: "PANEL-FENDER LH",
-    category: "Body",
-    price: 2061.74,
-    finalPrice: 2061.74,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "663211A000",
-    name: "PANEL-FENDER RH",
-    category: "Body",
-    price: 2061.74,
-    finalPrice: 2061.74,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-
-  {
-    id: "2431227000",
-    name: "BELT-VALVE TIMING",
-    category: "Engine",
-    price: 2045.07,
-    finalPrice: 2045.07,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "8651105000",
-    name: "COVER-FR BUMPER",
-    category: "Body",
-    price: 1973.66,
-    finalPrice: 1973.66,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "3517022600",
-    name: "SENSOR ASSY-THROTTLE POSITION",
-    category: "Engine",
-    price: 1963.47,
-    finalPrice: 1963.47,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "8711005541",
-    name: "GLASS-TAIL GATE",
-    category: "Glass",
-    price: 1946.87,
-    finalPrice: 1946.87,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "6450105060",
-    name: "PANEL ASSY-FNDR APRON LH",
-    category: "Body",
-    price: 1913.88,
-    finalPrice: 1913.88,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-
-  {
-    id: "8661105600",
-    name: "COVER-RR BUMPER",
-    category: "Body",
-    price: 1805.06,
-    finalPrice: 1805.06,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "9835205000",
-    name: "CAP-W/WPR ARM",
-    category: "Body",
-    price: 35.97,
-    finalPrice: 35.97,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "8135533000",
-    name: "SHIM-DR STRIKER",
-    category: "Body",
-    price: 38.06,
-    finalPrice: 38.06,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "8683225000",
-    name: "GUARD ASSY-FRONT WHEEL MUD RH",
-    category: "Body",
-    price: 51.94,
-    finalPrice: 51.94,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-
-  {
-    id: "8661605600",
-    name: "BRACKET-RR BUMPER SIDE RH",
-    category: "Body",
-    price: 55.26,
-    finalPrice: 55.26,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "8661505600",
-    name: "BRACKET-RR BUMPER SIDE LH",
-    category: "Body",
-    price: 55.26,
-    finalPrice: 55.26,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "8939114001J",
-    name: "KNOB-LATCH ROD",
-    category: "Body",
-    price: 57.68,
-    finalPrice: 57.68,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-  {
-    id: "8766025010",
-    name: "COVER-FR DR QUADRANT INR LH",
-    category: "Body",
-    price: 60.7,
-    finalPrice: 60.7,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  },
-
-  {
-    id: "7112700000",
-    name: "BRACKET ASSY-FENDER MTG RH",
-    category: "Body",
-    price: 64.85,
-    finalPrice: 64.85,
-    discount: 0,
-    manufacturer: "Hyundai",
-    image: "/images/no-image.png"
-  }
-];
 /* ------------ Cart LocalStorage ------------ */
 const LS_CART_KEY = 'akc_cart_v1';
 
 function loadCart(){ try{ return JSON.parse(localStorage.getItem(LS_CART_KEY)) || []; }catch(e){return []} }
 function saveCart(c){ localStorage.setItem(LS_CART_KEY, JSON.stringify(c)); updateCartBadge(); }
 
-function updateCartBadge(){
-  const cart = loadCart();
-  const count = cart.reduce((s,i)=>s + (i.qty||0), 0);
-  const el = document.getElementById('cartCount');
-  if(count>0){ el.style.display='block'; el.textContent = count; }
-  else { el.style.display='none'; }
+function updateCartBadge() {
+  const badge = document.getElementById('cartBadge');
+  if (!badge) {
+    console.warn('Cart badge element not found');
+    return;
+  }
+
+  const itemCount = getCartItemCount();
+  
+  // Update badge text
+  badge.textContent = itemCount;
+  
+  // Show/hide badge based on count
+  if (itemCount > 0) {
+    badge.style.display = 'flex';
+    
+    // Optional: Add animation when count changes
+    badge.classList.add('badge-bounce');
+    setTimeout(() => {
+      badge.classList.remove('badge-bounce');
+    }, 300);
+  } else {
+    badge.style.display = 'none';
+  }
 }
 
 /* ------------ Messages ------------ */
