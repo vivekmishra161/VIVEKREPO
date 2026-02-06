@@ -367,6 +367,38 @@ body * {
   min-width: 85px;
 }
 
+/* ===== ITEM IMAGE - Clickable ===== */
+.item-image {
+  width: 100%;
+  margin-bottom: 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: white;
+  border: 2px solid #e5e7eb;
+}
+
+.item-image:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  border-color: #3b82f6;
+}
+
+.item-image img {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  padding: 10px;
+  display: block;
+}
+
+.item-image:hover img {
+  transform: scale(1.05);
+}
+
 /* ===== BUTTONS & STATUS TEXT ===== */
 .cancel-btn {
   width: 100%;
@@ -898,7 +930,7 @@ body * {
 <% if (items && items.length > 0) { %>
   <% items.forEach(function(item){ %>
         <div class="item-box">
-          <div class="item-image">
+          <div class="item-image" onclick="window.location.href='/product?id=<%= item.id %>'">
                <img src="<%= item.img %>" alt="<%= item.name %>">
             </div>
           <p><strong>Name:</strong> <%= item.name %></p>
