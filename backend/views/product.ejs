@@ -1798,7 +1798,7 @@ select:focus-visible {
       </div>
     </div>
     <div class="delivery-box">
-  <p class="free-delivery">🚚 Free Delivery Available</p>
+  <p class="free-delivery">🚚 <%= t.freeDelivery %></p>
   <p class="delivery-date">Delivery by: <span id="etaDate"></span></p>
 </div>
 
@@ -1811,7 +1811,7 @@ select:focus-visible {
     </div>
 
     <div class="qty-row">
-      <div style="color:var(--muted); font-size:14px"><%= t.quantity %></div>
+      <div style="color:var(--muted); font-size:14px"><%= t.Quantity %></div>
       <div class="qty" style="margin-left:8px">
         <button type="button" onclick="decreaseQty()">−</button>
         <input id="qtyInput" type="number" value="1" min="1" />
