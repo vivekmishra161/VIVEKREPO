@@ -1825,7 +1825,7 @@ select:focus-visible {
   id="addCartBtn"
   onclick="addToCart('<%= product.id %>', document.getElementById('qtyInput').value)"
 >
-  Add to Cart
+  <%= t.addToCart %>
 </button>
 
     </div>
@@ -1842,12 +1842,12 @@ select:focus-visible {
 
   </aside>
     <div class="details" id="descBlock">
-      <h4>Product description</h4>
+      <h4><%= t['product description'] %></h4>
       <div id="prodDescription" style="color:var(--muted); line-height:1.5;">
         Loading description...
       </div>
 
-      <h4 style="margin-top:12px">Specifications</h4>
+      <h4 style="margin-top:12px"><%= t.specifications %></h4>
       <table class="specs" id="specTable">
         <!-- rows populated by JS -->
       </table>
@@ -1872,12 +1872,12 @@ select:focus-visible {
   </div>
 </div>
 <div class="details" style="margin-top:20px;">
-  <h4>Customer Reviews</h4>
+  <h4><%= t['customer reviews'] %></h4>
 
   <!-- Review Form -->
   <% if (session && session.user) { %>
     <div style="margin-bottom:15px;">
-      <textarea id="reviewMessage" placeholder="Write your review..." style="width:100%;height:70px;padding:10px;border-radius:8px;border:1px solid #ccc;box-sizing:border-box;"></textarea>
+      <textarea id="reviewMessage" placeholder="<%= t.reviewPlaceholder %>" style="width:100%;height:70px;padding:10px;border-radius:8px;border:1px solid #ccc;box-sizing:border-box;"></textarea>
       
       <div class="review-form-actions" style="margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
         <div style="display:flex;align-items:center;gap:8px;">
@@ -1891,7 +1891,7 @@ select:focus-visible {
           </select>
         </div>
 
-        <button class="btn buy review-submit-btn" onclick="submitReview()">Submit Review</button>
+        <button class="btn buy review-submit-btn" onclick="submitReview()"><%= t.submit %></button>
       </div>
     </div>
   <% } else { %>
