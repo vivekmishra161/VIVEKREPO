@@ -86,7 +86,7 @@ app.get("/", async (req, res) => {
    const products = dbProducts.map(p => ({
   id: p.part_no,
   name: p.name,
-  manufacturer: "Hyundai",     // 👈 important
+  manufacturer: p.manufacturer,     // 👈 important
   category: p.category,        // 👈 important
   price: p.price,
   discount: p.discount || 0,
