@@ -110,5 +110,14 @@
   "High quality auto part with perfect fitting and durability.": "उच्च गुणवत्ता वाला ऑटो पार्ट, जिसमें परफेक्ट फिटिंग और टिकाऊपन है।",
   "You need to sign in before buying. Would you like to sign in now?": "खरीदने से पहले आपको साइन इन करना होगा। क्या आप अभी साइन इन करना चाहते हैं?",
   "Quantity": "मात्रा",
+  "brand": "ब्रांड",
+  "category": "श्रेणी",
+  "stockstatus": "स्टॉक स्थिति",
+  "instock": "स्टॉक में",
+  "outofstock": "स्टॉक में नहीं",
+  "limited": "सीमित मात्रा",
+  "partnumber": "पार्ट नंबर"
+  
+
 }
 

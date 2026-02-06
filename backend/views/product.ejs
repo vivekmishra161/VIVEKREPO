@@ -2346,19 +2346,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   specTable.innerHTML = `
     <tr>
-      <td>Brand</td>
+      <td><%=t.brand%></td>
       <td>${product.manufacturer}</td>
     </tr>
     <tr>
-      <td>Category</td>
+      <td><%=t.category%></td>
       <td>${product.category}</td>
     </tr>
     <tr>
-      <td>Part Number</td>
+      <td><%=t.partnumber%></td>
       <td>${product.id}</td>
     </tr>
     <tr>
-      <td>Stock Status</td>
+      <td><%=t.stockstatus%></td>
       <td>${product.stock}</td>
     </tr>
   `;

@@ -110,8 +110,16 @@
   "vehicles": "Vehicles",
   "High quality auto part with perfect fitting and durability.": "High quality auto part with perfect fitting and durability.",
   "You need to sign in before buying. Would you like to sign in now?": "You need to sign in before buying. Would you like to sign in now?",
-  "Quantity": "Quantity"
+  "Quantity": "Quantity",
+  "brand": "Brand",
+  "category": "Category",
+  "stockstatus": "Stock Status",
+  "instock": "In Stock",
+  "outofstock": "Out of Stock",
+  "limited": "Limited Quantity",
+  "partnumber": "Part Number"
 }
+
   
 
 
