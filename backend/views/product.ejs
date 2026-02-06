@@ -1831,7 +1831,7 @@ select:focus-visible {
     </div>
 
     <div style="display:flex; gap:10px; margin-top:8px; align-items:center;">
-      <button class="btn" style="background:transparent; border:1px dashed #e6e9ef; padding:8px 10px" id="backBtn">← Back to shop</button>
+      <button class="btn" style="background:transparent; border:1px dashed #e6e9ef; padding:8px 10px" id="backBtn">← <%= t.backtoshop %></button>
       <div style="margin-left:auto; color:var(--muted); font-size:13px">Share:
         <a href="#" id="shareFb" style="margin-left:8px; text-decoration:none">FB</a>
         <a href="#" id="shareTw" style="margin-left:6px; text-decoration:none">TW</a>
@@ -2324,6 +2324,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 <script>
+  const tLabels = {
+    Genuine: "<%= t.Genuine %>",
+    suitableFor: "<%= t.suitableFor %>",
+    vehicles: "<%= t.vehicles %>",
+    descriptionLine: "<%= t['High quality auto part with perfect fitting and durability.'] %>",
+    brand: "<%= t.brand %>",
+    category: "<%= t.category %>",
+    partnumber: "<%= t.partnumber %>",
+    stockstatus: "<%= t.stockstatus %>"
+  };
+</script>
+<script>
 document.addEventListener("DOMContentLoaded", () => {
 
   if (!product) return;
@@ -2333,38 +2345,39 @@ document.addEventListener("DOMContentLoaded", () => {
   // =====================
   const descBox = document.getElementById("prodDescription");
 
-  descBox.innerHTML = `
-    <%= t.Genuine %> <b>${product.name}</b> <%= t.suitableFor %> 
-    <b>${product.manufacturer}</b> <%= t.vehicles %>.
-    <%= t.High quality auto part with perfect fitting and durability. %>
-  `;
+descBox.innerHTML = `
+  ${tLabels.Genuine} <b>${product.name}</b> ${tLabels.suitableFor}
+  <b>${product.manufacturer}</b> ${tLabels.vehicles}.
+  ${tLabels.descriptionLine}
+`;
+
 
   // =====================
   // PRODUCT SPECIFICATIONS
   // =====================
   const specTable = document.getElementById("specTable");
 
-  specTable.innerHTML = `
-    <tr>
-      <td><%=t.brand%></td>
-      <td>${product.manufacturer}</td>
-    </tr>
-    <tr>
-      <td><%=t.category%></td>
-      <td>${product.category}</td>
-    </tr>
-    <tr>
-      <td><%=t.partnumber%></td>
-      <td>${product.id}</td>
-    </tr>
-    <tr>
-      <td><%=t.stockstatus%></td>
-      <td>${product.stock}</td>
-    </tr>
-  `;
+specTable.innerHTML = `
+  <tr>
+    <td>${tLabels.brand}</td>
+    <td>${product.manufacturer}</td>
+  </tr>
+  <tr>
+    <td>${tLabels.category}</td>
+    <td>${product.category}</td>
+  </tr>
+  <tr>
+    <td>${tLabels.partnumber}</td>
+    <td>${product.id}</td>
+  </tr>
+  <tr>
+    <td>${tLabels.stockstatus}</td>
+    <td>${product.stock}</td>
+  </tr>
+`;
+
 });
 </script>
-
 
 </body>
 </html>

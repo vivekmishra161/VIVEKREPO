@@ -117,7 +117,9 @@
   "instock": "In Stock",
   "outofstock": "Out of Stock",
   "limited": "Limited Quantity",
-  "partnumber": "Part Number"
+  "partnumber": "Part Number",
+  "backtoshop" : "Back to Shop"
+
 }
 
   
