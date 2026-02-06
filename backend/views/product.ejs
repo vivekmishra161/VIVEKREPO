@@ -1811,7 +1811,7 @@ select:focus-visible {
     </div>
 
     <div class="qty-row">
-      <div style="color:var(--muted); font-size:14px">Quantity</div>
+      <div style="color:var(--muted); font-size:14px"><%= t.quantity %></div>
       <div class="qty" style="margin-left:8px">
         <button type="button" onclick="decreaseQty()">−</button>
         <input id="qtyInput" type="number" value="1" min="1" />
@@ -1864,7 +1864,7 @@ select:focus-visible {
 <div id="signModal" class="modal-overlay">
   <div class="modal">
     <h3>Sign in required</h3>
-    <p>You need to sign in before buying. Would you like to sign in now?</p>
+    <p><%= t['You need to sign in before buying. Would you like to sign in now?'] %></p>
     <div class="actions">
       <button class="btn cart" onclick="closeModal()">No, stay</button>
       <button class="btn buy" onclick="goSignin()">Yes, take me to sign in</button>
@@ -1881,7 +1881,7 @@ select:focus-visible {
       
       <div class="review-form-actions" style="margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
         <div style="display:flex;align-items:center;gap:8px;">
-          <label for="reviewRating" style="font-weight:600;font-size:14px;">Rating:</label>
+          <label for="reviewRating" style="font-weight:600;font-size:14px;"><%= t.rating %>:</label>
           <select id="reviewRating" style="padding:8px 12px;border-radius:8px;border:1px solid #ccc;font-size:14px;">
             <option value="5">⭐⭐⭐⭐⭐</option>
             <option value="4">⭐⭐⭐⭐</option>
@@ -2135,7 +2135,7 @@ function loadRating() {
       const starsWrap = document.getElementById("stars");
 
       if (count === 0) {
-        ratingText.textContent = "No reviews yet";
+        ratingText.textContent = "<%= t.noReviews %>";
         starsWrap.innerHTML = "☆☆☆☆☆";
         return;
       }
@@ -2334,9 +2334,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const descBox = document.getElementById("prodDescription");
 
   descBox.innerHTML = `
-    Genuine <b>${product.name}</b> suitable for
-    <b>${product.manufacturer}</b> vehicles.
-    High quality auto part with perfect fitting and durability.
+    <%= t.Genuine %> <b>${product.name}</b> <%= t.suitableFor %> 
+    <b>${product.manufacturer}</b> <%= t.vehicles %>.
+    <%= t.High quality auto part with perfect fitting and durability. %>
   `;
 
   // =====================
