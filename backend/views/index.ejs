@@ -1321,18 +1321,6 @@ label.muted {
 /* About Box - Full Width */
 .footer-box.about-box {
   width: 100%;
-  background-color: var(--white);
-  padding: 24px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.footer-box.about-box h3 {
-  color: var(--blue-900);
-}
-
-.footer-box.about-box p {
-  color: var(--gray-700);
 }
 
 /* Contact Wrapper - Two Column Layout */
@@ -1452,22 +1440,17 @@ label.muted {
   margin-top: 16px;
 }
 
-.footer-address strong {
-  color: var(--white);
-}
-
 .address-link {
   display: inline-block;
   padding: 8px 16px;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 6px;
-  color: var(--gray-900) !important;
+  color: var(--white) !important;
   margin-left: 8px;
 }
 
 .address-link:hover {
-  background-color: var(--white);
-  color: var(--blue-700) !important;
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 /* Social Links */
@@ -2900,40 +2883,27 @@ function confirmSignout() {
         </p>
       </div>
 
-      <!-- Social Media (Right Side) -->
-      <div class="footer-box social-box">
-        <h3>Follow Us</h3>
-        <div class="social-links">
-          <a href="#" aria-label="Instagram" class="social-link">
-            <span class="social-icon">📷</span>
-            <span>Instagram</span>
-          </a>
-          <a href="#" aria-label="Facebook" class="social-link">
-            <span class="social-icon">📘</span>
-            <span>Facebook</span>
-          </a>
-          <a href="#" aria-label="Twitter" class="social-link">
-            <span class="social-icon">🐦</span>
-            <span>Twitter</span>
-          </a>
-          <a href="#" aria-label="LinkedIn" class="social-link">
-            <span class="social-icon">💼</span>
-            <span>LinkedIn</span>
-          </a>
-        </div>
+      <!-- Social Media -->
+     <div class="footer-box">
+      <h3>Follow Us</h3>
+      <div class="social-links">
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="#" aria-label="Facebook">Facebook</a>
+        <a href="#" aria-label="Twitter">Twitter</a>
+        <a href="#" aria-label="LinkedIn">LinkedIn</a>
       </div>
+    </div>
 
     </div>
 
   </div>
-
-</footer>
-
 <!-- Footer Closure - At the bottom -->
 <div class="footer-bottom">
   <p>© <span id="year"></span> AKC Parts. All rights reserved.</p>
   <p>Authorized dealer for Bajaj, Tata Motors & Hyundai</p>
 </div>
+
+</footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   document.getElementById("year").textContent = new Date().getFullYear();
