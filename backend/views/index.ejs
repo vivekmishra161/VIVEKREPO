@@ -1307,15 +1307,35 @@ label.muted {
   background: var(--blue-900);
   color: var(--gray-200);
   margin-top: 60px;
-  padding: 52px 20px 22px;
+  padding: 52px 20px 0;
 }
 
 .footer-container {
   max-width: 1100px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 36px;
+}
+
+/* About Box - Full Width */
+.footer-box.about-box {
+  width: 100%;
+}
+
+/* Contact Wrapper - Two Column Layout */
+.footer-contact-wrapper {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.footer-box.contact-box {
+  flex: 1;
+}
+
+.footer-box.social-box {
+  flex: 0 0 280px;
 }
 
 .footer-box h3 {
@@ -1342,30 +1362,138 @@ label.muted {
   color: var(--blue-300);
 }
 
+/* Email Link Styling */
+.footer-email {
+  margin-bottom: 20px;
+}
+
+.email-link {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--white) !important;
+  margin-left: 8px;
+}
+
+.email-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Phone Items */
+.footer-phones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.phone-item {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 12px 16px;
+  gap: 16px;
+}
+
+.phone-icon {
+  flex-shrink: 0;
+  width: 70px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phone-icon img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.phone-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.phone-label {
+  font-weight: 600;
+  color: var(--blue-900);
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.phone-number {
+  color: var(--gray-700) !important;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.phone-number:hover {
+  color: var(--blue-700) !important;
+}
+
+/* Address */
+.footer-address {
+  margin-top: 16px;
+}
+
+.address-link {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--white) !important;
+  margin-left: 8px;
+}
+
+.address-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Social Links */
 .social-links {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
-.social-links a {
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--white) !important;
   font-size: 14px;
-  color: var(--blue-400);
-  text-decoration: none;
-  transition: color 0.18s;
+  transition: all 0.3s;
 }
 
-.social-links a:hover {
-  color: var(--blue-300);
+.social-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateX(4px);
 }
 
+.social-icon {
+  font-size: 20px;
+}
+
+/* Footer Bottom - Closure */
 .footer-bottom {
+  background-color: #082440;
+  color: var(--gray-400);
   text-align: center;
-  margin-top: 36px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255,255,255,.1);
+  padding: 20px;
+  margin-top: 0;
   font-size: 13px;
-  color: var(--gray-500);
+}
+
+.footer-bottom p {
+  margin: 4px 0;
+  color: var(--gray-400);
 }
 
 /* ─────────────────────────────────────
@@ -1720,8 +1848,30 @@ label.muted {
 
   /* footer */
   .footer {
-    padding: 28px 12px 16px;
+    padding: 28px 12px 0;
     margin-top: 30px;
+  }
+
+  .footer-contact-wrapper {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .footer-box.social-box {
+    flex: 1;
+  }
+
+  .phone-icon {
+    width: 60px;
+    height: 45px;
+  }
+
+  .phone-number {
+    font-size: 16px;
+  }
+
+  .phone-item {
+    padding: 10px 14px;
   }
 
   .footer-box h3 {
@@ -1732,6 +1882,14 @@ label.muted {
   .footer-box a,
   .social-links a {
     font-size: 13px;
+  }
+
+  .footer-bottom {
+    padding: 16px;
+  }
+
+  .footer-bottom p {
+    font-size: 12px;
   }
 }
 
@@ -2660,7 +2818,7 @@ function confirmSignout() {
   <div class="footer-container">
 
     <!-- Company Info -->
-    <div class="footer-box">
+    <div class="footer-box about-box">
       <h3>About AKC Parts</h3>
       <p>
         AKC Parts is a trusted supplier of high-quality automobile spare parts.
@@ -2673,78 +2831,94 @@ function confirmSignout() {
       </p>
     </div>
 
-    <!-- Contact Info -->
-    <div class="footer-box">
-      <!-- Contact Info -->
-<div class="footer-box">
-  <h3>Contact Us</h3>
+    <!-- Contact & Follow Us Wrapper -->
+    <div class="footer-contact-wrapper">
+      
+      <!-- Contact Info (Left Side) -->
+      <div class="footer-box contact-box">
+        <h3>Contact Us</h3>
 
- <p>
-  <strong>Email:</strong>
-  <a href="mailto:vivekmishra261105@gmail.com">vivekmishra261105@gmail.com</a>
-</p>
+        <p class="footer-email">
+          <strong>Email:</strong>
+          <a href="mailto:vivekmishra261105@gmail.com" class="email-link">vivekmishra261105@gmail.com</a>
+        </p>
 
-<div class="footer-phones">
-  <div class="phone-item">
-    <div class="phone-icon">
-      <img src="/images/bajaj.png" alt="Bajaj Logo">
-    </div>
-    <div class="phone-details">
-      <span class="phone-label">Bajaj: </span>
-      <a href="tel:+917055500601" class="phone-number">+91 70555 00601</a>
-    </div>
-  </div>
-  
-  <div class="phone-item">
-    <div class="phone-icon">
-      <img src="/images/tata.png" alt="Tata Logo">
-    </div>
-    <div class="phone-details">
-      <span class="phone-label">Tata: </span>
-      <a href="tel:+917078695315" class="phone-number">+91 70786 95315</a>
-    </div>
-  </div>
-  
-  <div class="phone-item">
-    <div class="phone-icon">
-      <img src="/images/hyundai.png" alt="Hyundai Logo">
-    </div>
-    <div class="phone-details">
-      <span class="phone-label">Hyundai: </span>
-      <a href="tel:+919935701730" class="phone-number">+91 99357 01730</a>
-    </div>
-  </div>
-</div>
+        <div class="footer-phones">
+          <div class="phone-item">
+            <div class="phone-icon">
+              <img src="/images/bajaj.png" alt="Bajaj Logo">
+            </div>
+            <div class="phone-details">
+              <span class="phone-label">Bajaj:</span>
+              <a href="tel:+917055500601" class="phone-number">+91 70555 00601</a>
+            </div>
+          </div>
+          
+          <div class="phone-item">
+            <div class="phone-icon">
+              <img src="/images/tata.png" alt="Tata Logo">
+            </div>
+            <div class="phone-details">
+              <span class="phone-label">Tata:</span>
+              <a href="tel:+917078695315" class="phone-number">+91 70786 95315</a>
+            </div>
+          </div>
+          
+          <div class="phone-item">
+            <div class="phone-icon">
+              <img src="/images/hyundai.png" alt="Hyundai Logo">
+            </div>
+            <div class="phone-details">
+              <span class="phone-label">Hyundai:</span>
+              <a href="tel:+919935701730" class="phone-number">+91 99357 01730</a>
+            </div>
+          </div>
+        </div>
 
-  <p>
-    <strong>Address:</strong>
-    <a href="https://www.google.com/maps/place/AKC+Hyundai-+Parsakhera+Ind.+Area/@28.4255407,79.3528077,17z/data=!3m1!4b1!4m6!3m5!1s0x390aa86cf1ff5d31:0x466accda9ebc0370!8m2!3d28.425536!4d79.3553826!16s%2Fg%2F1ptxtv4n0?entry=ttu&g_ep=EgoyMDI2MDExMS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
-      AKC Auto Mall, Parsakhera
-    </a>
-  </p>
-</div>
-
-
-    <!-- Social Media -->
-    <div class="footer-box">
-      <h3>Follow Us</h3>
-      <div class="social-links">
-        <a href="#" aria-label="Instagram">Instagram</a>
-        <a href="#" aria-label="Facebook">Facebook</a>
-        <a href="#" aria-label="Twitter">Twitter</a>
-        <a href="#" aria-label="LinkedIn">LinkedIn</a>
+        <p class="footer-address">
+          <strong>Address:</strong>
+          <a href="https://www.google.com/maps/place/AKC+Hyundai-+Parsakhera+Ind.+Area/@28.4255407,79.3528077,17z/data=!3m1!4b1!4m6!3m5!1s0x390aa86cf1ff5d31:0x466accda9ebc0370!8m2!3d28.425536!4d79.3553826!16s%2Fg%2F1ptxtv4n0?entry=ttu&g_ep=EgoyMDI2MDExMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="address-link">
+            📍 AKC Auto Mall, Parsakhera
+          </a>
+        </p>
       </div>
+
+      <!-- Social Media (Right Side) -->
+      <div class="footer-box social-box">
+        <h3>Follow Us</h3>
+        <div class="social-links">
+          <a href="#" aria-label="Instagram" class="social-link">
+            <span class="social-icon">📷</span>
+            <span>Instagram</span>
+          </a>
+          <a href="#" aria-label="Facebook" class="social-link">
+            <span class="social-icon">📘</span>
+            <span>Facebook</span>
+          </a>
+          <a href="#" aria-label="Twitter" class="social-link">
+            <span class="social-icon">🐦</span>
+            <span>Twitter</span>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="social-link">
+            <span class="social-icon">💼</span>
+            <span>LinkedIn</span>
+          </a>
+        </div>
+      </div>
+
     </div>
 
-  </div>
-
-  <div class="footer-bottom">
-    © <span id="year"></span> AKC Parts. All rights reserved.
   </div>
 
 </footer>
 
-<script>
+<!-- Footer Closure - At the bottom -->
+<div class="footer-bottom">
+  <p>© <span id="year"></span> AKC Parts. All rights reserved.</p>
+  <p>Authorized dealer for Bajaj, Tata Motors & Hyundai</p>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 <!-- MAIN SIDEBAR -->
