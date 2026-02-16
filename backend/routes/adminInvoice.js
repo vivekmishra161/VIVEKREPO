@@ -11,6 +11,8 @@ router.get("/invoice/:id", adminAuth, async (req, res) => {
     const order = await Order.findByPk(req.params.id);
     if (!order) return res.send("Order not found");
 
+    const GST_RATE = 0.18;
+
     // PDF headers
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
@@ -152,6 +154,9 @@ router.get("/invoice/:id", adminAuth, async (req, res) => {
 
     /* ================= TOTAL ================= */
 
+    const gstAmount = subtotal * GST_RATE;
+    const grandTotal = subtotal + gstAmount;
+
     y += 10;
 
     doc
@@ -163,9 +168,23 @@ router.get("/invoice/:id", adminAuth, async (req, res) => {
     y += 15;
 
     doc
-      .fontSize(13)
+      .fontSize(11)
       .fillColor("#111827")
-      .text(`Grand Total: ₹ ${subtotal.toFixed(2)}`, 350, y, {
+      .text(`Subtotal: ₹ ${subtotal.toFixed(2)}`, 350, y, { align: "right" });
+
+    y += 18;
+
+    doc
+      .fontSize(11)
+      .fillColor("#111827")
+      .text(`GST (18%): ₹ ${gstAmount.toFixed(2)}`, 350, y, { align: "right" });
+
+    y += 22;
+
+    doc
+      .fontSize(14)
+      .fillColor("#2563eb")
+      .text(`Total Payable: ₹ ${grandTotal.toFixed(2)}`, 350, y, {
         align: "right"
       });
 

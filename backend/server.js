@@ -432,11 +432,16 @@ app.post("/order", async (req, res) => {
       img: item.img   
     }));
 
-    let calculatedTotal = 0;
+     let subtotal = 0;
 
-    safeItems.forEach(i => {
-      calculatedTotal += i.price * i.qty;
-    });
+     safeItems.forEach(i => {
+      subtotal += i.price * i.qty;
+       });
+
+const GST_RATE = 0.18;
+const gstAmount = subtotal * GST_RATE;
+const calculatedTotal = subtotal + gstAmount;
+
 
     if (calculatedTotal <= 0) {
       return res.json({ success: false, message: "Invalid total" });

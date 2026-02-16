@@ -909,9 +909,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const qty = Number(item.qty || 1);
     total += price * qty;
   });
+  const GST_RATE = 0.18;
+
+  const gstAmount = total * GST_RATE;
+  const grandTotal = total + gstAmount;
 
   document.getElementById("totalDisplay").innerText =
-    total.toFixed(2);
+  grandTotal.toFixed(2) + " (Incl. 18% GST)";
+
 });
 
 /* ======================
@@ -1011,17 +1016,22 @@ form.addEventListener("submit", async (e) => {
     return statusMsg.innerText = "Please enter UTR number.";
 
   // ✅ RECALCULATE TOTAL AGAIN
-  let finalTotal = 0;
+let subtotal = 0;
 
-  cart.forEach(item => {
-    const price =
-      Number(item.finalPrice) ||
-      Number(item.price) ||
-      0;
+cart.forEach(item => {
+  const price =
+    Number(item.finalPrice) ||
+    Number(item.price) ||
+    0;
 
-    const qty = Number(item.qty || 1);
-    finalTotal += price * qty;
-  });
+  const qty = Number(item.qty || 1);
+  subtotal += price * qty;
+});
+
+const GST_RATE = 0.18;
+const gstAmount = subtotal * GST_RATE;
+const finalTotal = subtotal + gstAmount;
+
 
   const orderItems = cart.map(i => ({
     id: i.id,
@@ -1041,6 +1051,8 @@ form.addEventListener("submit", async (e) => {
         state,
         phone,
         pin,
+        subtotal,
+        gst: gstAmount,
         total: finalTotal,
         items: orderItems,
         paymentMethod,
