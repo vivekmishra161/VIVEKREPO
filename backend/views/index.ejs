@@ -1484,7 +1484,7 @@ function confirmSignout() {
       <% if (session && session.user) { %>
         <a href="#" class="danger" onclick="openSignoutPopup()">🚪 <%= t.signOut %></a>
       <% } else { %>
-        <a href="/signin">🔐 <%= t.Login %></a>
+        <a href="/signin">🔐 <%= t.signIn %></a>
         <a href="/signup">📝 <%= t.signUp %></a>
       <% } %>
     </nav>
