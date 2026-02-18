@@ -5,40 +5,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout - Customer Details</title>
   <link rel="icon" type="image/png" href="/images/logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    /* =====================================================
-   LEVEL 3 — BRAND CHECKOUT UI
+/* =====================================================
+   AKC AUTO PARTS — CHECKOUT DARK THEME
+   Palette: Obsidian · Charcoal · Champagne Gold
 ===================================================== */
-:root {
-  --bg: #f6f8fc;
-  --card: #ffffff;
-  --text: #0f172a;
-  --muted: #6b7280;
-  --border: #e5e7eb;
 
-  --brand: #0f172a;
-  --accent: #2563eb;
-  --accent-dark: #1e40af;
+*, *::before, *::after { box-sizing: border-box; max-width: 100%; }
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+:root {
+  --ink-0:    #08080a;
+  --ink-1:    #0d0d10;
+  --ink-2:    #111116;
+  --ink-3:    #18181e;
+  --ink-4:    #202028;
+  --ink-5:    #2a2a34;
+  --ink-6:    #36363f;
+  --ink-7:    #48484f;
+
+  --gold-1:   #b8941e;
+  --gold-2:   #c9a84c;
+  --gold-3:   #d4b86a;
+  --gold-4:   #e2cc8c;
+  --gold-5:   #f0e0b4;
+
+  --text-1:   #f0f0ee;
+  --text-2:   #c8c8c4;
+  --text-3:   #8a8a84;
+  --text-4:   #5a5a56;
+
+  --success:  #1a9c5b;
+  --danger:   #c0392b;
 
   --radius-lg: 22px;
   --radius-md: 14px;
 
-  --shadow-soft: 0 10px 25px rgba(0,0,0,.06);
-  --shadow-main: 0 25px 55px rgba(0,0,0,.08);
+  --shadow-soft: 0 10px 25px rgba(0,0,0,.35);
+  --shadow-main: 0 25px 55px rgba(0,0,0,.55);
+  --s-gold: 0 0 0 1px rgba(201,168,76,.18), 0 4px 20px rgba(0,0,0,.5);
 }
-
-/* ================= BASE ================= */
-* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: "Nunito Sans", system-ui;
-  background: linear-gradient(180deg,#f9fbff,#eef3fb);
-  color: var(--text);
+  font-family: "Nunito Sans", system-ui, sans-serif;
+  background: var(--ink-2);
+  background-image:
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 30% at 90% 100%, rgba(184,148,30,0.04) 0%, transparent 60%);
+  color: var(--text-2);
   padding: 26px 16px 60px;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ================= HEADER ================= */
@@ -46,12 +75,24 @@ body {
   max-width: 1200px;
   margin: 0 auto 22px;
   padding: 18px 30px;
-  background: #ffffff;
+  background: var(--ink-1);
   border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: var(--shadow-soft);
+  border: 1px solid var(--ink-5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gold accent bottom line */
+.checkout-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 5%; right: 5%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-1) 30%, var(--gold-4) 50%, var(--gold-1) 70%, transparent);
+  opacity: 0.55;
 }
 
 .checkout-left {
@@ -62,18 +103,21 @@ body {
 
 .checkout-logo {
   height: 42px;
+  filter: drop-shadow(0 0 8px rgba(201,168,76,0.3));
 }
 
 .checkout-title {
   font-size: 22px;
   font-weight: 900;
-  letter-spacing: .5px;
+  letter-spacing: 2px;
+  color: var(--gold-3);
+  text-transform: uppercase;
 }
 
 .checkout-right {
   font-size: 14px;
   font-weight: 700;
-  color: var(--muted);
+  color: var(--text-3);
 }
 
 /* ================= STEPS ================= */
@@ -84,31 +128,43 @@ body {
   justify-content: space-between;
   font-size: 14px;
   font-weight: 800;
-  color: #9ca3af;
+  color: var(--text-4);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
 }
 
 .checkout-steps span.active {
-  color: var(--accent);
+  color: var(--gold-3);
 }
 
 /* ================= MAIN CARD ================= */
 .box {
   max-width: 1200px;
   margin: auto;
-  background: var(--card);
+  background: var(--ink-3);
+  border: 1px solid var(--ink-5);
   border-radius: 26px;
   padding: 34px;
-  box-shadow: var(--shadow-main);
+  box-shadow: var(--shadow-main), 0 0 0 1px rgba(201,168,76,0.06);
+  position: relative;
+  overflow: hidden;
 
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 34px;
 }
 
+/* Subtle gold top glow */
+.box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-2), transparent);
+  opacity: 0.4;
+}
+
 @media (max-width: 900px) {
-  .box {
-    grid-template-columns: 1fr;
-  }
+  .box { grid-template-columns: 1fr; }
 }
 
 /* ================= TITLE ================= */
@@ -116,9 +172,11 @@ body {
   grid-column: 1 / -1;
   font-size: 25px;
   font-weight: 900;
+  color: var(--text-1);
   margin-bottom: 12px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--ink-5);
   padding-bottom: 14px;
+  letter-spacing: -0.3px;
 }
 
 /* ================= FORM ================= */
@@ -138,9 +196,11 @@ h3,
 }
 
 label {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 800;
-  color: #374151;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 input,
@@ -149,33 +209,47 @@ select {
   width: 100%;
   padding: 13px 14px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  background: #f9fafb;
+  border: 1px solid var(--ink-6);
+  background: var(--ink-4);
+  color: var(--text-1);
   font-size: 14px;
+  font-family: "Nunito Sans", system-ui, sans-serif;
+  transition: all 0.25s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-4);
+}
+
+select option {
+  background: var(--ink-4);
+  color: var(--text-1);
 }
 
 input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: #2563eb;
-  background: #ffffff;
+  border-color: var(--gold-2);
+  background: var(--ink-5);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
 }
-
 
 /* ================= ORDER SUMMARY ================= */
 .muted {
-  background: #f8fafc;
-  border-radius: 18px;
+  background: var(--ink-4);
+  border-radius: 16px;
   padding: 18px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--ink-6);
   font-weight: 800;
+  color: var(--text-2);
 }
 
 .muted span {
   float: right;
   font-size: 20px;
-  color: var(--accent-dark);
+  color: var(--gold-3);
 }
 
 /* ================= PAYMENT ================= */
@@ -183,12 +257,22 @@ h3 {
   margin-top: 8px;
   font-size: 18px;
   font-weight: 900;
+  color: var(--text-1);
 }
 
 label input[type="radio"] {
-  accent-color: var(--accent);
+  accent-color: var(--gold-2);
   margin-right: 6px;
 }
+
+#upiBox {
+  background: var(--ink-4);
+  border: 1px solid var(--ink-6);
+  border-radius: 14px;
+  padding: 18px;
+  margin-top: 12px;
+}
+
 #upiBox p strong,
 #upiBox p:first-child {
   display: none;
@@ -199,11 +283,21 @@ label input[type="radio"] {
   display: block;
   font-size: 14px;
   font-weight: 700;
-  color: #374151;
-  margin-bottom: 10px;
+  color: var(--text-3);
+  margin-bottom: 12px;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-size: 11px;
 }
 
+#upiBox img {
+  border-radius: 10px;
+  border: 2px solid var(--gold-1);
+  margin: 0 auto;
+  padding: 6px;
+  background: var(--ink-3);
+}
 
 /* ================= CTA ================= */
 .btn {
@@ -213,21 +307,37 @@ label input[type="radio"] {
   border-radius: 16px;
   border: none;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 900;
-  letter-spacing: .5px;
-  color: #ffffff;
-  background: linear-gradient(135deg,var(--accent),var(--accent-dark));
+  font-family: "Nunito Sans", system-ui, sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-0);
+  background: linear-gradient(135deg, var(--gold-1), var(--gold-2));
+  box-shadow: 0 4px 18px rgba(184,148,30,0.3);
   transition: .25s ease;
 }
 
 .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 18px 35px rgba(37,99,235,.35);
+  background: linear-gradient(135deg, var(--gold-2), var(--gold-4));
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(201,168,76,0.4);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* ================= STATUS MESSAGE ================= */
+#statusMsg {
+  color: var(--danger);
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 8px;
 }
 
 /* ================= LANGUAGE DROPDOWN ================= */
-
 .lang-select {
   position: relative;
   display: inline-block;
@@ -236,33 +346,25 @@ label input[type="radio"] {
 .lang-select select {
   appearance: none;
   -webkit-appearance: none;
-  -moz-appearance: none;
-
-  background: #ffffff;
-  border: 2px solid #2563eb;
+  background: var(--ink-4);
+  border: 2px solid var(--gold-1);
   border-radius: 8px;
-
   padding: 8px 36px 8px 12px;
   font-size: 13px;
-  font-weight: 600;
-  color: #2563eb;
-
+  font-weight: 700;
+  color: var(--gold-3);
+  font-family: "Nunito Sans", system-ui;
   cursor: pointer;
   outline: none;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 2px 8px rgba(184,148,30,0.15);
 }
 
-.lang-select select:hover {
-  border-color: #1e40af;
-  background: #f0f9ff;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-}
-
+.lang-select select:hover,
 .lang-select select:focus {
-  border-color: #1e40af;
-  background: #f0f9ff;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1), 0 4px 12px rgba(37, 99, 235, 0.2);
+  border-color: var(--gold-3);
+  background: var(--ink-5);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
 }
 
 .lang-select::after {
@@ -271,48 +373,19 @@ label input[type="radio"] {
   right: 8px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 16px;
+  font-size: 15px;
   pointer-events: none;
-  transition: transform 0.3s ease;
 }
 
-.lang-select select:hover::after {
-  transform: translateY(-50%) scale(1.1);
-}
-
-.lang-select select:focus::after {
-  transform: translateY(-50%) scale(1.15);
-}
-
-.lang-select select option {
-  background: #ffffff;
-  color: #2563eb;
-  padding: 8px;
-  font-weight: 600;
-}
-
-.lang-select select option:hover {
-  background: #2563eb;
-  color: #ffffff;
-}
-
-.lang-select select option:checked {
-  background: #2563eb;
-  color: #ffffff;
-  font-weight: 700;
-}
-
-/* ================= PREMIUM SUCCESS POPUP ================= */
-
+/* ================= SUCCESS POPUP ================= */
 .popup-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.55);
+  background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
-
   opacity: 0;
   visibility: hidden;
   transition: .4s ease;
@@ -329,33 +402,40 @@ label input[type="radio"] {
   transform: scale(1) translateY(0);
 }
 
-/* Card */
 .popup-box {
   width: 380px;
-  background: #ffffff;
+  background: var(--ink-3);
+  border: 1px solid var(--ink-5);
   border-radius: 28px;
   padding: 36px 32px 32px;
   text-align: center;
-  box-shadow: 0 40px 100px rgba(0,0,0,.35);
-
+  box-shadow: 0 40px 100px rgba(0,0,0,.65), var(--s-gold);
   transform: scale(.85) translateY(30px);
   opacity: 0;
   transition: .45s cubic-bezier(.25,.8,.25,1);
+  position: relative;
+  overflow: hidden;
 }
 
+/* Gold shimmer top */
+.popup-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-2), transparent);
+  opacity: 0.6;
+}
 
-/* Success circle */
 .success-icon {
   width: 96px;
   height: 96px;
   margin: 0 auto 18px;
   border-radius: 50%;
-  background: linear-gradient(135deg,#22c55e,#16a34a);
+  background: linear-gradient(135deg, var(--success), #15803d);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-
   animation: pulseGlow 1.8s infinite;
 }
 
@@ -364,33 +444,30 @@ label input[type="radio"] {
   filter: brightness(0) invert(1);
 }
 
-/* Glow */
 @keyframes pulseGlow {
-  0% { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
-  70% { box-shadow: 0 0 0 25px rgba(34,197,94,0); }
-  100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+  0%   { box-shadow: 0 0 0 0 rgba(26,156,91,.6); }
+  70%  { box-shadow: 0 0 0 25px rgba(26,156,91,0); }
+  100% { box-shadow: 0 0 0 0 rgba(26,156,91,0); }
 }
 
-/* Text */
 .popup-box h3 {
   font-size: 22px;
   font-weight: 900;
   margin-bottom: 6px;
-  color: #0f172a;
+  color: var(--text-1);
 }
 
 .popup-box p {
   font-size: 14px;
-  color: #6b7280;
+  color: var(--text-3);
   line-height: 1.6;
   margin-bottom: 18px;
 }
 
-/* progress bar */
 .popup-progress {
   height: 6px;
   width: 100%;
-  background: #e5e7eb;
+  background: var(--ink-5);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -399,361 +476,127 @@ label input[type="radio"] {
   display: block;
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg,#22c55e,#16a34a);
+  background: linear-gradient(90deg, var(--gold-1), var(--gold-3));
   animation: progressFill 1.6s linear forwards;
 }
 
 @keyframes progressFill {
   from { width: 0%; }
-  to { width: 100%; }
+  to   { width: 100%; }
 }
 
-/* ===============================
-   MOBILE RESPONSIVE STYLES
-   =============================== */
-
+/* ================= MOBILE ================= */
 @media(max-width:768px){
-  body{
-    padding:20px 12px 40px;
+  body { padding: 20px 12px 40px; }
+
+  .checkout-header {
+    flex-direction: column;
+    padding: 14px 20px;
+    gap: 10px;
+    text-align: center;
   }
-  
-  .checkout-header{
-    flex-direction:column;
-    padding:14px 20px;
-    gap:10px;
-    text-align:center;
+
+  .checkout-left { justify-content: center; }
+  .checkout-logo { height: 36px; }
+  .checkout-title { font-size: 16px; letter-spacing: 1.5px; }
+  .checkout-right { font-size: 12px; }
+
+  .checkout-steps {
+    font-size: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
   }
-  
-  .checkout-left{
-    justify-content:center;
+
+  .box { padding: 22px 18px; border-radius: 20px; }
+  .box h2 { font-size: 20px; padding-bottom: 12px; }
+
+  form { grid-template-columns: 1fr !important; gap: 14px; }
+
+  label { font-size: 10px; }
+
+  input, textarea, select {
+    padding: 11px 12px;
+    font-size: 14px;
+    border-radius: 12px;
   }
-  
-  .checkout-logo{
-    height:36px;
-  }
-  
-  .checkout-title{
-    font-size:18px;
-  }
-  
-  .checkout-right{
-    font-size:12px;
-  }
-  
-  .checkout-steps{
-    font-size:12px;
-    flex-wrap:wrap;
-    gap:8px;
-    justify-content:center;
-  }
-  
-  .box{
-    padding:22px 18px;
-    border-radius:20px;
-  }
-  
-  .box h2{
-    font-size:20px;
-    padding-bottom:12px;
-  }
-  
-  form{
-    grid-template-columns:1fr;
-    gap:14px;
-  }
-  
-  label{
-    font-size:12px;
-  }
-  
-  input,
-  textarea,
-  select{
-    padding:11px 12px;
-    font-size:14px;
-    border-radius:12px;
-  }
-  
-  .row{
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-  }
-  
-  .muted{
-    padding:14px;
-    border-radius:14px;
-  }
-  
-  .muted span{
-    font-size:18px;
-  }
-  
-  h3{
-    font-size:16px;
-  }
-  
-  .btn{
-    padding:14px;
-    font-size:15px;
-    border-radius:14px;
-  }
-  
-  .popup-box{
-    width:90%;
-    padding:28px 24px;
-  }
-  
-  .success-icon{
-    width:80px;
-    height:80px;
-  }
-  
-  .success-icon img{
-    width:36px;
-  }
-  
-  .popup-box h3{
-    font-size:20px;
-  }
-  
-  .popup-box p{
-    font-size:13px;
-  }
+
+  .row { display: flex; flex-direction: column; gap: 14px; }
+  .muted { padding: 14px; border-radius: 14px; }
+  .muted span { font-size: 18px; }
+  h3 { font-size: 16px; }
+  .btn { padding: 14px; font-size: 15px; border-radius: 14px; }
+
+  .popup-box { width: 90%; padding: 28px 24px; }
+  .success-icon { width: 80px; height: 80px; }
+  .success-icon img { width: 36px; }
+  .popup-box h3 { font-size: 20px; }
+  .popup-box p { font-size: 13px; }
 }
 
 @media(max-width:480px){
-  body{
-    padding:15px 10px 30px;
-  }
-  
-  .checkout-header{
-    padding:12px 15px;
-    border-radius:14px;
-    margin-bottom:15px;
-  }
-  
-  .checkout-logo{
-    height:32px;
-  }
-  
-  .checkout-title{
-    font-size:16px;
-  }
-  
-  .checkout-right{
-    display:none;
-  }
-  
-  .checkout-steps{
-    font-size:11px;
-    margin-bottom:12px;
-  }
-  
-  .box{
-    padding:18px 14px;
-    border-radius:16px;
-  }
-  
-  .box h2{
-    font-size:18px;
-    margin-bottom:10px;
-    padding-bottom:10px;
-  }
-  
-  form{
-    gap:12px;
-  }
-  
-  label{
-    font-size:11px;
-    margin-bottom:2px;
-  }
-  
-  input,
-  textarea,
-  select{
-    padding:10px;
-    font-size:13px;
-    border-radius:10px;
-  }
-  
-  textarea{
-    min-height:70px;
-  }
-  
-  .muted{
-    padding:12px;
-    font-size:14px;
-  }
-  
-  .muted span{
-    font-size:16px;
-  }
-  
-  h3{
-    font-size:14px;
-    margin-top:6px;
-  }
-  
-  label input[type="radio"]{
-    margin-right:4px;
-  }
-  
-  #upiBox::before{
-    font-size:12px;
-  }
-  
-  .btn{
-    padding:12px;
-    font-size:14px;
-    border-radius:12px;
-    margin-top:8px;
-  }
-  
-  .popup-box{
-    width:95%;
-    padding:24px 20px;
-    border-radius:20px;
-  }
-  
-  .success-icon{
-    width:70px;
-    height:70px;
-    margin-bottom:14px;
-  }
-  
-  .success-icon img{
-    width:32px;
-  }
-  
-  .popup-box h3{
-    font-size:18px;
-    margin-bottom:4px;
-  }
-  
-  .popup-box p{
-    font-size:12px;
-    margin-bottom:14px;
-  }
-  
-  .popup-progress{
-    height:5px;
-  }
-  
-  .lang-select select{
-    padding:6px 28px 6px 10px;
-    font-size:12px;
-  }
-}
-@media (max-width: 768px) {
-  form {
-    grid-template-columns: 1fr !important;
-  }
-}
-/* ===============================
-   RESPONSIVE BREAKPOINT SYSTEM
-================================ */
+  body { padding: 15px 10px 30px; }
 
-/* Tablets */
-@media (max-width: 992px) {
-  body {
-    padding: 15px;
+  .checkout-header {
+    padding: 12px 15px;
+    border-radius: 14px;
+    margin-bottom: 15px;
   }
 
-  .container,
-  .box {
-    padding: 20px;
-  }
-}
+  .checkout-logo { height: 32px; }
+  .checkout-title { font-size: 14px; }
+  .checkout-right { display: none; }
+  .checkout-steps { font-size: 11px; margin-bottom: 12px; }
 
-/* Mobiles */
-@media (max-width: 600px) {
-  body {
+  .box { padding: 18px 14px; border-radius: 16px; }
+  .box h2 { font-size: 18px; margin-bottom: 10px; padding-bottom: 10px; }
+
+  form { gap: 12px; }
+  label { font-size: 10px; margin-bottom: 2px; }
+
+  input, textarea, select {
     padding: 10px;
+    font-size: 13px;
+    border-radius: 10px;
   }
 
-  h1 { font-size: 20px; }
-  h2 { font-size: 18px; }
-  h3 { font-size: 16px; }
+  textarea { min-height: 70px; }
+  .muted { padding: 12px; font-size: 14px; }
+  .muted span { font-size: 16px; }
+  h3 { font-size: 14px; margin-top: 6px; }
+  label input[type="radio"] { margin-right: 4px; }
 
-  p, span {
-    font-size: 14px;
-  }
+  .btn { padding: 12px; font-size: 14px; border-radius: 12px; margin-top: 8px; }
+
+  .popup-box { width: 95%; padding: 24px 20px; border-radius: 20px; }
+  .success-icon { width: 70px; height: 70px; margin-bottom: 14px; }
+  .success-icon img { width: 32px; }
+  .popup-box h3 { font-size: 18px; margin-bottom: 4px; }
+  .popup-box p { font-size: 12px; margin-bottom: 14px; }
+  .popup-progress { height: 5px; }
+
+  .lang-select select { padding: 6px 28px 6px 10px; font-size: 12px; }
 }
 
-/* Small phones */
-@media (max-width: 420px) {
-  h1 { font-size: 18px; }
-  h2 { font-size: 16px; }
-  p  { font-size: 13px; }
-}
-/* ===============================
-   GLOBAL RESPONSIVE RESET
-================================ */
-
-* {
-  box-sizing: border-box;
-  max-width: 100%;
-}
-
-html, body {
-  width: 100%;
-  overflow-x: hidden;
-}
-
-/* Images auto resize */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Containers */
-.container,
-.box,
-.orders-wrapper,
-.media,
-.meta {
-  width: 100%;
-  max-width: 1200px;
-  margin: auto;
-}
-
-/* Buttons full width on mobile */
 @media (max-width: 600px) {
-  button,
-  .btn {
-    width: 100%;
-  }
+  button, .btn { width: 100%; }
 }
-
   </style>
 </head>
 
 <body>
   <header class="checkout-header">
+    <a href="/" style="text-decoration:none;color:inherit;">
+      <div class="checkout-left">
+        <img src="/images/logo.png" class="checkout-logo" alt="AKC AUTO PARTS">
+        <span class="checkout-title">AKC AUTO PARTS</span>
+      </div>
+    </a>
 
-  <!-- LOGO → HOME -->
-  <a href="/" style="text-decoration:none;color:inherit;">
-    <div class="checkout-left">
-      <img
-        src="/images/logo.png"
-        class="checkout-logo"
-        alt="AKC AUTO PARTS"
-      >
-      <span class="checkout-title">AKC AUTO PARTS</span>
+    <div class="checkout-right">
+      <%= t.partsFor %>
     </div>
-  </a>
-
-  <div class="checkout-right">
-    <%= t.partsFor %>
-  </div>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/mobile-ui.css">
-</header>
+  </header>
 
 
 <div class="box">
@@ -762,15 +605,15 @@ img {
   <form id="customerForm">
 
     <label><%= t.name %>:</label>
-    <input type="text" id="custName" required>
+    <input type="text" id="custName" placeholder="Your full name" required>
 
     <label><%= t.address %>:</label>
-    <textarea id="custAddress" required></textarea>
+    <textarea id="custAddress" placeholder="Street address, area..." required></textarea>
 
     <div class="row">
       <div class="col">
         <label><%= t.city %>:</label>
-        <input type="text" id="custCity" required>
+        <input type="text" id="custCity" placeholder="City" required>
       </div>
 
       <div class="col">
@@ -818,48 +661,46 @@ img {
     </div>
 
     <label><%= t.phoneNumber %>:</label>
-    <input type="tel" id="custPhone" maxlength="10" required>
+    <input type="tel" id="custPhone" maxlength="10" placeholder="10-digit mobile number" required>
 
     <label><%= t.pinCode %>:</label>
-    <input type="number" id="custPin" required>
+    <input type="number" id="custPin" placeholder="PIN code" required>
 
     <p class="muted">Total: ₹<span id="totalDisplay">0</span></p>
-<h3><%= t.paymentMethod %></h3>
 
-<label>
-  <input type="radio" name="paymentMethod" value="COD" checked>
-  <%= t.cashOnDelivery %>
-</label>
+    <h3><%= t.paymentMethod %></h3>
 
-<label>
-  <input type="radio" name="paymentMethod" value="UPI">
-  <%= t.upi %>
-</label>
+    <label>
+      <input type="radio" name="paymentMethod" value="COD" checked>
+      <%= t.cashOnDelivery %>
+    </label>
 
+    <label>
+      <input type="radio" name="paymentMethod" value="UPI">
+      <%= t.upi %>
+    </label>
 
-<div id="upiBox" style="display:none; margin-top:12px; padding:12px; background:#f9fafb; border-radius:8px;">
-  <p><strong>UPI ID:</strong> vivekmishra261105@okhdfcbank</p>
+    <div id="upiBox" style="display:none;">
+      <p><strong>UPI ID:</strong> vivekmishra261105@okhdfcbank</p>
+      <img id="upiQrImage" alt="Scan to Pay UPI">
 
-  <img id="upiQrImage" alt="Scan to Pay UPI">
-<div id="utrBox" style="display:none; margin-top:12px;">
-  <label style="font-weight:800;">Enter UTR Number</label>
-  <input 
-    type="text" 
-    id="utrNumber"
-    placeholder="Example: 324567890123"
-    style="margin-top:6px;"
-  >
-</div>
+      <div id="utrBox" style="display:none; margin-top:14px;">
+        <label style="font-weight:800;">Enter UTR Number</label>
+        <input
+          type="text"
+          id="utrNumber"
+          placeholder="Example: 324567890123"
+          style="margin-top:8px;"
+        >
+      </div>
 
-  
-  <p class="muted">
-    After completing payment, click <b>Place Order</b>.
-    Your order will be verified.
-  </p>
+      <p class="muted" style="margin-top:14px;">
+        After completing payment, click <b>Place Order</b>. Your order will be verified.
+      </p>
+    </div>
 
-</div>
     <button type="submit" class="btn"><%= t.placeOrder %></button>
-    
+
   </form>
 
   <p class="muted" id="statusMsg"></p>
@@ -867,17 +708,14 @@ img {
 
 
 <!-- SUCCESS POPUP -->
-
 <div id="orderSuccessPopup" class="popup-overlay">
   <div class="popup-box">
-    
     <div class="success-icon">
-      <img src="https://th.bing.com/th/id/R.85c14dfeb8edd88f62b5bbfe671f0108?rik=T38yCB6ZWsrEdA&riu=http%3a%2f%2fclipart-library.com%2fimages_k%2fgreen-checkmark-transparent%2fgreen-checkmark-transparent-17.png&ehk=XzHgRYQ3s7cSIB3YzfqPKv4s787lzN9vDBRhCfmVfH0%3d&risl=&pid=ImgRaw&r=0" 
+      <img src="https://th.bing.com/th/id/R.85c14dfeb8edd88f62b5bbfe671f0108?rik=T38yCB6ZWsrEdA&riu=http%3a%2f%2fclipart-library.com%2fimages_k%2fgreen-checkmark-transparent%2fgreen-checkmark-transparent-17.png&ehk=XzHgRYQ3s7cSIB3YzfqPKv4s787lzN9vDBRhCfmVfH0%3d&risl=&pid=ImgRaw&r=0"
            alt="Success">
     </div>
-
     <h3>Order Placed Successfully!</h3>
-
+    <div class="popup-progress"><span></span></div>
   </div>
 </div>
 
@@ -894,36 +732,25 @@ let cart = [];
 let total = 0;
 let grandTotal = 0;
 
-/* ======================
-   CALCULATE TOTAL ON LOAD
-====================== */
+/* CALCULATE TOTAL ON LOAD */
 document.addEventListener("DOMContentLoaded", () => {
-
   cart = loadCart();
 
   cart.forEach(item => {
-    const price =
-      Number(item.finalPrice) ||
-      Number(item.price) ||
-      0;
-
+    const price = Number(item.finalPrice) || Number(item.price) || 0;
     const qty = Number(item.qty || 1);
     total += price * qty;
   });
-  const GST_RATE = 0.18;
 
+  const GST_RATE = 0.18;
   const gstAmount = total * GST_RATE;
   grandTotal = total + gstAmount;
 
   document.getElementById("totalDisplay").innerText =
-  grandTotal.toFixed(2) + " (Incl. 18% GST)";
-
+    grandTotal.toFixed(2) + " (Incl. 18% GST)";
 });
 
-/* ======================
-   UPI QR GENERATION
-====================== */
-
+/* UPI QR GENERATION */
 function buildUPILink(finalprice) {
   return (
     `upi://pay` +
@@ -937,7 +764,6 @@ function buildUPILink(finalprice) {
 
 function showUPIQR() {
   const img = document.getElementById("upiQrImage");
-
   const upiLink = buildUPILink(grandTotal.toFixed(2));
 
   img.src =
@@ -948,42 +774,25 @@ function showUPIQR() {
   img.style.display = "block";
 }
 
-/* ======================
-   PAYMENT METHOD
-====================== */
+/* PAYMENT METHOD */
+document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+  radio.addEventListener("change", () => {
+    const upiBox = document.getElementById("upiBox");
+    const utrBox = document.getElementById("utrBox");
 
-document
-  .querySelectorAll('input[name="paymentMethod"]')
-  .forEach(radio => {
-
-    radio.addEventListener("change", () => {
-
-      const upiBox = document.getElementById("upiBox");
-      const utrBox = document.getElementById("utrBox");
-
-      if (radio.value === "UPI") {
-
-        if (cart.length === 0) {
-          alert("Cart is empty");
-          return;
-        }
-
-        upiBox.style.display = "block";
-        utrBox.style.display = "block";
-
-        showUPIQR();
-
-      } else {
-        upiBox.style.display = "none";
-        utrBox.style.display = "none";
-      }
-    });
+    if (radio.value === "UPI") {
+      if (cart.length === 0) { alert("Cart is empty"); return; }
+      upiBox.style.display = "block";
+      utrBox.style.display = "block";
+      showUPIQR();
+    } else {
+      upiBox.style.display = "none";
+      utrBox.style.display = "none";
+    }
   });
+});
 
-/* ======================
-   PLACE ORDER
-====================== */
-
+/* PLACE ORDER */
 const form = document.getElementById("customerForm");
 
 form.addEventListener("submit", async (e) => {
@@ -991,54 +800,38 @@ form.addEventListener("submit", async (e) => {
 
   const statusMsg = document.getElementById("statusMsg");
 
-  const name = document.getElementById("custName").value.trim();
+  const name    = document.getElementById("custName").value.trim();
   const address = document.getElementById("custAddress").value.trim();
-  const city = document.getElementById("custCity").value.trim();
-  const state = document.getElementById("custState").value;
-  const phone = document.getElementById("custPhone").value.trim();
-  const pin = document.getElementById("custPin").value.trim();
+  const city    = document.getElementById("custCity").value.trim();
+  const state   = document.getElementById("custState").value;
+  const phone   = document.getElementById("custPhone").value.trim();
+  const pin     = document.getElementById("custPin").value.trim();
 
-  const paymentMethod =
-    document.querySelector('input[name="paymentMethod"]:checked')?.value;
+  const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value;
+  const utrNumber     = document.getElementById("utrNumber")?.value.trim();
 
-  const utrNumber =
-    document.getElementById("utrNumber")?.value.trim();
-
-  if (!cart.length)
-    return statusMsg.innerText = "Cart is empty.";
-
+  if (!cart.length)                           return statusMsg.innerText = "Cart is empty.";
   if (!name || !address || !city || !state || !phone || !pin)
-    return statusMsg.innerText = "Please fill all fields.";
+                                              return statusMsg.innerText = "Please fill all fields.";
+  if (phone.length !== 10)                    return statusMsg.innerText = "Phone must be 10 digits.";
+  if (paymentMethod === "UPI" && !utrNumber)  return statusMsg.innerText = "Please enter UTR number.";
 
-  if (phone.length !== 10)
-    return statusMsg.innerText = "Phone must be 10 digits.";
+  let subtotal = 0;
+  cart.forEach(item => {
+    const price = Number(item.finalPrice) || Number(item.price) || 0;
+    const qty = Number(item.qty || 1);
+    subtotal += price * qty;
+  });
 
-  if (paymentMethod === "UPI" && !utrNumber)
-    return statusMsg.innerText = "Please enter UTR number.";
-
-  // ✅ RECALCULATE TOTAL AGAIN
-let subtotal = 0;
-
-cart.forEach(item => {
-  const price =
-    Number(item.finalPrice) ||
-    Number(item.price) ||
-    0;
-
-  const qty = Number(item.qty || 1);
-  subtotal += price * qty;
-});
-
-const GST_RATE = 0.18;
-const gstAmount = subtotal * GST_RATE;
-const finalTotal = subtotal + gstAmount;
-
+  const GST_RATE  = 0.18;
+  const gstAmount = subtotal * GST_RATE;
+  const finalTotal = subtotal + gstAmount;
 
   const orderItems = cart.map(i => ({
-    id: i.id,
-    name: i.name,
+    id:    i.id,
+    name:  i.name,
     price: i.finalPrice || i.price,
-    qty: i.qty
+    qty:   i.qty
   }));
 
   try {
@@ -1046,18 +839,9 @@ const finalTotal = subtotal + gstAmount;
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name,
-        address,
-        city,
-        state,
-        phone,
-        pin,
-        subtotal,
-        gst: gstAmount,
-        total: finalTotal,
-        items: orderItems,
-        paymentMethod,
-        utrNumber
+        name, address, city, state, phone, pin,
+        subtotal, gst: gstAmount, total: finalTotal,
+        items: orderItems, paymentMethod, utrNumber
       })
     });
 
@@ -1066,22 +850,16 @@ const finalTotal = subtotal + gstAmount;
     if (data.success) {
       localStorage.removeItem(CART_KEY);
       document.getElementById("orderSuccessPopup").classList.add("show");
-
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 1500);
+      setTimeout(() => { window.location.href = "/"; }, 1500);
     } else {
       statusMsg.innerText = "Order failed. Try again.";
     }
-
   } catch (err) {
     console.error(err);
     statusMsg.innerText = "Server error. Please try later.";
   }
 });
-
 </script>
-
 
 </body>
 </html>
