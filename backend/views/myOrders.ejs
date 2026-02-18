@@ -5,26 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MY ORDERS</title>
 <link rel="icon" type="image/png" href="/images/logo.png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/mobile-ui.css">
-
-
-<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/mobile-ui.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================
-   FULLY FLEXIBLE MOBILE-OPTIMIZED ORDER PAGE
-   No Overflow, Perfect Responsiveness
+   AKC AUTO PARTS — MY ORDERS DARK THEME
+   Palette: Obsidian · Charcoal · Champagne Gold
 ============================================ */
 
-/* ===== GLOBAL RESET & BASE ===== */
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  max-width: 100%;
 }
 
 html {
@@ -38,16 +33,52 @@ html, body {
   overflow-x: hidden;
 }
 
-body {
-  font-family: 'Nunito Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  padding: 20px 10px;
-  min-height: 100vh;
+:root {
+  --ink-0:    #08080a;
+  --ink-1:    #0d0d10;
+  --ink-2:    #111116;
+  --ink-3:    #18181e;
+  --ink-4:    #202028;
+  --ink-5:    #2a2a34;
+  --ink-6:    #36363f;
+  --ink-7:    #48484f;
+
+  --gold-1:   #b8941e;
+  --gold-2:   #c9a84c;
+  --gold-3:   #d4b86a;
+  --gold-4:   #e2cc8c;
+  --gold-5:   #f0e0b4;
+
+  --text-1:   #f0f0ee;
+  --text-2:   #c8c8c4;
+  --text-3:   #8a8a84;
+  --text-4:   #5a5a56;
+
+  --success:  #1a9c5b;
+  --danger:   #c0392b;
+
+  --s2: 0 2px 12px rgba(0,0,0,.45);
+  --s3: 0 6px 28px rgba(0,0,0,.55);
+  --s4: 0 12px 48px rgba(0,0,0,.65);
+  --s-gold: 0 0 0 1px rgba(201,168,76,.18), 0 4px 20px rgba(0,0,0,.5);
 }
 
-/* Prevent any element from exceeding viewport */
-body * {
+body {
+  font-family: 'Nunito Sans', system-ui, sans-serif;
+  background: var(--ink-2);
+  background-image:
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 30% at 90% 100%, rgba(184,148,30,0.04) 0%, transparent 60%);
+  padding: 20px 10px;
+  min-height: 100vh;
+  color: var(--text-2);
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
   max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* ===== HEADER BAR ===== */
@@ -55,20 +86,32 @@ body * {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto 30px;
-  background: #ffffff;
+  background: var(--ink-1);
   border-radius: 16px;
-  padding: 15px 20px;
+  padding: 15px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: var(--s3);
+  border: 1px solid var(--ink-5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gold bottom accent line */
+.header-bar::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 5%; right: 5%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-1) 30%, var(--gold-4) 50%, var(--gold-1) 70%, transparent);
+  opacity: 0.55;
 }
 
 .header-bar img {
   height: 50px;
   max-width: 120px;
   object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(201,168,76,0.25));
   transition: transform 0.3s ease;
 }
 
@@ -78,20 +121,17 @@ body * {
 
 .center-section h1 {
   margin: 0;
-  font-size: clamp(20px, 4vw, 32px);
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  color: #0f172a;
-  background: linear-gradient(135deg, #000000, #050609);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: clamp(20px, 4vw, 30px);
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold-3);
 }
 
 .right-section p {
   margin: 0;
-  font-size: clamp(12px, 2.5vw, 15px);
-  color: #64748b;
+  font-size: clamp(12px, 2.5vw, 14px);
+  color: var(--text-3);
   font-weight: 600;
 }
 
@@ -108,49 +148,55 @@ body * {
 /* ===== ORDER CARD ===== */
 .order-card {
   width: 100%;
-  background: #ffffff;
+  background: var(--ink-3);
+  border: 1px solid var(--ink-5);
   padding: 25px 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   position: relative;
   margin-bottom: 40px;
-  transition: all 0.3s ease;
-  border-left: 4px solid transparent;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-  border-radius: 0;
+  border-radius: 16px;
+  border-left: 4px solid var(--ink-6);
+  box-shadow: var(--s2);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.order-card:hover {
+  box-shadow: var(--s-gold);
 }
 
 /* Order separator */
 .order-card::after {
   content: '';
   position: absolute;
-  bottom: -20px;
+  bottom: -22px;
   left: 50%;
   transform: translateX(-50%);
-  width: 85%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
+  width: 70%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-1), transparent);
+  opacity: 0.2;
 }
 
 .order-card:last-child::after {
   display: none;
 }
 
-/* Status-based border colors */
+/* Status-based left border */
 .order-card:has(.placed-status),
 .order-card:has(.packed-text) {
-  border-left-color: #10b981;
+  border-left-color: var(--gold-2);
 }
 
 .order-card:has(.delivered-status),
 .order-card:has(.delivered-text) {
-  border-left-color: #059669;
+  border-left-color: var(--success);
 }
 
 .order-card:has(.cancelled-status),
 .order-card:has(.cancelled-text) {
-  border-left-color: #ef4444;
+  border-left-color: var(--danger);
 }
 
 /* ===== ORDER DETAILS ===== */
@@ -165,66 +211,69 @@ body * {
 .status {
   padding: 8px 20px;
   border-radius: 50px;
-  font-weight: 700;
-  font-size: clamp(11px, 2.5vw, 14px);
+  font-weight: 800;
+  font-size: clamp(11px, 2.5vw, 13px);
   display: inline-block;
   width: fit-content;
   max-width: 100%;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  letter-spacing: 1px;
+  box-shadow: var(--s2);
   transition: all 0.3s ease;
 }
 
 .placed-status {
-  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
-  color: #065f46;
-  border: 2px solid #10b981;
+  background: rgba(201,168,76,0.12);
+  color: var(--gold-3);
+  border: 1.5px solid var(--gold-2);
 }
 
 .delivered-status {
-  background: linear-gradient(135deg, #bbf7d0, #86efac);
-  color: #065f46;
-  border: 2px solid #059669;
+  background: rgba(26,156,91,0.12);
+  color: #4ade80;
+  border: 1.5px solid var(--success);
 }
 
 .cancelled-status {
-  background: linear-gradient(135deg, #fee2e2, #fecaca);
-  color: #991b1b;
-  border: 2px solid #dc2626;
+  background: rgba(192,57,43,0.12);
+  color: #f87171;
+  border: 1.5px solid var(--danger);
 }
 
-/* ===== HEADER INFO ===== */
+/* ===== ORDER HEADER INFO ===== */
 .order-header {
   width: 100%;
-  background: #f8fafc;
+  background: var(--ink-4);
   padding: 15px 18px;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  border: 1px solid var(--ink-6);
 }
 
 .order-header p {
   margin: 6px 0;
-  font-size: clamp(12px, 2.8vw, 15px);
-  color: #334155;
-  line-height: 1.6;
+  font-size: clamp(12px, 2.8vw, 14px);
+  color: var(--text-2);
+  line-height: 1.7;
   word-wrap: break-word;
 }
 
 .order-header strong {
-  color: #0f172a;
+  color: var(--text-3);
   font-weight: 700;
   display: inline-block;
-  min-width: 100px;
+  min-width: 110px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
 }
 
-/* ===== TIMELINE - FULLY RESPONSIVE ===== */
+/* ===== TIMELINE ===== */
 .timeline {
   width: 100%;
   display: flex;
   justify-content: space-between;
   position: relative;
-  margin: 20px 0;
+  margin: 10px 0;
   padding: 0 5px;
 }
 
@@ -234,8 +283,8 @@ body * {
   top: 9px;
   left: 12%;
   right: 12%;
-  height: 3px;
-  background: linear-gradient(90deg, #e2e8f0, #cbd5e1);
+  height: 2px;
+  background: var(--ink-6);
   border-radius: 10px;
 }
 
@@ -244,44 +293,44 @@ body * {
   text-align: center;
   position: relative;
   z-index: 2;
-  min-width: 0; /* Prevents overflow */
+  min-width: 0;
 }
 
 .circle {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #cbd5e1;
+  background: var(--ink-6);
   margin: 0 auto;
   transition: all 0.3s ease;
-  border: 2px solid #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  border: 2px solid var(--ink-5);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 .circle.active {
-  background: linear-gradient(135deg, #10b981, #059669);
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2),
-              0 2px 8px rgba(16, 185, 129, 0.4);
-  transform: scale(1.1);
+  background: linear-gradient(135deg, var(--gold-1), var(--gold-3));
+  border-color: var(--gold-2);
+  box-shadow: 0 0 0 4px rgba(201,168,76,0.2), 0 2px 8px rgba(201,168,76,0.35);
+  transform: scale(1.15);
 }
 
 .timeline-step span {
   display: block;
   margin-top: 8px;
-  font-size: clamp(9px, 2.2vw, 13px);
-  font-weight: 700;
-  color: #64748b;
+  font-size: clamp(9px, 2.2vw, 12px);
+  font-weight: 800;
+  color: var(--text-4);
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
   word-break: break-word;
   padding: 0 2px;
 }
 
 .timeline-step:has(.active) span {
-  color: #10b981;
+  color: var(--gold-3);
 }
 
-/* ===== PRODUCT IMAGE - FLEXIBLE SIZE ===== */
+/* ===== PRODUCT IMAGE ===== */
 .large-product-image {
   width: 100%;
   height: auto;
@@ -289,20 +338,20 @@ body * {
   max-height: 300px;
   border-radius: 12px;
   overflow: hidden;
-  border: 2px solid #e5e7eb;
-  background: linear-gradient(135deg, #ffffff, #f9fafb);
+  border: 1px solid var(--ink-6);
+  background: var(--ink-4);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--s2);
   transition: all 0.3s ease;
   margin-bottom: 15px;
 }
 
 .large-product-image:hover {
   transform: scale(1.01);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-  border-color: #3b82f6;
+  box-shadow: var(--s-gold);
+  border-color: var(--gold-1);
 }
 
 .large-product-image img {
@@ -317,28 +366,26 @@ body * {
   transform: scale(1.03);
 }
 
-/* ===== ITEMS SECTION ===== */
+/* ===== ITEM BOX ===== */
 .item-box {
   width: 100%;
-  background: #ffffff;
+  background: var(--ink-4);
   border-radius: 14px;
   padding: 20px 18px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--ink-6);
   margin-bottom: 12px;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--s2);
 }
 
 .item-box::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(180deg, #3b82f6, #1e40af);
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--gold-1), var(--gold-3));
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -349,14 +396,14 @@ body * {
 
 .item-box:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  border-color: #cbd5e1;
+  box-shadow: var(--s-gold);
+  border-color: var(--gold-1);
 }
 
 .item-box p {
   margin: 8px 0;
-  font-size: clamp(13px, 2.8vw, 15px);
-  color: #475569;
+  font-size: clamp(13px, 2.8vw, 14px);
+  color: var(--text-2);
   line-height: 1.7;
   word-wrap: break-word;
   display: flex;
@@ -365,14 +412,16 @@ body * {
 }
 
 .item-box p strong {
-  color: #0f172a;
+  color: var(--text-3);
   font-weight: 700;
   min-width: 100px;
   flex-shrink: 0;
-  font-size: clamp(12px, 2.6vw, 14px);
+  font-size: clamp(10px, 2.2vw, 12px);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
 }
 
-/* ===== ITEM IMAGE - Clickable ===== */
+/* ===== ITEM IMAGE ===== */
 .item-image {
   width: 100%;
   max-width: 500px;
@@ -381,15 +430,15 @@ body * {
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  background: var(--ink-3);
+  border: 1px solid var(--ink-6);
+  box-shadow: var(--s2);
 }
 
 .item-image:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.15);
-  border-color: #93c5fd;
+  box-shadow: var(--s-gold);
+  border-color: var(--gold-1);
 }
 
 .item-image img {
@@ -405,26 +454,15 @@ body * {
 
 .item-image:hover img {
   transform: scale(1.03);
-  filter: brightness(1.05);
 }
 
-/* Responsive image sizing */
 @media (max-width: 768px) {
-  .item-image {
-    max-width: 100%;
-  }
-  
-  .item-image img {
-    max-height: 160px;
-    padding: 12px;
-  }
+  .item-image { max-width: 100%; }
+  .item-image img { max-height: 160px; padding: 12px; }
 }
 
 @media (max-width: 480px) {
-  .item-image img {
-    max-height: 140px;
-    padding: 10px;
-  }
+  .item-image img { max-height: 140px; padding: 10px; }
 }
 
 /* ===== BUTTONS & STATUS TEXT ===== */
@@ -434,21 +472,22 @@ body * {
   padding: 13px 24px;
   border: none;
   border-radius: 10px;
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  color: #fff;
-  font-weight: 700;
-  font-size: clamp(13px, 3vw, 16px);
+  background: rgba(192,57,43,0.15);
+  color: #f87171;
+  border: 1.5px solid var(--danger);
+  font-weight: 800;
+  font-family: 'Nunito Sans', system-ui;
+  font-size: clamp(13px, 3vw, 15px);
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
   transition: all 0.3s ease;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
 }
 
 .cancel-btn:hover {
+  background: rgba(192,57,43,0.25);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
-  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  box-shadow: 0 6px 20px rgba(192,57,43,0.3);
 }
 
 .cancel-btn:active {
@@ -460,32 +499,32 @@ body * {
 .packed-text {
   width: 100%;
   margin-top: 12px;
-  font-size: clamp(14px, 3.5vw, 18px);
+  font-size: clamp(13px, 3vw, 15px);
   font-weight: 800;
   padding: 11px 20px;
   border-radius: 10px;
   display: block;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
 }
 
 .delivered-text {
-  color: #065f46;
-  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-  border: 2px solid #10b981;
+  color: #4ade80;
+  background: rgba(26,156,91,0.1);
+  border: 1.5px solid var(--success);
 }
 
 .cancelled-text {
-  color: #991b1b;
-  background: linear-gradient(135deg, #fee2e2, #fecaca);
-  border: 2px solid #ef4444;
+  color: #f87171;
+  background: rgba(192,57,43,0.1);
+  border: 1.5px solid var(--danger);
 }
 
 .packed-text {
-  color: #1e40af;
-  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-  border: 2px solid #3b82f6;
+  color: var(--gold-3);
+  background: rgba(201,168,76,0.1);
+  border: 1.5px solid var(--gold-2);
 }
 
 /* ===== POPUP STYLES ===== */
@@ -493,12 +532,9 @@ body * {
 #successPopup {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(5px);
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
   z-index: 1000;
   align-items: center;
   justify-content: center;
@@ -508,42 +544,48 @@ body * {
 
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
 .popup-content {
   width: 100%;
   max-width: 400px;
-  background: #fff;
-  padding: 25px 30px;
-  border-radius: 16px;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+  background: var(--ink-3);
+  border: 1px solid var(--ink-5);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: var(--s4), var(--s-gold);
   text-align: center;
   animation: slideUp 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.popup-content::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-2), transparent);
+  opacity: 0.5;
 }
 
 @keyframes slideUp {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
 }
 
 .popup-content h3 {
-  font-size: clamp(16px, 4vw, 22px);
-  font-weight: 800;
-  margin-bottom: 12px;
-  color: #0f172a;
+  font-size: clamp(16px, 4vw, 20px);
+  font-weight: 900;
+  margin-bottom: 10px;
+  color: var(--text-1);
 }
 
 .popup-content p {
-  font-size: clamp(13px, 3vw, 15px);
-  color: #64748b;
-  margin-bottom: 20px;
+  font-size: clamp(13px, 3vw, 14px);
+  color: var(--text-3);
+  margin-bottom: 22px;
+  line-height: 1.6;
 }
 
 .popup-buttons {
@@ -560,66 +602,64 @@ body * {
   padding: 11px 22px;
   border: none;
   border-radius: 10px;
-  font-weight: 700;
-  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 800;
+  font-family: 'Nunito Sans', system-ui;
+  font-size: clamp(12px, 3vw, 14px);
   cursor: pointer;
   transition: all 0.3s ease;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
 }
 
 .yes-btn {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  background: rgba(192,57,43,0.15);
+  color: #f87171;
+  border: 1.5px solid var(--danger);
 }
 
 .yes-btn:hover {
+  background: rgba(192,57,43,0.28);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(239, 68, 68, 0.5);
+  box-shadow: 0 6px 18px rgba(192,57,43,0.3);
 }
 
 .no-btn {
-  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-  color: #475569;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, var(--gold-1), var(--gold-2));
+  color: var(--ink-0);
+  border: none;
+  box-shadow: 0 4px 12px rgba(184,148,30,0.3);
 }
 
 .no-btn:hover {
+  background: linear-gradient(135deg, var(--gold-2), var(--gold-4));
   transform: translateY(-2px);
-  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 18px rgba(201,168,76,0.4);
 }
 
 /* ===== NO ORDERS MESSAGE ===== */
-.no-orders-message {
+.no-orders-message,
+.orders-wrapper > p {
   text-align: center;
-  font-size: clamp(16px, 4vw, 20px);
-  color: #64748b;
-  padding: 40px 20px;
-  background: #ffffff;
+  font-size: clamp(16px, 4vw, 18px);
+  color: var(--text-3);
+  padding: 50px 20px;
+  background: var(--ink-3);
+  border: 1px solid var(--ink-5);
   border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--s2);
   margin: 30px auto;
   max-width: 600px;
+  font-weight: 700;
 }
 
-/* ===== SELECTION COLORS ===== */
-::selection {
-  background: #3b82f6;
-  color: #ffffff;
-}
-
-::-moz-selection {
-  background: #3b82f6;
-  color: #ffffff;
-}
+/* ===== SELECTION ===== */
+::selection { background: var(--gold-2); color: var(--ink-0); }
+::-moz-selection { background: var(--gold-2); color: var(--ink-0); }
 
 /* ============================================
    RESPONSIVE BREAKPOINTS
 ============================================ */
 
-/* Large Desktop (1400px+) */
 @media (min-width: 1400px) {
   .order-card {
     display: grid;
@@ -627,19 +667,10 @@ body * {
     gap: 40px;
     padding: 35px 40px;
   }
-
-  .large-product-image {
-    height: 320px;
-    max-height: none;
-  }
-
-  .status {
-    padding: 10px 24px;
-    font-size: 14px;
-  }
+  .large-product-image { height: 320px; max-height: none; }
+  .status { padding: 10px 24px; font-size: 13px; }
 }
 
-/* Desktop (1024px - 1399px) */
 @media (min-width: 1024px) and (max-width: 1399px) {
   .order-card {
     display: grid;
@@ -647,113 +678,53 @@ body * {
     gap: 35px;
     padding: 30px 35px;
   }
-
-  .large-product-image {
-    height: 280px;
-    max-height: none;
-  }
+  .large-product-image { height: 280px; max-height: none; }
 }
 
-/* Tablet (768px - 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
-  body {
-    padding: 20px 12px;
-  }
-
-  .header-bar {
-    padding: 16px 22px;
-  }
-
+  body { padding: 20px 12px; }
+  .header-bar { padding: 16px 22px; }
   .order-card {
     display: grid;
     grid-template-columns: 1fr 240px;
     gap: 30px;
     padding: 28px 30px;
   }
-
-  .large-product-image {
-    height: 240px;
-    max-height: none;
-  }
+  .large-product-image { height: 240px; max-height: none; }
 }
 
-/* Large Mobile (481px - 767px) */
 @media (min-width: 481px) and (max-width: 767px) {
-  body {
-    padding: 18px 12px;
-  }
-
+  body { padding: 18px 12px; }
   .header-bar {
     flex-direction: column;
     gap: 10px;
     text-align: center;
     padding: 14px 18px;
   }
-
-  .header-bar img {
-    height: 45px;
-  }
-
-  .order-card {
-    padding: 22px 18px;
-  }
-
-  .large-product-image {
-    max-height: 280px;
-  }
-
-  .timeline::before {
-    left: 10%;
-    right: 10%;
-  }
+  .header-bar img { height: 45px; }
+  .order-card { padding: 22px 18px; }
+  .large-product-image { max-height: 280px; }
+  .timeline::before { left: 10%; right: 10%; }
 }
 
-/* Mobile (361px - 480px) */
 @media (min-width: 361px) and (max-width: 480px) {
-  body {
-    padding: 15px 10px;
-  }
-
+  body { padding: 15px 10px; }
   .header-bar {
     flex-direction: column;
     gap: 10px;
     text-align: center;
     padding: 12px 15px;
   }
-
-  .header-bar img {
-    height: 42px;
-  }
-
-  .right-section {
-    display: none;
-  }
-
-  .order-card {
-    padding: 20px 15px;
-  }
-
-  .large-product-image {
-    max-height: 240px;
-  }
-
-  .timeline::before {
-    left: 8%;
-    right: 8%;
-  }
-
-  .circle {
-    width: 16px;
-    height: 16px;
-  }
+  .header-bar img { height: 42px; }
+  .right-section { display: none; }
+  .order-card { padding: 20px 15px; }
+  .large-product-image { max-height: 240px; }
+  .timeline::before { left: 8%; right: 8%; }
+  .circle { width: 16px; height: 16px; }
 }
 
-/* Small Mobile (max-width: 360px) */
 @media (max-width: 360px) {
-  body {
-    padding: 12px 8px;
-  }
-
+  body { padding: 12px 8px; }
   .header-bar {
     flex-direction: column;
     gap: 8px;
@@ -761,104 +732,38 @@ body * {
     padding: 10px 12px;
     border-radius: 12px;
   }
-
-  .header-bar img {
-    height: 38px;
-  }
-
-  .right-section {
-    display: none;
-  }
-
-  .order-card {
-    padding: 18px 12px;
-    border-left-width: 3px;
-  }
-
-  .large-product-image {
-    max-height: 220px;
-    border-radius: 10px;
-  }
-
-  .status {
-    padding: 7px 16px;
-  }
-
-  .order-header {
-    padding: 12px 14px;
-  }
-
-  .timeline {
-    padding: 0 3px;
-  }
-
-  .timeline::before {
-    left: 6%;
-    right: 6%;
-    top: 8px;
-    height: 2px;
-  }
-
-  .circle {
-    width: 14px;
-    height: 14px;
-  }
-
-  .item-box {
-    padding: 10px 12px;
-  }
-
-  .popup-buttons {
-    flex-direction: column;
-  }
-
-  .yes-btn,
-  .no-btn {
-    width: 100%;
-  }
+  .header-bar img { height: 38px; }
+  .right-section { display: none; }
+  .order-card { padding: 18px 12px; border-left-width: 3px; }
+  .large-product-image { max-height: 220px; border-radius: 10px; }
+  .status { padding: 7px 16px; }
+  .order-header { padding: 12px 14px; }
+  .timeline { padding: 0 3px; }
+  .timeline::before { left: 6%; right: 6%; top: 8px; height: 2px; }
+  .circle { width: 14px; height: 14px; }
+  .item-box { padding: 10px 12px; }
+  .popup-buttons { flex-direction: column; }
+  .yes-btn, .no-btn { width: 100%; }
 }
 
-/* Extra Small Mobile (max-width: 320px) */
 @media (max-width: 320px) {
-  body {
-    padding: 10px 6px;
-  }
-
-  .header-bar img {
-    height: 35px;
-  }
-
-  .order-card {
-    padding: 15px 10px;
-  }
-
-  .large-product-image {
-    max-height: 200px;
-  }
-
-  .timeline::before {
-    left: 5%;
-    right: 5%;
-  }
+  body { padding: 10px 6px; }
+  .header-bar img { height: 35px; }
+  .order-card { padding: 15px 10px; }
+  .large-product-image { max-height: 200px; }
+  .timeline::before { left: 5%; right: 5%; }
 }
 </style>
 </head>
 
 <body>
+
 <!-- HEADER BAR -->
 <div class="header-bar">
   <div class="left-section">
     <a href="/" style="display:flex;align-items:center;text-decoration:none;">
-      <img 
-        src="/images/logo.png"
-        alt="AKC AUTO PARTS"
-        style="cursor:pointer;"
-      >
+      <img src="/images/logo.png" alt="AKC AUTO PARTS" style="cursor:pointer;">
     </a>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/mobile-ui.css">
   </div>
 
   <div class="center-section">
@@ -874,9 +779,7 @@ body * {
 <div class="orders-wrapper">
 
   <% if (!orders || orders.length === 0) { %>
-    <p style="text-align:center;font-size:20px;color:#333;">
-      <%= t.noOrders %>
-    </p>
+    <p><%= t.noOrders %></p>
   <% } %>
 
   <% orders.forEach(function(order){ %>
@@ -892,103 +795,72 @@ body * {
     <!-- ORDER CARD -->
     <div class="order-card">
 
-      <!-- LEFT SECTION: DETAILS -->
+      <!-- DETAILS -->
       <div class="order-details">
 
         <!-- STATUS BADGE -->
-<% if (order.status === "Pending") { %>
-
-  <span class="status placed-status">Pending</span>
-
-<% } else if (order.status === "Packed") { %>
-
-  <span class="status placed-status">Packed</span>
-
-<% } else if (order.status === "Delivered") { %>
-
-  <span class="status delivered-status">Delivered</span>
-
-<% } else if (order.status === "Cancelled") { %>
-
-  <span class="status cancelled-status">Cancelled</span>
-
-<% } %>
+        <% if (order.status === "Pending") { %>
+          <span class="status placed-status">Pending</span>
+        <% } else if (order.status === "Packed") { %>
+          <span class="status placed-status">Packed</span>
+        <% } else if (order.status === "Delivered") { %>
+          <span class="status delivered-status">Delivered</span>
+        <% } else if (order.status === "Cancelled") { %>
+          <span class="status cancelled-status">Cancelled</span>
+        <% } %>
 
         <!-- HEADER -->
         <div class="order-header">
-          <div>
-            <p><strong><%= t.orderDate %>:</strong> <%= orderDate.toDateString() %></p>
-            <p><strong><%= t.totalPrice %>:</strong> ₹<%= order.totalPrice %></p>
-            <p><strong><%= t.deliveryDate %>:</strong>
-              <%= deliveryDate.toDateString() %>
-            </p>
-          </div>
+          <p><strong><%= t.orderDate %>:</strong> <%= orderDate.toDateString() %></p>
+          <p><strong><%= t.totalPrice %>:</strong> ₹<%= order.totalPrice %></p>
+          <p><strong><%= t.deliveryDate %>:</strong> <%= deliveryDate.toDateString() %></p>
         </div>
 
         <!-- TIMELINE -->
         <div class="timeline">
-
-          <!-- PLACED -->
           <div class="timeline-step">
             <div class="circle active"></div>
             <span>Placed</span>
           </div>
-
-          <!-- PACKED -->
           <div class="timeline-step">
-             <div class="circle <%= (order.status === 'Packed' || order.status === 'Delivered') ? 'active' : '' %>"></div>
-              <span>Packed</span>
+            <div class="circle <%= (order.status === 'Packed' || order.status === 'Delivered') ? 'active' : '' %>"></div>
+            <span>Packed</span>
           </div>
-
-          <!-- DELIVERED -->
           <div class="timeline-step">
             <div class="circle <%= order.status === 'Delivered' ? 'active' : '' %>"></div>
             <span>Delivered</span>
           </div>
-
         </div>
 
-        <!-- ITEMS (WITHOUT IMAGES) -->
-<%
-  let items = order.items;
-  if (typeof items === "string") {
-    items = JSON.parse(items);
-  }
-%>
-<% if (items && items.length > 0) { %>
-  <% items.forEach(function(item){ %>
-        <div class="item-box">
-          <div class="item-image" onclick="window.location.href='/product?id=<%= item.id %>'">
-               <img src="<%= item.img %>" alt="<%= item.name %>">
+        <!-- ITEMS -->
+        <%
+          let items = order.items;
+          if (typeof items === "string") { items = JSON.parse(items); }
+        %>
+        <% if (items && items.length > 0) { %>
+          <% items.forEach(function(item){ %>
+            <div class="item-box">
+              <div class="item-image" onclick="window.location.href='/product?id=<%= item.id %>'">
+                <img src="<%= item.img %>" alt="<%= item.name %>">
+              </div>
+              <p><strong>Name:</strong> <%= item.name %></p>
+              <p><strong>Product ID:</strong> <%= item.id %></p>
+              <p><strong>Price:</strong> ₹<%= item.price %></p>
+              <p><strong>Quantity:</strong> <%= item.qty %></p>
             </div>
-          <p><strong>Name:</strong> <%= item.name %></p>
-          <p><strong>Product ID:</strong> <%= item.id %></p>
-          <p><strong>Price:</strong> ₹<%= item.price %></p>
-          <p><strong>Quantity:</strong> <%= item.qty %></p>
-        </div>
-      <% }) %>
-<% } %>
+          <% }) %>
+        <% } %>
 
         <!-- ACTION -->
-<% if (order.status === "Pending") { %>
-
-  <button class="cancel-btn" onclick="cancelOrder('<%= order.id %>')">
-    Cancel Order
-  </button>
-
-<% } else if (order.status === "Packed") { %>
-
-  <p class="packed-text">Order Packed 📦</p>
-
-<% } else if (order.status === "Delivered") { %>
-
-  <p class="delivered-text">Order Delivered ✔</p>
-
-<% } else if (order.status === "Cancelled") { %>
-
-  <p class="cancelled-text">Order Cancelled ✖</p>
-
-<% } %>
+        <% if (order.status === "Pending") { %>
+          <button class="cancel-btn" onclick="cancelOrder('<%= order.id %>')">Cancel Order</button>
+        <% } else if (order.status === "Packed") { %>
+          <p class="packed-text">Order Packed 📦</p>
+        <% } else if (order.status === "Delivered") { %>
+          <p class="delivered-text">Order Delivered ✔</p>
+        <% } else if (order.status === "Cancelled") { %>
+          <p class="cancelled-text">Order Cancelled ✖</p>
+        <% } %>
 
       </div>
 
@@ -1040,7 +912,6 @@ function confirmCancel() {
     .then(data => {
       if (data.success) {
         document.getElementById("successPopup").style.display = "flex";
-
         setTimeout(() => {
           document.getElementById("successPopup").style.display = "none";
           location.reload();
