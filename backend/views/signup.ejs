@@ -3,218 +3,324 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/mobile-ui.css">
 
   <title>Sign Up - AKC Auto Parts</title>
   <link rel="icon" type="image/png" href="/images/logo.png">
 
   <style>
-    * { box-sizing: border-box; }
-    
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink-0:    #08080a;
+      --ink-1:    #0d0d10;
+      --ink-2:    #111116;
+      --ink-3:    #18181e;
+      --ink-4:    #202028;
+      --ink-5:    #2a2a34;
+      --ink-6:    #36363f;
+      --ink-7:    #48484f;
+
+      --gold-1:   #b8941e;
+      --gold-2:   #c9a84c;
+      --gold-3:   #d4b86a;
+      --gold-4:   #e2cc8c;
+      --gold-5:   #f0e0b4;
+
+      --text-1:   #f0f0ee;
+      --text-2:   #c8c8c4;
+      --text-3:   #8a8a84;
+      --text-4:   #5a5a56;
+
+      --success:  #1a9c5b;
+      --danger:   #c0392b;
+
+      --r:    14px;
+      --r-lg: 18px;
+      --r-xl: 24px;
+
+      --s4: 0 12px 48px rgba(0,0,0,.65);
+    }
+
     body {
-      font-family: 'Nunito Sans';
-      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-      margin: 0;
-      padding: 40px 20px;
+      font-family: 'Nunito Sans', system-ui, sans-serif;
+      background: var(--ink-2);
+      background-image:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(201,168,76,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 100%, rgba(184,148,30,0.05) 0%, transparent 60%);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      padding: 40px 20px;
+      color: var(--text-2);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .gold-line {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 5%, var(--gold-1) 30%, var(--gold-4) 50%, var(--gold-1) 70%, transparent 95%);
+      opacity: 0.7;
+      border-radius: 2px;
+      margin-bottom: 28px;
     }
 
     .box {
-      background: #fff;
-      padding: 30px 28px;
-      border-radius: 16px;
+      background: var(--ink-3);
+      border: 1px solid var(--ink-5);
+      padding: 36px 30px;
+      border-radius: var(--r-xl);
       width: 100%;
-      max-width: 400px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      max-width: 420px;
+      box-shadow: var(--s4), 0 0 0 1px rgba(201,168,76,0.07);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-2), transparent);
+      opacity: 0.5;
+    }
+
+    .brand-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .brand-logo {
+      width: 54px;
+      height: auto;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 0 10px rgba(201,168,76,0.35));
+    }
+
+    .brand-name {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--gold-3);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
     }
 
     h2 {
-      margin-top: 0;
       text-align: center;
-      color: #111827;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--text-1);
+      margin-bottom: 24px;
+      letter-spacing: -0.3px;
     }
 
     label {
       display: block;
-      margin-top: 12px;
-      font-weight: 600;
-      color: #374151;
+      margin-top: 14px;
+      font-weight: 700;
+      font-size: 11px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     input {
       width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
+      padding: 13px 15px;
+      margin-top: 7px;
+      background: var(--ink-4);
+      border: 1px solid var(--ink-6);
+      border-radius: var(--r);
       font-size: 15px;
-      box-sizing: border-box;
+      font-family: 'Nunito Sans', sans-serif;
+      color: var(--text-1);
+      transition: all 0.25s ease;
     }
 
-    button {
+    input::placeholder {
+      color: var(--text-4);
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--gold-2);
+      background: var(--ink-5);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+    }
+
+    button[type="submit"] {
       width: 100%;
-      margin-top: 20px;
-      padding: 12px;
-      font-size: 16px;
-      background: #0d6efd;
+      margin-top: 24px;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--gold-1), var(--gold-2));
+      color: var(--ink-0);
+      border-radius: var(--r);
       border: none;
-      color: white;
-      border-radius: 8px;
       cursor: pointer;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 900;
+      font-family: 'Nunito Sans', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 16px rgba(184,148,30,0.3);
     }
 
-    button:hover {
-      background: #0a58ca;
+    button[type="submit"]:hover {
+      background: linear-gradient(135deg, var(--gold-2), var(--gold-4));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201,168,76,0.4);
     }
 
-    p {
-      margin-top: 18px;
+    button[type="submit"]:active {
+      transform: translateY(0);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 4px;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--ink-6);
+    }
+    .divider span {
+      font-size: 11px;
+      color: var(--text-4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .footer-links {
       text-align: center;
-      color: #374151;
+      margin-top: 20px;
+      font-size: 14px;
+      color: var(--text-3);
     }
 
-    a {
-      color: #0d6efd;
+    .footer-links a {
+      color: var(--gold-3);
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
+      transition: color 0.2s;
     }
 
-    /* popup overlay */
+    .footer-links a:hover {
+      color: var(--gold-5);
+      text-decoration: underline;
+    }
+
+    /* ── Popup ── */
     .popup-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.45);
+      background: rgba(0,0,0,0.7);
       display: none;
       z-index: 99;
+      backdrop-filter: blur(3px);
     }
 
-    /* popup box */
     .popup-box {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: white;
-      padding: 24px 36px;
-      border-radius: 12px;
-      box-shadow: 0 0 18px rgba(0,0,0,0.3);
+      background: var(--ink-3);
+      border: 1px solid var(--ink-5);
+      padding: 28px 32px;
+      border-radius: var(--r-lg);
       display: none;
-      z-index: 100;
-      min-width: 280px;
+      font-size: 16px;
+      font-weight: 700;
       text-align: center;
-      font-size: 18px;
-      font-weight: 600;
+      box-shadow: var(--s4);
+      z-index: 100;
+      width: 90%;
+      max-width: 320px;
+      color: var(--text-1);
     }
 
-    .popup-success { border-left: 6px solid #28a745; }
-    .popup-error   { border-left: 6px solid #dc3545; }
+    .popup-success {
+      border-top: 3px solid var(--success);
+      box-shadow: var(--s4), 0 0 20px rgba(26,156,91,0.2);
+    }
+    .popup-error {
+      border-top: 3px solid var(--danger);
+      box-shadow: var(--s4), 0 0 20px rgba(192,57,43,0.2);
+    }
 
-    /* ===============================
-       MOBILE RESPONSIVE STYLES
-       =============================== */
-    
+    /* ── Mobile ── */
     @media(max-width: 480px) {
-      body {
-        padding: 20px 15px;
-      }
-      
-      .box {
-        padding: 25px 20px;
-        border-radius: 14px;
-      }
-      
-      h2 {
-        font-size: 22px;
-      }
-      
-      label {
-        font-size: 13px;
-        margin-top: 10px;
-      }
-      
-      input {
-        padding: 11px 12px;
-        font-size: 14px;
-        border-radius: 8px;
-      }
-      
-      button {
-        padding: 12px;
-        font-size: 15px;
-        margin-top: 18px;
-      }
-      
-      p {
-        font-size: 13px;
-        margin-top: 15px;
-      }
-      
-      .popup-box {
-        width: 90%;
-        padding: 20px 24px;
-        font-size: 15px;
-      }
-    }
-    
-    @media(max-width: 360px) {
-      .box {
-        padding: 20px 15px;
-      }
-      
-      h2 {
-        font-size: 20px;
-      }
-      
-      input {
-        padding: 10px;
-      }
-      
-      button {
-        padding: 11px;
-        font-size: 14px;
-      }
+      body { padding: 20px 15px; }
+      .box { padding: 28px 20px; border-radius: var(--r-lg); }
+      h2 { font-size: 22px; margin-bottom: 20px; }
+      label { font-size: 10px; margin-top: 10px; }
+      input { padding: 11px 12px; font-size: 14px; }
+      button[type="submit"] { padding: 13px; font-size: 14px; margin-top: 18px; }
+      .footer-links { font-size: 13px; margin-top: 15px; }
+      .popup-box { width: 90%; padding: 20px 24px; font-size: 15px; }
     }
 
+    @media(max-width: 360px) {
+      .box { padding: 22px 15px; }
+      h2 { font-size: 20px; }
+      input { padding: 10px; }
+      button[type="submit"] { padding: 12px; font-size: 14px; }
+    }
   </style>
 </head>
 
 <body>
 
   <div class="box">
+    <div class="brand-header">
+      <img class="brand-logo" src="/images/logo.png" alt="AKC Logo">
+      <div class="brand-name">AKC Auto Parts</div>
+    </div>
+
+    <div class="gold-line"></div>
+
     <h2>Create Account</h2>
 
     <form action="/signup" method="POST">
 
-      <label>Name:</label>
-      <input type="text" name="name" required>
+      <label>Name</label>
+      <input type="text" name="name" placeholder="Your full name" required>
 
-      <label>Email:</label>
-      <input type="email" name="email" required>
+      <label>Email</label>
+      <input type="email" name="email" placeholder="you@example.com" required>
 
-      <label>Password:</label>
-      <input type="password" name="password" required>
+      <label>Password</label>
+      <input type="password" name="password" placeholder="••••••••" required>
 
       <button type="submit">Create Account</button>
 
     </form>
 
-    <p>Already have an account? <a href="/signin">Sign In</a></p>
+    <div class="divider"><span>or</span></div>
+
+    <div class="footer-links">
+      Already have an account? <a href="/signin">Sign In</a>
+    </div>
   </div>
 
-  <!-- popup components -->
+  <!-- Popup components -->
   <div id="popupOverlay" class="popup-overlay"></div>
   <div id="popupBox" class="popup-box"></div>
 
-  <!-- hidden popup message (sent by server) -->
+  <!-- Hidden popup message (sent by server) -->
   <input type="hidden" id="popupStatus" value="<%= popup %>">
 
   <script>
-    // popup function (fade + 2 sec + redirect)
     function showPopup(message, type, redirectURL) {
       const overlay = document.getElementById("popupOverlay");
       const box = document.getElementById("popupBox");
@@ -228,12 +334,10 @@
       setTimeout(() => {
         overlay.style.display = "none";
         box.style.display = "none";
-
         if (redirectURL) window.location.href = redirectURL;
       }, 2000);
     }
 
-    // read popup status from server
     const popup = document.getElementById("popupStatus").value;
 
     if (popup === "success") {
