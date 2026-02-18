@@ -892,6 +892,7 @@ function loadCart() {
 
 let cart = [];
 let total = 0;
+let grandTotal = 0;
 
 /* ======================
    CALCULATE TOTAL ON LOAD
@@ -912,7 +913,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const GST_RATE = 0.18;
 
   const gstAmount = total * GST_RATE;
-  const grandTotal = total + gstAmount;
+  grandTotal = total + gstAmount;
 
   document.getElementById("totalDisplay").innerText =
   grandTotal.toFixed(2) + " (Incl. 18% GST)";
@@ -923,12 +924,12 @@ document.addEventListener("DOMContentLoaded", () => {
    UPI QR GENERATION
 ====================== */
 
-function buildUPILink(finalTotal) {
+function buildUPILink(finalprice) {
   return (
     `upi://pay` +
     `?pa=vivekmishra261105@okhdfcbank` +
     `&pn=AKC Auto Parts` +
-    `&am=${finalTotal}` +
+    `&am=${finalprice}` +
     `&cu=INR` +
     `&tn=Order Payment`
   );
@@ -937,7 +938,7 @@ function buildUPILink(finalTotal) {
 function showUPIQR() {
   const img = document.getElementById("upiQrImage");
 
-  const upiLink = buildUPILink(total.toFixed(2));
+  const upiLink = buildUPILink(grandTotal.toFixed(2));
 
   img.src =
     "https://api.qrserver.com/v1/create-qr-code/?" +
