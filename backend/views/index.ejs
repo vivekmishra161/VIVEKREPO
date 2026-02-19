@@ -959,6 +959,28 @@ select.select:focus, select.sort:focus,
   .card .btn { font-size: 11px; padding: 7px; }
   .mobile-sidebar { width: 78vw; }
 }
+/* Fix white search card from mobile-ui.css */
+.controls,
+.controls > div,
+.search-wrapper,
+.search-container,
+.input-wrapper,
+.search-box {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+#liveSearch,
+.controls input[type="text"],
+.controls input[type="search"] {
+  background: var(--ink-4) !important;
+  border: 1px solid var(--ink-6) !important;
+  color: var(--text-1) !important;
+  border-radius: var(--r-sm) !important;
+  box-shadow: none !important;
+}
 </style>
 
 
