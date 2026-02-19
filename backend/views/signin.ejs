@@ -73,8 +73,8 @@
     }
 
     .box {
-      background: var(--ink-3);
-      border: 1px solid var(--ink-5);
+      background: var(--ink-3) !important;
+      border: 1px solid var(--ink-5) !important;
       padding: 36px 30px;
       border-radius: var(--r-xl);
       width: 100%;
@@ -278,6 +278,16 @@
     .popup-error {
       border-top: 3px solid var(--danger);
       box-shadow: var(--s4), 0 0 20px rgba(192,57,43,0.2);
+    }
+
+    /* ── Override any white card styles from mobile-ui.css ── */
+    form, .form, .form-card, .auth-card, .card, .login-card,
+    .login-box, .auth-box, .signin-card, .signin-box {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
     }
 
     /* ── Mobile ── */
