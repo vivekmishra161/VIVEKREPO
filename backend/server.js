@@ -644,40 +644,86 @@ app.post("/review", async (req, res) => {
   }
 });
 app.get("/admin/dashboard", async (req, res) => {
-  const orders = await Order.find();
+  try {
 
-  const productSales = {};
+    // ✅ Get all orders (for stats)
+    const allOrders = await Order.findAll();
 
-  orders.forEach(order => {
-    order.items.forEach(item => {
-      if (!productSales[item.name]) {
-        productSales[item.name] = 0;
-      }
-
-      productSales[item.name] += item.price * item.qty;
+    // ✅ Get ONLY paid orders (for revenue)
+    const paidOrders = await Order.findAll({
+      where: { paymentStatus: "PAID" }
     });
-  });
 
-  // convert to array
-  const topProducts = Object.entries(productSales)
-    .map(([name, total]) => ({
-      name,
-      total
-    }))
-    .sort((a, b) => b.total - a.total)
-    .slice(0, 5);
+    /* ======================
+       REVENUE (PAID ONLY)
+    ====================== */
+    let totalRevenue = 0;
 
-  res.render("admin/dashboard", {
-    topProducts,
-    totalRevenue,
-    totalOrders,
-    delivered,
-    cancelled,
-    pending,
-    packed
-  });
+    paidOrders.forEach(order => {
+      totalRevenue += Number(order.totalPrice || 0);
+    });
+
+    /* ======================
+       ORDER COUNTS
+    ====================== */
+    const totalOrders = allOrders.length;
+    const delivered = allOrders.filter(o => o.status === "Delivered").length;
+    const cancelled = allOrders.filter(o => o.status === "Cancelled").length;
+    const pending = allOrders.filter(o => o.status === "Pending").length;
+    const packed = allOrders.filter(o => o.status === "Packed").length;
+
+    /* ======================
+       TOP PRODUCTS (PAID ONLY)
+    ====================== */
+    const productSales = {};
+
+    paidOrders.forEach(order => {
+
+      const items =
+        typeof order.items === "string"
+          ? JSON.parse(order.items)
+          : order.items;
+
+      items.forEach(item => {
+        if (!productSales[item.name]) {
+          productSales[item.name] = 0;
+        }
+
+        productSales[item.name] += item.price * item.qty;
+      });
+    });
+
+    const topProducts = Object.entries(productSales)
+      .map(([name, total]) => ({ name, total }))
+      .sort((a, b) => b.total - a.total)
+      .slice(0, 5);
+
+    /* ======================
+       RENDER DASHBOARD
+    ====================== */
+    res.render("admin/dashboard", {
+      topProducts,
+      totalRevenue,
+      totalOrders,
+      delivered,
+      cancelled,
+      pending,
+      packed
+    });
+
+  } catch (err) {
+    console.log("Dashboard error:", err);
+    res.render("admin/dashboard", {
+      topProducts: [],
+      totalRevenue: 0,
+      totalOrders: 0,
+      delivered: 0,
+      cancelled: 0,
+      pending: 0,
+      packed: 0
+    });
+  }
 });
-
 const { Resend } = require("resend");
 
 const resend = new Resend(process.env.RESEND_API_KEY);
