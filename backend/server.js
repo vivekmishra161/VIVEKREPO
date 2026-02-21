@@ -505,7 +505,7 @@ app.post("/cancel-order/:id", async (req, res) => {
 // ===============================
 app.put("/admin/update-payment-status/:id", async (req, res) => {
   try {
-    const orderId = req.params.id;
+    const orderId = Number(req.params.id);
     const { paymentStatus } = req.body;
 
     console.log("➡️ Updating Payment:", orderId, paymentStatus);
@@ -525,22 +525,17 @@ app.put("/admin/update-payment-status/:id", async (req, res) => {
       });
     }
 
-    await Order.update(
-  {
-    paymentStatus,
-    status: paymentStatus === "PAID" ? "Packed" : "Pending"
-  },
-  { where: { id: orderId } }
-);
+    // ✅ THIS WAS MISSING / BROKEN
+    const updated = await Order.update(
+      { paymentStatus },
+      { where: { id: orderId } }
+    );
 
-    if (!updated[0]) {
-      return res.json({
-        success: false,
-        message: "Order not found"
-      });
-    }
+    console.log("✅ Rows updated:", updated[0]);
 
-    res.json({ success: true });
+    res.json({
+      success: updated[0] > 0
+    });
 
   } catch (err) {
     console.log("❌ Payment update error:", err);
