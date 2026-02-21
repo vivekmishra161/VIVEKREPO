@@ -472,7 +472,7 @@ tr {
 <!-- PAYMENT STATUS -->
 <td>
   <select
-    onchange="updatePaymentStatus('<%= o.id %>', this.value)"
+    onchange="updatePaymentStatus('<%= o.id %>', this.value, this)"
     class="pay-status <%= o.paymentStatus %>">
 
     <option value="PAYMENT_PENDING"
@@ -559,27 +559,34 @@ function searchOrders() {
 }
 </script>
 <script>
-function updatePaymentStatus(orderId, paymentStatus) {
-  fetch("/admin/update-payment-status", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ orderId, paymentStatus })
-  })
-  .then(res => res.json())
-  .then(data => {
+async function updatePaymentStatus(orderId, paymentStatus, el) {
+  try {
+    const res = await fetch(`/admin/update-payment-status/${orderId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ paymentStatus })
+    });
+
+    const data = await res.json();
+
     if (data.success) {
-      const select = event.target;
+      // remove old color classes
+      el.classList.remove("PAID", "PAYMENT_PENDING");
 
-      // remove old classes
-      select.classList.remove("PAID", "PAYMENT_PENDING");
+      // apply new color
+      el.classList.add(paymentStatus);
 
-      // add new class
-      select.classList.add(paymentStatus);
+      console.log("✅ Payment updated");
+    } else {
+      alert("Update failed");
     }
-  });
+
+  } catch (err) {
+    console.error(err);
+  }
 }
-
-
 </script>
 </body>
 </html>

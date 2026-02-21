@@ -500,7 +500,53 @@ app.post("/cancel-order/:id", async (req, res) => {
     res.json({ success: false });
   }
 });
+// ===============================
+// ADMIN - UPDATE PAYMENT STATUS
+// ===============================
+app.put("/admin/update-payment-status/:id", async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const { paymentStatus } = req.body;
 
+    console.log("➡️ Updating Payment:", orderId, paymentStatus);
+
+    const allowedStatus = [
+      "PAYMENT_PENDING",
+      "PAID",
+      "FAILED",
+      "REFUNDED",
+      "COD"
+    ];
+
+    if (!allowedStatus.includes(paymentStatus)) {
+      return res.json({
+        success: false,
+        message: "Invalid payment status"
+      });
+    }
+
+    await Order.update(
+  {
+    paymentStatus,
+    status: paymentStatus === "PAID" ? "Packed" : "Pending"
+  },
+  { where: { id: orderId } }
+);
+
+    if (!updated[0]) {
+      return res.json({
+        success: false,
+        message: "Order not found"
+      });
+    }
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.log("❌ Payment update error:", err);
+    res.json({ success: false });
+  }
+});
 app.get("/registration", (req, res) => {
   if (!req.session.user) {
     return res.redirect("/login");
